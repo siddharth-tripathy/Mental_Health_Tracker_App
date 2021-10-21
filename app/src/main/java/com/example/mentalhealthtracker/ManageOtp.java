@@ -27,18 +27,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ManageOtp extends AppCompatActivity {
 
-    /*
-    EditText t2;
-    Button b2;
-    String phonenumber;
-    String otpid;
-    FirebaseAuth mAuth;
-    private String verificationId;
-
-     */
-
-
-
     // variable for FirebaseAuth class
     private FirebaseAuth mAuth;
 
@@ -57,12 +45,10 @@ public class ManageOtp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_otp);
 
-        /*
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             startActivity(new Intent(ManageOtp.this, SignIn.class));
         }
-         */
 
         // below line is for getting instance
         // of our FirebaseAuth.
@@ -136,7 +122,6 @@ public class ManageOtp extends AppCompatActivity {
                     }
                 });
     }
-
 
     private void sendVerificationCode(String number) {
         // this method is used for getting
