@@ -47,7 +47,7 @@ public class ManageOtp extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            startActivity(new Intent(ManageOtp.this, SignIn.class));
+            startActivity(new Intent(ManageOtp.this, CreateAccount.class));
         }
 
         // below line is for getting instance
@@ -108,10 +108,8 @@ public class ManageOtp extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // if the code is correct and the task is successful
                             // we are sending our user to new activity.
-                            Fragment mFragment = new HomeFragment();
-                            getSupportFragmentManager().beginTransaction().replace(R.id.home, mFragment).commit();
-                            Intent i = new Intent(ManageOtp.this, HomeFragment.class);
-                            i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            Toast.makeText(getApplicationContext(),"Sign In Sucessfull", Toast.LENGTH_LONG).show();
+                            Intent i = new Intent(ManageOtp.this, CreateAccount.class);
                             startActivity(i);
                             finish();
                         } else {
