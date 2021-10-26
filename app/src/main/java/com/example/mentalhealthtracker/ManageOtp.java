@@ -47,7 +47,7 @@ public class ManageOtp extends AppCompatActivity {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            startActivity(new Intent(ManageOtp.this, CreateAccount.class));
+            startActivity(new Intent(ManageOtp.this, Dashboard.class));
         }
 
         // below line is for getting instance
