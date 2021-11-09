@@ -33,10 +33,6 @@ import java.util.Map;
 
 public class CreateAccount extends AppCompatActivity {
 
-    private interface PictuteListener {
-        void onProfilePictureUpdated();
-    }
-
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     EditText name, email, age, moto;
@@ -99,60 +95,59 @@ public class CreateAccount extends AppCompatActivity {
             }
         });
 
-        /*
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGallery();
-            }
-        });
-        pictureListener = new PictuteListener() {
-            @Override
-            public void onProfilePictureUpdated() {
-                Uri uri = firebaseUser.getPhotoUrl();
-                Glide.with(getActivity()).load(uri).into(imageView);
-                //skipBtn.setBackgroundColor(Color.parseColor("#2c8bff"));
-                //skipBtn.setText("done");
-            }
-        };
+            /*
+            profile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openGallery();
+                }
+            });
+            pictureListener = new PictuteListener() {
+                @Override
+                public void onProfilePictureUpdated() {
+                    Uri uri = firebaseUser.getPhotoUrl();
+                    Glide.with(getActivity()).load(uri).into(imageView);
+                    //skipBtn.setBackgroundColor(Color.parseColor("#2c8bff"));
+                    //skipBtn.setText("done");
+                }
+            };
 
+             */
+    }
+
+
+        /*
+        private static final int PICK_IMAGE = 100;
+
+        private void openGallery() {
+            Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+            startActivityForResult(gallery, PICK_IMAGE);
+        }
+
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
+                final Uri imageUri = data.getData();
+                updateUserProfilePicture(imageUri);
+            }
+        }
+        private void updateUserProfilePicture(final Uri uri) {
+            UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                    .setPhotoUri(uri)
+                    .build();
+
+            firebaseUser.updateProfile(profileChangeRequest)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                pictureListener.onProfilePictureUpdated();
+                            }
+                        }
+                    });
+        }
 
          */
-    }
-
-
-    /*
-    private static final int PICK_IMAGE = 100;
-
-    private void openGallery() {
-        Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-        startActivityForResult(gallery, PICK_IMAGE);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
-            final Uri imageUri = data.getData();
-            updateUserProfilePicture(imageUri);
-        }
-    }
-    private void updateUserProfilePicture(final Uri uri) {
-        UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
-                .setPhotoUri(uri)
-                .build();
-
-        firebaseUser.updateProfile(profileChangeRequest)
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            pictureListener.onProfilePictureUpdated();
-                        }
-                    }
-                });
-    }
-
-     */
 }

@@ -5,19 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Analysis">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_margin="12dp">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Over the last 2 weeks, how often have you been bothered by any of the following problems?"
             android:textSize="18sp"
             android:textColor="@color/black"/>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="30dp"/>
@@ -57,7 +56,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nearly every day" />
-
         </RadioGroup>
 
         <View
@@ -68,21 +66,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <Button
                 android:id="@+id/nxtQ"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Next Ques."/>
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="quit"/>
-
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
@@ -92,7 +88,6 @@
         android:orientation="vertical"
         android:background="@color/white"
         android:visibility="gone">
-
         <TextView
             android:id="@+id/resD"
             android:layout_width="match_parent"
@@ -101,7 +96,5 @@
             android:text="-"
             android:textSize="48sp"
             android:gravity="center"/>
-
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
