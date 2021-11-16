@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -40,6 +41,8 @@ public class ManageOtp extends AppCompatActivity {
     // string for storing our verification ID
     private String verificationId;
 
+    boolean doctor=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +51,7 @@ public class ManageOtp extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
             startActivity(new Intent(ManageOtp.this, Dashboard.class));
+            finish();
         }
 
         // below line is for getting instance
@@ -110,6 +114,12 @@ public class ManageOtp extends AppCompatActivity {
                             // we are sending our user to new activity.
                             Toast.makeText(getApplicationContext(),"Sign In Sucessfull", Toast.LENGTH_LONG).show();
                             Intent i = new Intent(ManageOtp.this, CreateAccount.class);
+                            if(doctor==true){
+                                i.putExtra("Doctor", "True");
+                            }
+                            else {
+                                i.putExtra("Doctor", "False");
+                            }
                             startActivity(i);
                             finish();
                         } else {
@@ -194,4 +204,18 @@ public class ManageOtp extends AppCompatActivity {
         // calling sign in method.
         signInWithCredential(credential);
     }
+
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkBox:
+                if (checked)
+                    doctor=true;
+            // TODO: Veggie sandwich
+        }
+    }
+
 }

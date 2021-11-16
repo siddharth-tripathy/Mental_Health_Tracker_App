@@ -12,6 +12,9 @@ import com.rilixtech.widget.countrycodepicker.CountryCodePicker;
 
 //import com.hbb20.CountryCodePicker;
 
+
+// NOT CURRENTLY IN USE
+
 public class SignIn extends AppCompatActivity {
 
     CountryCodePicker ccp;

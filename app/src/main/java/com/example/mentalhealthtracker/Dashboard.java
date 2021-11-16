@@ -21,14 +21,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Dashboard extends AppCompatActivity implements PaymentResultListener {
-
+    Dialog dialog;
+    Dialog doc_list;
+    boolean payment=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        Dialog dialog =new Dialog(Dashboard.this);
+        dialog =new Dialog(Dashboard.this);
         dialog.setContentView(R.layout.subscription);
+
+        doc_list =new Dialog(Dashboard.this);
+        doc_list.setContentView(R.layout.doc_list);
 
         Button buy = dialog.findViewById(R.id.buy);
         buy.setOnClickListener(new View.OnClickListener() {
@@ -37,7 +42,6 @@ public class Dashboard extends AppCompatActivity implements PaymentResultListene
                 Checkout checkout = new Checkout();
                 checkout.setKeyID("rzp_test_m8Mx6M6wvVB1qu");
                 //checkout.setImage(R.drawable.nev_cart);
-
                 JSONObject object = new JSONObject();
                 try {
                     object.put("name", "Sid");
@@ -51,12 +55,9 @@ public class Dashboard extends AppCompatActivity implements PaymentResultListene
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
         });
-
         CardView analysis_option = findViewById(R.id.analysis_options);
-
         Button logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +65,6 @@ public class Dashboard extends AppCompatActivity implements PaymentResultListene
                 FirebaseAuth.getInstance().signOut();
             }
         });
-
         ImageView profile =findViewById(R.id.profileImage);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +72,6 @@ public class Dashboard extends AppCompatActivity implements PaymentResultListene
                 logout.setVisibility(View.VISIBLE);
             }
         });
-
         Button analysis = findViewById(R.id.analysis);
         analysis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +79,6 @@ public class Dashboard extends AppCompatActivity implements PaymentResultListene
                 analysis_option.setVisibility(View.VISIBLE);
             }
         });
-
         Button depression = findViewById(R.id.depression);
         depression.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,32 +119,28 @@ public class Dashboard extends AppCompatActivity implements PaymentResultListene
                 startActivity(i);
             }
         });
-
         Button articles = findViewById(R.id.articles);
         articles.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Dashboard.this, Reads.class));
-            }
+            public void onClick(View v) { startActivity(new Intent(Dashboard.this, Reads.class)); }
         });
-
         FloatingActionButton doc = findViewById(R.id.doc);
         doc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialog.show();
+                //if (payment==false)
+                //    dialog.show();
+                //else
+                    doc_list.show();
             }
         });
-
     }
-
     @Override
     public void onPaymentSuccess(String s) {
-
+        dialog.hide();
+        doc_list.show();
+        payment=true;
     }
-
     @Override
-    public void onPaymentError(int i, String s) {
-
-    }
+    public void onPaymentError(int i, String s) { }
 }

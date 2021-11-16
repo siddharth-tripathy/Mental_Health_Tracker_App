@@ -35,7 +35,7 @@ public class CreateAccount extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    EditText name, email, age, moto;
+    EditText role, name, email, age, moto;
     Button save;
     String eName, eEmail, eAge, eMoto;
     ImageView profile;
@@ -46,6 +46,9 @@ public class CreateAccount extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
+
+        Intent i = getIntent();
+        String doctor = i.getStringExtra("Doctor");
 
         name = findViewById(R.id.editTextTextPersonName);
         email = findViewById(R.id.editTextTextEmailAddress);
@@ -70,6 +73,12 @@ public class CreateAccount extends AppCompatActivity {
                 accountData.put("email", eEmail);
                 accountData.put("age", eAge);
                 accountData.put("moto", eMoto);
+                if (doctor.equals("True")) {
+                    accountData.put("doctor", "true");
+                }
+                else {
+                    accountData.put("doctor", "false");
+                }
 
                 Task<Void> account_data = db.collection(currentUser).document("Account Data")
                         .set(accountData)
@@ -77,8 +86,14 @@ public class CreateAccount extends AppCompatActivity {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG, "DocumentSnapshot successfully written!");
-                                startActivity(new Intent(CreateAccount.this, Dashboard.class));
-                                finish();
+                                if (doctor.equals("True")) {
+                                    startActivity(new Intent(CreateAccount.this, DocDashboard.class));
+                                    finish();
+                                }
+                                else {
+                                    startActivity(new Intent(CreateAccount.this, Dashboard.class));
+                                    finish();
+                                }
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -87,11 +102,6 @@ public class CreateAccount extends AppCompatActivity {
                                 Log.w(TAG, "Error writing document", e);
                             }
                         });
-
-
-
-
-
             }
         });
 
