@@ -1,8 +1,5 @@
 package com.example.mentalhealthtracker;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,21 +9,20 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import org.w3c.dom.Text;
-
-import java.sql.Time;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Analysis extends AppCompatActivity {
 
@@ -189,7 +185,7 @@ public class Analysis extends AppCompatActivity {
                     //r4.setChecked(false);
                 }
 
-                if (testFor.equals("Depression"))
+                if (testFor.equals("DDepression"))
                 {
                     ques.setText(questions_depression[flag]);
                     //arLn= questions_depression.length;

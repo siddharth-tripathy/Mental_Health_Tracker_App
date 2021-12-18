@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MentalHealthTracker">
-        <activity android:name=".DocDashboard"></activity>
+        <activity android:name=".Chat"></activity>
+        <activity android:name=".DocDashboard" />
         <activity android:name=".Reads" />
         <activity android:name=".Analysis" />
         <activity android:name=".CreateAccount" />

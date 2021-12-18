@@ -6,18 +6,101 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Dashboard">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/top"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello"
+                    android:textSize="35sp"
+                    android:layout_gravity="center_vertical"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="50sp"
+                    android:text="Peter"/>
+            </LinearLayout>
 
-    <ImageView
-        android:id="@+id/profileImage"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_gravity="end"
-        android:src="@drawable/profile" />
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_margin="10dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/profile" />
+        </RelativeLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="5dp"
+            android:layout_margin="15dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:src="@drawable/ic_baseline_auto_graph_24"
+                        android:layout_margin="15dp"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="2"
+                        android:orientation="vertical"
+                        android:layout_margin="10dp">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="DEPRESSION : -"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="ANGER : -"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="ANXIETY : -"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="1"
+                            android:text="SLEEP : -"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/analysis"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Check now"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/logout"
@@ -25,12 +108,6 @@
         android:layout_height="wrap_content"
         android:text="Logout"
         android:visibility="gone"/>
-
-    <Button
-        android:id="@+id/analysis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Analysis"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/analysis_options"
@@ -40,12 +117,10 @@
         android:layout_margin="10dp"
         android:padding="10dp"
         android:visibility="gone">
-
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <Button
                 android:id="@+id/depression"
                 android:layout_width="wrap_content"
@@ -69,9 +144,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sleep"/>
-
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 
     <Button
@@ -87,12 +160,10 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:srcCompat="@android:drawable/ic_dialog_email" />
-
     </LinearLayout>
 
     <include
         android:id="@+id/subscription"
         layout="@layout/subscription"
         android:visibility="gone"/>
-    
 </androidx.constraintlayout.widget.ConstraintLayout>

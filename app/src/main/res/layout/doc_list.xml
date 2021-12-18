@@ -34,6 +34,7 @@
             android:src="@drawable/ic_baseline_call_24"
             android:layout_gravity="center_vertical"/>
         <ImageView
+            android:id="@+id/chat"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

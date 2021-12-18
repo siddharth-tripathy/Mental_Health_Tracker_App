@@ -1,9 +1,5 @@
 package com.example.mentalhealthtracker;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,17 +9,18 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mentalhealthtracker.ui.home.HomeFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class ManageOtp extends AppCompatActivity {
@@ -34,9 +31,6 @@ public class ManageOtp extends AppCompatActivity {
     // variable for our text input
     // field for phone and OTP.
     private EditText edtPhone, edtOTP;
-
-    // buttons for generating OTP and verifying OTP
-    private Button verifyOTPBtn, generateOTPBtn;
 
     // string for storing our verification ID
     private String verificationId;
@@ -61,25 +55,23 @@ public class ManageOtp extends AppCompatActivity {
         // initializing variables for button and Edittext.
         edtPhone = findViewById(R.id.idEdtPhoneNumber);
         edtOTP = findViewById(R.id.idEdtOtp);
-        verifyOTPBtn = findViewById(R.id.idBtnVerify);
-        generateOTPBtn = findViewById(R.id.idBtnGetOtp);
+        // buttons for generating OTP and verifying OTP
+        Button verifyOTPBtn = findViewById(R.id.idBtnVerify);
+        Button generateOTPBtn = findViewById(R.id.idBtnGetOtp);
 
         // setting onclick listener for generate OTP button.
-        generateOTPBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // below line is for checking weather the user
-                // has entered his mobile number or not.
-                if (TextUtils.isEmpty(edtPhone.getText().toString())) {
-                    // when mobile number text field is empty
-                    // displaying a toast message.
-                    Toast.makeText(ManageOtp.this, "Please enter a valid phone number.", Toast.LENGTH_SHORT).show();
-                } else {
-                    // if the text field is not empty we are calling our
-                    // send OTP method for getting OTP from Firebase.
-                    String phone = "+91" + edtPhone.getText().toString();
-                    sendVerificationCode(phone);
-                }
+        generateOTPBtn.setOnClickListener(v -> {
+            // below line is for checking weather the user
+            // has entered his mobile number or not.
+            if (TextUtils.isEmpty(edtPhone.getText().toString())) {
+                // when mobile number text field is empty
+                // displaying a toast message.
+                Toast.makeText(ManageOtp.this, "Please enter a valid phone number.", Toast.LENGTH_SHORT).show();
+            } else {
+                // if the text field is not empty we are calling our
+                // send OTP method for getting OTP from Firebase.
+                String phone = "+91" + edtPhone.getText().toString();
+                sendVerificationCode(phone);
             }
         });
 
@@ -96,7 +88,7 @@ public class ManageOtp extends AppCompatActivity {
                 } else {
                     // if OTP field is not empty calling
                     // method to verify the OTP.
-                    verifyCode(edtOTP.getText().toString());
+                    ManageOtp.this.verifyCode(edtOTP.getText().toString());
                 }
             }
         });
@@ -106,27 +98,18 @@ public class ManageOtp extends AppCompatActivity {
         // inside this method we are checking if
         // the code entered is correct or not.
         mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // if the code is correct and the task is successful
-                            // we are sending our user to new activity.
-                            Toast.makeText(getApplicationContext(),"Sign In Sucessfull", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(ManageOtp.this, CreateAccount.class);
-                            if(doctor==true){
-                                i.putExtra("Doctor", "True");
-                            }
-                            else {
-                                i.putExtra("Doctor", "False");
-                            }
-                            startActivity(i);
-                            finish();
-                        } else {
-                            // if the code is not correct then we are
-                            // displaying an error message to the user.
-                            Toast.makeText(ManageOtp.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        // if the code is correct and the task is successful
+                        // we are sending our user to new activity.
+                        Toast.makeText(getApplicationContext(),"Sign In Sucessfull", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(ManageOtp.this, CreateAccount.class);
+                        startActivity(i);
+                        finish();
+                    } else {
+                        // if the code is not correct then we are
+                        // displaying an error message to the user.
+                        Toast.makeText(ManageOtp.this, Objects.requireNonNull(task.getException()).getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -145,7 +128,7 @@ public class ManageOtp extends AppCompatActivity {
     }
 
     // callback method is called on Phone auth provider.
-    private PhoneAuthProvider.OnVerificationStateChangedCallbacks
+    private final PhoneAuthProvider.OnVerificationStateChangedCallbacks
 
             // initializing our callbacks for on
             // verification callback method.
@@ -154,7 +137,7 @@ public class ManageOtp extends AppCompatActivity {
         // below method is used when
         // OTP is sent from Firebase
         @Override
-        public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+        public void onCodeSent(@NotNull String s, @NotNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
             // when we receive the OTP it
             // contains a unique id which
