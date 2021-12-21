@@ -55,7 +55,7 @@ public class Chat extends AppCompatActivity {
                 finish();
             }
         });
-
+ 
         String ReceiverId = "0qPs6bVRiWheAMec8no2qo9Wuah2";
         String SenderId = "tzO4M9oiJGc9zD3pDTalNfeWxtw2";
         String SenderRoom = SenderId + " " + ReceiverId;
