@@ -49,12 +49,8 @@ public class Analysis extends AppCompatActivity {
             "I embarrass family, friends, or coworkers with my anger outbursts.",
             "I get impatient when people in front of me drive exactly the speed limit.",
             "When my neighbors are inconsiderate, it makes me angry.",
-
-
             "I find myself frequently annoyed with certain friends or family.",
-            "I get angry when people do things that they are not supposed to, like smoking in a no\n" +
-                    "smoking section or having more items than marked in the supermarket express\n" +
-                    "checkout lane.",
+            "I get angry when people do things that they are not supposed to, like smoking in a no smoking section or having more items than marked in the supermarket express checkout lane.",
             "There are certain people who always rub me the wrong way.",
             "I feel uptight/tense.",
             "I yell and/or curse.",
@@ -85,14 +81,12 @@ public class Analysis extends AppCompatActivity {
             "Fear of dying",
             "Scared",
             "Indigestion",
-
             "Faint / lightheaded",
             "Face flushed",
             "Hot / cold sweats"
     };
 
     String questions_sleep[] = {
-            "heee",
             "Little interest or pleasure in doing things",
             "Feeling down, depressed or hopeless",
             "Trouble falling/staying asleep, sleeping too much",
@@ -103,7 +97,6 @@ public class Analysis extends AppCompatActivity {
             "Moving or speaking so slowly that other people could have noticed. Or the opposite; being so fidgety or restless that you have been moving around a lot more than usual.",
             "Thoughts that you would be better off dead or of hurting yourself in some way."
     };
-
 
     int flag = 0;
     int result = 0;
@@ -117,7 +110,6 @@ public class Analysis extends AppCompatActivity {
         setContentView(R.layout.activity_analysis);
 
         Intent i = getIntent();
-        //String testFor = i.getExtras().getString("AnalysisFor");
         String testFor = i.getStringExtra("AnalysisFor");
 
         RadioButton r1 = findViewById(R.id.opt1);
@@ -129,99 +121,71 @@ public class Analysis extends AppCompatActivity {
         LinearLayout resultDisplay = findViewById(R.id.resultDisplay);
         TextView resD = findViewById(R.id.resD);
 
-
-
-        //ques.setText("Yahooo!!!!");
-        if (testFor.equals("DDepression"))
-        {
+        if (testFor.equals("DDepression")) {
             ques.setText(questions_depression[flag]);
             arLn= questions_depression.length;
             flag++;
         }
-        else if (testFor.equals("Anger"))
-        {
+        else if (testFor.equals("Anger")) {
             ques.setText(questions_anger[flag]);
             arLn= questions_anger.length;
             flag++;
         }
-        else if (testFor.equals("Anxiety"))
-        {
+        else if (testFor.equals("Anxiety")) {
             ques.setText(questions_anxiety[flag]);
             arLn= questions_anxiety.length;
             flag++;
         }
-        else if (testFor.equals("Anger"))
-        {
+        else if (testFor.equals("Anger")) {
             ques.setText(questions_sleep[flag]);
             arLn= questions_sleep.length;
             flag++;
         }
 
-        //ques.setText(questions_depression[flag]);
-        //flag++;
-
         nxtQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if (r1.isChecked())
-                {
+                if (r1.isChecked()) {
                     result = result+1;
-                    //r1.setChecked(false);
                 }
-                else if (r2.isChecked())
-                {
+                else if (r2.isChecked()) {
                     result = result+2;
-                    //r2.setChecked(false);
                 }
-                else if (r3.isChecked())
-                {
+                else if (r3.isChecked()) {
                     result = result+3;
-                    //r3.setChecked(false);
                 }
-                else if (r4.isChecked())
-                {
+                else if (r4.isChecked()) {
                     result = result+4;
-                    //r4.setChecked(false);
                 }
 
-                if (testFor.equals("DDepression"))
-                {
+                if (testFor.equals("DDepression")) {
                     ques.setText(questions_depression[flag]);
-                    //arLn= questions_depression.length;
                     flag++;
                 }
-                else if (testFor.equals("Anger"))
-                {
+                else if (testFor.equals("Anger")) {
                     ques.setText(questions_anger[flag]);
-                    //arLn= questions_anger.length;
                     flag++;
                 }
-                else if (testFor.equals("Anxiety"))
-                {
+                else if (testFor.equals("Anxiety")) {
                     ques.setText(questions_anxiety[flag]);
-                    //arLn= questions_anxiety.length;
                     flag++;
                 }
-                else if (testFor.equals("Anger"))
-                {
+                else if (testFor.equals("Anger")) {
                     ques.setText(questions_sleep[flag]);
-                    //arLn= questions_sleep.length;
                     flag++;
                 }
 
-                if (flag==arLn)
-                {
+                if (flag==arLn) {
                     String  currentDateTimeString = DateFormat.getDateTimeInstance()
                             .format(new Date());
-                    String s = testFor + currentDateTimeString;
+                    String s = testFor;
                     resultDB = String.valueOf(result);
                     Map<String, Object> resultData = new HashMap<>();
                     resultData.put(s, resultDB);
 
                     final String TAG = "MyActivity";
 
-                    Task<Void> result_data = db.collection(currentUser).document("Analysis Report").collection(testFor).document(currentDateTimeString)
+                    Task<Void> result_data = db.collection("User").document(currentUser).collection("AnalysisReport").document(currentDateTimeString)
                             .set(resultData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
@@ -235,7 +199,6 @@ public class Analysis extends AppCompatActivity {
                                     Log.w(TAG, "Error writing document", e);
                                 }
                             });
-
                     resultDisplay.setVisibility(View.VISIBLE);
                     resD.setText(resultDB);
                 }

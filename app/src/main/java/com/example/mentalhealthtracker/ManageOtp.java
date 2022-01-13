@@ -104,6 +104,7 @@ public class ManageOtp extends AppCompatActivity {
                         // we are sending our user to new activity.
                         Toast.makeText(getApplicationContext(),"Sign In Sucessfull", Toast.LENGTH_LONG).show();
                         Intent i = new Intent(ManageOtp.this, CreateAccount.class);
+                        i.putExtra("EditMode","true");
                         startActivity(i);
                         finish();
                     } else {

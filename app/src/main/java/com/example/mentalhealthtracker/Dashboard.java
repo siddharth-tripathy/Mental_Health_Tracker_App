@@ -24,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.razorpay.Checkout;
@@ -46,13 +47,23 @@ import java.util.Map;
 
 import static android.content.ContentValues.TAG;
 
-public class Dashboard extends AppCompatActivity implements PaymentResultListener {
+public class Dashboard extends AppCompatActivity {
+
+    ImageView profileImg, settings;
+    CardView account, yourTherapist;
+    TextView userName, docName, trackHistory;
+
+
+
+    //Firebase
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+
     Dialog dialog;
     Dialog doc_list;
-    boolean payment=false;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    boolean payment=false;
     String docUid = "0qPs6bVRiWheAMec8no2qo9Wuah2";
 
     @Override
@@ -60,51 +71,111 @@ public class Dashboard extends AppCompatActivity implements PaymentResultListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        dialog =new Dialog(Dashboard.this);
-        dialog.setContentView(R.layout.subscription);
-        
-        doc_list =new Dialog(Dashboard.this);
-        doc_list.setContentView(R.layout.doc_list);
+        //DashboardTop
+        profileImg =findViewById(R.id.profileImage);
+        settings = findViewById(R.id.settings);
 
-        Button buy = dialog.findViewById(R.id.buy);
-        buy.setOnClickListener(new View.OnClickListener() {
+        //TextView
+        userName = findViewById(R.id.userName);
+
+        //More Options
+        trackHistory = findViewById(R.id.trackHistory);
+
+
+
+
+
+
+        settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                account.setVisibility(View.VISIBLE);
+            }
+        });
 
-                Checkout checkout = new Checkout();
-                checkout.setKeyID("rzp_test_m8Mx6M6wvVB1qu");
-                //checkout.setImage(R.drawable.nev_cart);
-                JSONObject object = new JSONObject();
-                try {
-                    object.put("name", "Sid");
-                    //object.put("description", "Test Payment");
-                    object.put("theme.color", "#FF8C00");
-                    object.put("currency", "INR");
-                    object.put("amount", 1000000);
-                    object.put("prefill.contact", "919867425435");
-                    object.put("prefill.email", "siddharth.tripathy01@gmail.com");
-                    checkout.open(Dashboard.this, object);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+        trackHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Dashboard.this, TrackHistory.class));
+            }
+        });
+
+        //Getting User Name
+        db.collection("User").document(currentUser)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
+                    @Override
+                    public void onComplete(@NonNull Task< DocumentSnapshot > task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot document = task.getResult();
+
+                            if (document.exists()) {
+                                String n = document.getString("name");
+                                userName.setText(n);
+                            } else {
+
+                            }
+                        }
+                    }
+                });
+
+        //Getting Therapist Name
+        //db.collection("User").document(currentUser).collection("Appointment").orderBy("")
+
+        //db.collection("User").document(currentUser).collection("AnalysisReport").orderBy("DDepression", Query.Direction.ASCENDING)
+                
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        yourTherapist = findViewById(R.id.yourTherapist);
+        yourTherapist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Dashboard.this, DocProfile.class));
             }
         });
 
         CardView analysis_option = findViewById(R.id.analysis_options);
-        Button logout = findViewById(R.id.logout);
+        TextView logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
             }
         });
-        ImageView profile =findViewById(R.id.profileImage);
+        TextView profile = findViewById(R.id.profile);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logout.setVisibility(View.VISIBLE);
+                Intent intent = new Intent(Dashboard.this, CreateAccount.class);
+                intent.putExtra("editMode", "false");
+                startActivity(intent);
             }
         });
+        account = findViewById(R.id.account);
+
         Button analysis = findViewById(R.id.analysis);
         analysis.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,104 +235,8 @@ public class Dashboard extends AppCompatActivity implements PaymentResultListene
         doc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-            db.collection("User").document(currentUser).collection("Appointment").document(docUid)
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                        @RequiresApi(api = Build.VERSION_CODES.O)
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()){
-                                DocumentSnapshot document = task.getResult();
-                                String validity = document.getString("Validity");
-
-                                LocalDate dt = LocalDate.parse(validity);
-                                LocalDate today = LocalDate.now();
-
-                                LocalDate a = LocalDate.of(dt.getYear(), dt.getMonth(), dt.getDayOfMonth());
-                                LocalDate b = LocalDate.of(today.getYear(), today.getMonth(), today.getDayOfMonth());
-                                int x = b.compareTo(a);
-
-                                if (x>=0)
-                                {
-                                    startActivity(new Intent(Dashboard.this, Chat.class));
-                                }
-                                else
-                                {
-                                    dialog.show();
-                                }
-
-                                if (document.exists()) {
-                                    Log.d(TAG, "DocumentSnapshot data: " + document.getData());
-                                } else {
-                                    Log.d(TAG, "No such document");
-                                }
-
-                            }
-                        }
-                    });
-
+                startActivity(new Intent(Dashboard.this, DocList.class));
             }
         });
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public void onPaymentSuccess(String s) {
-
-        payment=true;
-        String  currentDateTimeString = DateFormat.getDateTimeInstance()
-                .format(new Date());
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Calendar c = Calendar.getInstance();
-        c.add(Calendar.DATE, 0); // Adding 5 days
-        String output = sdf.format(c.getTime());
-
-        Map<String, Object> patientData = new HashMap<>();
-        patientData.put("Name(User)", "Peter");
-        patientData.put("Name(Doctor)", "Dr. Tony");
-        patientData.put("Email", "peter@spiderman.com");
-        patientData.put("Time", currentDateTimeString);
-        patientData.put("Validity", output);
-        patientData.put("PatientId", currentUser);
-
-        Task<Void> appointmentList = db.collection("DoctorUser").document(docUid).collection("AppointmentList").document(currentUser)
-                .set(patientData)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("TAG", "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("TAG", "Error writing document", e);
-                    }
-                });
-
-        Task<Void> appointment = db.collection("User").document(currentUser).collection("Appointment").document(docUid)
-                .set(patientData)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d("TAG", "DocumentSnapshot successfully written!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w("TAG", "Error writing document", e);
-                    }
-                });
-    }
-
-    @Override
-    public void onPaymentError(int i, String s) {
-        Toast toast = Toast.makeText(getApplicationContext(), "We are unable to process your request. Try Again", Toast.LENGTH_SHORT);
-        toast.show();
-    }
-
 }
