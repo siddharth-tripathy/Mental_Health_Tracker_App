@@ -9,14 +9,19 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +41,9 @@ public class ManageOtp extends AppCompatActivity {
     private String verificationId;
 
     boolean doctor=false;
+
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,11 +110,44 @@ public class ManageOtp extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         // if the code is correct and the task is successful
                         // we are sending our user to new activity.
-                        Toast.makeText(getApplicationContext(),"Sign In Sucessfull", Toast.LENGTH_LONG).show();
-                        Intent i = new Intent(ManageOtp.this, CreateAccount.class);
-                        i.putExtra("EditMode","true");
-                        startActivity(i);
-                        finish();
+
+                        String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                        db.collection("User").document(currentUser)
+                                .get()
+                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        DocumentSnapshot documentSnapshot = task.getResult();
+                                        if (documentSnapshot.exists()) {
+                                            startActivity(new Intent(ManageOtp.this, Dashboard.class));
+                                        } else {
+                                            String n = edtPhone.getText().toString();
+                                            Toast.makeText(getApplicationContext(),"Sign In Sucessfull", Toast.LENGTH_LONG).show();
+                                            Intent i = new Intent(ManageOtp.this, CreateAccount.class);
+                                            i.putExtra("EditMode","true");
+                                            i.putExtra("Number", n);
+                                            startActivity(i);
+                                            finish();
+                                        }
+                                    }
+                                });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                     } else {
                         // if the code is not correct then we are
                         // displaying an error message to the user.
@@ -189,17 +230,5 @@ public class ManageOtp extends AppCompatActivity {
         signInWithCredential(credential);
     }
 
-    public void onCheckboxClicked(View view) {
-        // Is the view now checked?
-        boolean checked = ((CheckBox) view).isChecked();
-
-        // Check which checkbox was clicked
-        switch(view.getId()) {
-            case R.id.checkBox:
-                if (checked)
-                    doctor=true;
-            // TODO: Veggie sandwich
-        }
-    }
 
 }

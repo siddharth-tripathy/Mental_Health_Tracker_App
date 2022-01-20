@@ -36,10 +36,10 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/name"
+                android:id="@+id/DocName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Dr. Sameer"
+                android:text="Dr. Name"
                 android:textSize="24dp"
                 android:textStyle="bold" />
 
@@ -67,6 +67,12 @@
         android:text="*****"
         android:layout_gravity="center_horizontal"/>
 
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numStars="5"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,6 +85,48 @@
         android:layout_height="wrap_content"
         android:text="240 Patients review"
         android:layout_gravity="center_horizontal"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Payment: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="COMPLITED"
+            android:textColor="@color/teal_700"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Appointment Date: "/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NOT SCHEDULED"
+            android:textColor="#FF0000"/>
+
+        <ImageView
+            android:layout_width="25sp"
+            android:layout_height="25sp"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_baseline_question_mark_24"/>
+    </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/contact"
@@ -94,6 +142,7 @@
             app:cardCornerRadius="20dp"
             app:cardElevation="5dp">
             <ImageButton
+                android:id="@+id/videoCallBtn"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginTop="10dp"

@@ -51,7 +51,7 @@ public class Dashboard extends AppCompatActivity {
 
     ImageView profileImg, settings;
     CardView account, yourTherapist;
-    TextView userName, docName, trackHistory;
+    TextView userName, docName, trackHistory, profile, greetings;
 
 
 
@@ -77,6 +77,8 @@ public class Dashboard extends AppCompatActivity {
 
         //TextView
         userName = findViewById(R.id.userName);
+        profile = findViewById(R.id.profile);
+        greetings = findViewById(R.id.greetings);
 
         //More Options
         trackHistory = findViewById(R.id.trackHistory);
@@ -111,7 +113,7 @@ public class Dashboard extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
 
                             if (document.exists()) {
-                                String n = document.getString("name");
+                                String n = document.getString("Name");
                                 userName.setText(n);
                             } else {
 
@@ -120,19 +122,21 @@ public class Dashboard extends AppCompatActivity {
                     }
                 });
 
-        //Getting Therapist Name
-        //db.collection("User").document(currentUser).collection("Appointment").orderBy("")
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
 
-        //db.collection("User").document(currentUser).collection("AnalysisReport").orderBy("DDepression", Query.Direction.ASCENDING)
-                
+        if(hour>= 12 && hour < 17){
+            greetings.setText("Good Afternoon");
+        } else if(hour >= 17 && hour < 21){
+            greetings.setText("Good Evening");
+        } else if(hour >= 21 && hour < 24){
+            greetings.setText("Good Night");
+        } else {
+            greetings.setText("Good Morning");
 
-
-
-
-
-
-
-
+        }
 
 
 
@@ -165,7 +169,7 @@ public class Dashboard extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
             }
         });
-        TextView profile = findViewById(R.id.profile);
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

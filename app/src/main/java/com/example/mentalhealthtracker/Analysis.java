@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,8 +21,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
@@ -104,6 +110,10 @@ public class Analysis extends AppCompatActivity {
     int arLn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    RadioGroup radioGroup;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -142,9 +152,34 @@ public class Analysis extends AppCompatActivity {
             flag++;
         }
 
+
+        radioGroup = findViewById(R.id.radioGroup);
+        radioGroup.setOnCheckedChangeListener(
+                new RadioGroup
+                        .OnCheckedChangeListener() {
+                    @Override
+
+                    // The flow will come here when
+                    // any of the radio buttons in the radioGroup
+                    // has been clicked
+
+                    // Check which radio button has been clicked
+                    public void onCheckedChanged(RadioGroup group,
+                                                 int checkedId)
+                    {
+
+                        // Get the selected Radio Button
+                        RadioButton
+                                radioButton
+                                = (RadioButton)group
+                                .findViewById(checkedId);
+                    }
+                });
+
         nxtQ.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (r1.isChecked()) {
                     result = result+1;
                 }
@@ -160,32 +195,52 @@ public class Analysis extends AppCompatActivity {
 
                 if (testFor.equals("DDepression")) {
                     ques.setText(questions_depression[flag]);
+                    radioGroup.clearCheck();
                     flag++;
                 }
                 else if (testFor.equals("Anger")) {
                     ques.setText(questions_anger[flag]);
+                    radioGroup.clearCheck();
                     flag++;
                 }
                 else if (testFor.equals("Anxiety")) {
                     ques.setText(questions_anxiety[flag]);
+                    radioGroup.clearCheck();
                     flag++;
                 }
                 else if (testFor.equals("Anger")) {
                     ques.setText(questions_sleep[flag]);
+                    radioGroup.clearCheck();
                     flag++;
                 }
 
                 if (flag==arLn) {
-                    String  currentDateTimeString = DateFormat.getDateTimeInstance()
-                            .format(new Date());
+                    //String  currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+                    Date c = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm aaa", Locale.getDefault());
+                    String currentDate = df.format(c);
+
+                    Date date = null;
+                    try {
+                        date = df.parse(currentDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Long TimeMilli = date.getTime();
+                    String timeStamp = String.valueOf(TimeMilli);
+
                     String s = testFor;
+
+                    String test = s + " " + currentDate;
+
                     resultDB = String.valueOf(result);
                     Map<String, Object> resultData = new HashMap<>();
                     resultData.put(s, resultDB);
+                    resultData.put("Date", timeStamp);
 
                     final String TAG = "MyActivity";
 
-                    Task<Void> result_data = db.collection("User").document(currentUser).collection("AnalysisReport").document(currentDateTimeString)
+                    Task<Void> result_data = db.collection("User").document(currentUser).collection(testFor).document(test)
                             .set(resultData)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

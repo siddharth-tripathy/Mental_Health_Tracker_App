@@ -22,6 +22,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.razorpay.Checkout;
 import com.razorpay.PaymentResultListener;
 
@@ -41,69 +42,119 @@ import static android.content.ContentValues.TAG;
 
 public class DocProfile extends AppCompatActivity implements PaymentResultListener {
 
-    ImageButton chat;
-    TextView temp;
-    String validity;
+    TextView docName, temp;
+    ImageButton chat, video;
+    String validity, uName, docId, doc_Name, uNumber;
     LinearLayout contact;
     Button bkApp;
-
+    String proceed;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    String docUid = "gUeAyAHY0WcnKJlJGywK0rW0aN13";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_profile);
 
+        ////////////////////////Checking validity
         Intent i = getIntent();
-        validity = i.getStringExtra("validity");
+        docId = i.getStringExtra("ID");
+        doc_Name = i.getStringExtra("Name");
+        validity = i.getStringExtra("Validity");
 
+        docId = docId.replaceAll("\\s", " ");
+
+        docName = findViewById(R.id.DocName);
+        docName.setText(docId);
+
+        temp = findViewById(R.id.temp);
+        temp.setText(doc_Name);
+
+
+        //validity = "true";
+
+
+
+        ////////////////////////Setting Name
+        docName = findViewById(R.id.DocName);
+
+        db.collection("DoctorUser").document(docId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        DocumentSnapshot documentSnapshot = task.getResult();
+                        if (task.isSuccessful()){
+                            doc_Name = documentSnapshot.getString("Name");
+                            docName.setText(documentSnapshot.getString("Name"));
+                        }
+                    }
+                });
+
+
+
+        db.collection("User").document(currentUser)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            uName = documentSnapshot.getString("Name");
+                            uNumber = documentSnapshot.getString("Number");
+                        }
+                    }
+                });
+
+
+
+        ////////////////////Setting Visibility based on validity
         contact = findViewById(R.id.contact);
-
         bkApp = findViewById(R.id.bkApp);
 
         if (validity.equals("false"))
         {
-            contact.setVisibility(View.INVISIBLE);
+            contact.setVisibility(View.GONE);
             bkApp.setVisibility(View.VISIBLE);
         }
-        else
+        else if (validity.equals("true"))
         {
             contact.setVisibility(View.VISIBLE);
-            bkApp.setVisibility(View.INVISIBLE);
+            bkApp.setVisibility(View.GONE);
         }
 
-        chat = findViewById(R.id.chatBtn);
-        temp = findViewById(R.id.temp);
-        chat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(DocProfile.this, Chat.class));
-            }
-        });
-
+        //////////////////////////Payment
         bkApp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Checkout checkout = new Checkout();
-                    checkout.setKeyID("rzp_test_m8Mx6M6wvVB1qu");
-                    //checkout.setImage(R.drawable.nev_cart);
-                    JSONObject object = new JSONObject();
-                    try {
-                        object.put("name", "Sid");
-                        //object.put("description", "Test Payment");
-                        object.put("theme.color", "#FF8C00");
-                        object.put("currency", "INR");
-                        object.put("amount", 1000000);
-                        object.put("prefill.contact", "919867425435");
-                        object.put("prefill.email", "siddharth.tripathy01@gmail.com");
-                        checkout.open(DocProfile.this, object);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                Checkout checkout = new Checkout();
+                checkout.setKeyID("rzp_test_m8Mx6M6wvVB1qu");
+                //checkout.setImage(R.drawable.nev_cart);
+                JSONObject object = new JSONObject();
+                try {
+                    object.put("name", uName);
+                    //object.put("description", "Test Payment");
+                    object.put("theme.color", "#FF8C00");
+                    object.put("currency", "INR");
+                    object.put("amount", 1000);
+                    object.put("prefill.contact", uNumber);
+                    checkout.open(DocProfile.this, object);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
+        ////////////////////Contacting the Therapist
+        chat = findViewById(R.id.chatBtn);
+        chat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DocProfile.this, Chat.class);
+                intent.putExtra("SenderId", currentUser);
+                intent.putExtra("ReceiverId", docId);
+                startActivity(intent);
             }
         });
     }
@@ -127,7 +178,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         patientData.put("Validity", output);
         patientData.put("PatientId", currentUser);
 
-        Task<Void> appointmentList = db.collection("DoctorUser").document(docUid).collection("AppointmentList").document(currentUser)
+        Task<Void> appointmentList = db.collection("DoctorUser").document(docId).collection("AppointmentList").document(currentUser)
                 .set(patientData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -142,7 +193,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                     }
                 });
 
-        Task<Void> appointment = db.collection("User").document(currentUser).collection("Appointment").document(docUid)
+        Task<Void> appointment = db.collection("User").document(currentUser).collection("Appointment").document(docId)
                 .set(patientData)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

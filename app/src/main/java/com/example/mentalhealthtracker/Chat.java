@@ -28,10 +28,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Chat extends AppCompatActivity {
-    ImageView DoctorPatientChatBackBtn;
+    ImageView DoctorPatientChatBackBtn, DoctorPatientChatSendBtn;
     TextView DoctorPatientChatNameTxt;
     EditText DoctorPatientChatTxt;
-    ImageView DoctorPatientChatSendBtn;
     RecyclerView DoctorPatientChatRecyclerView;
     ArrayList<Messages> messagesArrayList;
     MessagesAdapter messagesAdapter;
