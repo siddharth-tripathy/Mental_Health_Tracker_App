@@ -114,6 +114,7 @@
             android:text="Appointment Date: "/>
 
         <TextView
+            android:id="@+id/AppointmentDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="NOT SCHEDULED"
@@ -133,8 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:visibility="gone">
+        android:gravity="center_horizontal">
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

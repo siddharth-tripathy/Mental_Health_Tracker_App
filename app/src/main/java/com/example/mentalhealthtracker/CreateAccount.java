@@ -58,7 +58,12 @@ public class CreateAccount extends AppCompatActivity {
 
         Intent i = getIntent();
         editMode = i.getStringExtra("EditMode");
-        uNumber = i.getStringExtra("Number");
+        String frm = i.getStringExtra("From");
+        if (frm.equals("signin"))
+        {
+            uNumber = i.getStringExtra("Number");
+        }
+
 
         //TextView
         name  = (TextView)findViewById(R.id.name);
@@ -125,9 +130,6 @@ public class CreateAccount extends AppCompatActivity {
             save.setVisibility(View.GONE);
             radioGroup.setVisibility(View.GONE);
 
-
-
-
             db.collection("User").document(currentUser)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -150,7 +152,6 @@ public class CreateAccount extends AppCompatActivity {
                 }
             }
         });
-
 
         }
 

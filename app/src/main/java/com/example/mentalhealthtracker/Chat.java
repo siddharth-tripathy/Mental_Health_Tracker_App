@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -43,6 +44,11 @@ public class Chat extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        Intent i = getIntent();
+        String ReceiverId = i.getStringExtra("SenderId");
+        String SenderId = i.getStringExtra("ReceiverId");
+        String Name = i.getStringExtra("Name");
+
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
@@ -55,13 +61,12 @@ public class Chat extends AppCompatActivity {
             }
         });
  
-        String ReceiverId = "0qPs6bVRiWheAMec8no2qo9Wuah2";
-        String SenderId = "tzO4M9oiJGc9zD3pDTalNfeWxtw2";
+
         String SenderRoom = SenderId + " " + ReceiverId;
         String ReceiverRoom = ReceiverId + " " + SenderId;
 
         DoctorPatientChatNameTxt = findViewById(R.id.DoctorPatientChatNameTxt);
-        DoctorPatientChatNameTxt.setText("Name");
+        DoctorPatientChatNameTxt.setText(Name);
 
         messagesArrayList = new ArrayList<>();
 
@@ -124,7 +129,7 @@ public class Chat extends AppCompatActivity {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 finish();
                                                 overridePendingTransition( 0, 0);
-                                                startActivity(getIntent());
+                                                startActivity(new Intent(Chat.this, Loader.class));
                                                 overridePendingTransition( 0, 0);
                                             }
                                         });

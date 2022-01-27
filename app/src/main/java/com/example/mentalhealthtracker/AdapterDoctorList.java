@@ -57,35 +57,27 @@ public class AdapterDoctorList extends RecyclerView.Adapter<AdapterDoctorList.My
             @Override
             public void onClick(View view) {
 
-
-                /*
-                SimpleDateFormat Dt = new SimpleDateFormat("dd/MM/yyyy");
-                Date vDt = null;
-                try {
-                    vDt = Dt.parse(validityDate);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                if (new Date().after(vDt))
-                {
-                    //String validity="false";
-                    Intent i = new Intent(DocList.this, DocProfile.class);
-                    i.putExtra("validity", "false");
-                    startActivity(i);
-                }
-                else
-                {
-                    //String validity="true";
-                    Intent i = new Intent(DocList.this, DocProfile.class);
-                    i.putExtra("validity", "true");
-                    startActivity(i);
-                }
-                 */
+                db.collection("DoctorUser").document(id).collection("AppointmentList").document(currentUser)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                DocumentSnapshot documentSnapshot = task.getResult();
+                                if (task.isSuccessful()){
+                                    if (documentSnapshot.exists()){
+                                        validity = "true";
+                                    }
+                                    else {
+                                        validity = "false";
+                                    }
+                                }
+                            }
+                        });
 
                 Intent a = new Intent(context, DocProfile.class);
                 a.putExtra("Name", name);
                 a.putExtra("ID", id);
-                a.putExtra("Validity", "false");
+                a.putExtra("Validity", "true");
                 context.startActivity(a);
             }
         });

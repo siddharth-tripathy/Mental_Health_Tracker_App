@@ -9,13 +9,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MentalHealthTracker">
-        <activity android:name=".TrackHistory"></activity>
+        <activity android:name=".Loader"></activity>
+        <activity android:name=".TrackHistory" />
         <activity android:name=".DocList" />
         <activity android:name=".DocProfile" />
         <activity android:name=".Chat" />
         <activity android:name=".Reads" />
         <activity android:name=".Analysis" />
-        <activity android:name=".CreateAccount"></activity>
+        <activity android:name=".CreateAccount" />
         <activity android:name=".Dashboard" />
         <activity android:name=".ManageOtp">
             <intent-filter>

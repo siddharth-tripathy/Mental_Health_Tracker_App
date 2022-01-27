@@ -5,16 +5,19 @@
     android:background="@color/white"
     android:layout_marginTop="2dp"
     android:layout_marginBottom="2dp">
-
     <TextView
         android:id="@+id/ReceiverMessage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="100dp"
         android:text="@string/app_name"
-        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textColor="@color/black"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="10dp"
         android:background="@drawable/receivershape"
-        android:padding="7dp"/>
-
+        android:paddingLeft="20dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"/>
 </RelativeLayout>

@@ -42,12 +42,11 @@ import static android.content.ContentValues.TAG;
 
 public class DocProfile extends AppCompatActivity implements PaymentResultListener {
 
-    TextView docName, temp;
+    TextView docName, temp, appointmentDate;
     ImageButton chat, video;
     String validity, uName, docId, doc_Name, uNumber;
     LinearLayout contact;
     Button bkApp;
-    String proceed;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -71,10 +70,9 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         temp = findViewById(R.id.temp);
         temp.setText(doc_Name);
 
+        appointmentDate = findViewById(R.id.AppointmentDate);
 
         //validity = "true";
-
-
 
         ////////////////////////Setting Name
         docName = findViewById(R.id.DocName);
@@ -92,8 +90,6 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                     }
                 });
 
-
-
         db.collection("User").document(currentUser)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -107,7 +103,20 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                     }
                 });
 
+        if (validity.equals("true")){
+            db.collection("User").document(currentUser).collection("Appointment").document(docId)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            if (task.isSuccessful()){
+                                DocumentSnapshot documentSnapshot = task.getResult();
 
+                                appointmentDate.setText(documentSnapshot.getString("AppointmentDate"));
+                            }
+                        }
+                    });
+        }
 
         ////////////////////Setting Visibility based on validity
         contact = findViewById(R.id.contact);
@@ -137,7 +146,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                     //object.put("description", "Test Payment");
                     object.put("theme.color", "#FF8C00");
                     object.put("currency", "INR");
-                    object.put("amount", 1000);
+                    object.put("amount", 100000);
                     object.put("prefill.contact", uNumber);
                     checkout.open(DocProfile.this, object);
                 } catch (JSONException e) {
@@ -154,6 +163,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 Intent intent = new Intent(DocProfile.this, Chat.class);
                 intent.putExtra("SenderId", currentUser);
                 intent.putExtra("ReceiverId", docId);
+                intent.putExtra("Name", uName);
                 startActivity(intent);
             }
         });
@@ -177,6 +187,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         patientData.put("Time", currentDateTimeString);
         patientData.put("Validity", output);
         patientData.put("PatientId", currentUser);
+        patientData.put("AppointmentDate", "NotScheduled");
 
         Task<Void> appointmentList = db.collection("DoctorUser").document(docId).collection("AppointmentList").document(currentUser)
                 .set(patientData)
