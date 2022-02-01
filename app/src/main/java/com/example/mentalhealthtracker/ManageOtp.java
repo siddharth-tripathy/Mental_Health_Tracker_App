@@ -128,27 +128,10 @@ public class ManageOtp extends AppCompatActivity {
                                             i.putExtra("From", "signin");
                                             i.putExtra("Number", n);
                                             startActivity(i);
-                                            finish();
                                         }
+                                        finish();
                                     }
                                 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     } else {
                         // if the code is not correct then we are
                         // displaying an error message to the user.

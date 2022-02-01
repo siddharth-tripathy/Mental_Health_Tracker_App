@@ -121,8 +121,8 @@ public class Dashboard extends AppCompatActivity {
         //Line Chart
         lineChart = findViewById(R.id.lineChart);
 
-      //  lineChart.setOnChartGestureListener(Dashboard.this);
-      //  lineChart.setOnChartValueSelectedListener(Dashboard.this);
+          //  lineChart.setOnChartGestureListener(Dashboard.this);
+          //  lineChart.setOnChartValueSelectedListener(Dashboard.this);
 
         db.collection("User").document(currentUser)
                 .collection("Anxiety")
@@ -202,7 +202,7 @@ public class Dashboard extends AppCompatActivity {
 
                                     set1.setFillAlpha(110);
 
-                                    set1.setCircleColor(Color.BLUE);
+                                    set1.setCircleColor(R.drawable.gradient_drawable);
                                     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                                     dataSets.add(set1);
 

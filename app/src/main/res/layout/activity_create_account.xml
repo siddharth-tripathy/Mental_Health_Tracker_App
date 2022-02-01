@@ -56,7 +56,7 @@ tools:context=".CreateAccount">
                 android:gravity="center_vertical">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profile_image"
+                    android:id="@+id/profileImg"
                     android:layout_width="150dp"
                     android:layout_height="150dp"
                     android:layout_gravity="center_horizontal"
@@ -64,8 +64,6 @@ tools:context=".CreateAccount">
                     app:civ_border_width="2dp"
                     app:civ_border_color="#000000"
                     android:scaleType="centerCrop"/>
-
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -137,8 +135,7 @@ tools:context=".CreateAccount">
                     android:id="@+id/calendarView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="30dp"
-                    android:visibility="gone"/>
+                    android:layout_margin="30dp"/>
 
                 <TextView
                     android:layout_width="match_parent"

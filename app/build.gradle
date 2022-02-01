@@ -41,6 +41,7 @@ dependencies {
     implementation 'com.razorpay:checkout:1.6.15'
     implementation 'com.google.firebase:firebase-firestore:24.0.0'
     implementation 'com.google.firebase:firebase-messaging:23.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
     //implementation 'com.razorpay:checkout:1.6.15'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

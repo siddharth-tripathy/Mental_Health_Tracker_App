@@ -57,27 +57,12 @@ public class AdapterDoctorList extends RecyclerView.Adapter<AdapterDoctorList.My
             @Override
             public void onClick(View view) {
 
-                db.collection("DoctorUser").document(id).collection("AppointmentList").document(currentUser)
-                        .get()
-                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                DocumentSnapshot documentSnapshot = task.getResult();
-                                if (task.isSuccessful()){
-                                    if (documentSnapshot.exists()){
-                                        validity = "true";
-                                    }
-                                    else {
-                                        validity = "false";
-                                    }
-                                }
-                            }
-                        });
+
 
                 Intent a = new Intent(context, DocProfile.class);
                 a.putExtra("Name", name);
                 a.putExtra("ID", id);
-                a.putExtra("Validity", "true");
+                a.putExtra("Validity", "false");
                 context.startActivity(a);
             }
         });
