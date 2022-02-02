@@ -107,14 +107,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:visibility="gone">
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="5dp"
-                    android:visibility="gone">
+                    app:cardElevation="5dp">
                     <ImageButton
                         android:id="@+id/videoCallBtn"
                         android:layout_width="24dp"
@@ -132,8 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="5dp"
-                    android:visibility="gone">
+                    app:cardElevation="5dp">
                     <ImageButton
                         android:id="@+id/call"
                         android:layout_width="24dp"
@@ -151,8 +150,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
-                    app:cardElevation="5dp"
-                    android:visibility="gone">
+                    app:cardElevation="5dp">
                     <ImageButton
                         android:id="@+id/chatBtn"
                         android:layout_width="24dp"

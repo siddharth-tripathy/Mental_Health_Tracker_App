@@ -48,6 +48,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
     String uName, docId, doc_Name, uNumber;
     LinearLayout contact;
     Button bkApp;
+    String AppointmentDate;
 
     Button requestAppointment;
 
@@ -92,7 +93,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
 
                             if (documentSnapshot.exists()) {
                                 call.setVisibility(View.VISIBLE);
-                                String AppointmentDate = documentSnapshot.getString("AppointmentDate");
+                                AppointmentDate = documentSnapshot.getString("AppointmentDate");
 
                                 if (AppointmentDate.equals("NotScheduled")){
                                     Log.d(TAG, "Appointment not scheduled!!!!!!");
@@ -101,8 +102,11 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                                 }
                                 else {
                                     bkApp.setVisibility(View.VISIBLE);
+                                    appointmentDate.setText(AppointmentDate);
+                                    Log.d("TAG", "Appointment Date Set");
                                     String payment = documentSnapshot.getString("Payment");
                                     if (payment.equals("true")){
+                                        Log.d("TAG", "Payment Complete");
                                         SimpleDateFormat Dt = new SimpleDateFormat("dd/MM/yyyy");
                                         Date aDt = null;
                                         try {
@@ -139,6 +143,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                                                     DocumentSnapshot document = task.getResult();
                                                     if (document.exists()){
                                                         String validityDate = document.getString("Validity");
+                                                        Log.d("TAG", "Validity Date" + validityDate);
 
                                                         SimpleDateFormat Dt = new SimpleDateFormat("dd/MM/yyyy");
                                                         Date vDt = null;
@@ -156,6 +161,8 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                                                         }
                                                         else
                                                         {
+                                                            Log.d("TAG", "Subscription Valid");
+                                                            contact.setVisibility(View.VISIBLE);
                                                             chat.setVisibility(View.VISIBLE);
                                                             video.setVisibility(View.VISIBLE);
                                                             requestAppointment.setVisibility(View.GONE);
@@ -246,8 +253,8 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
             public void onClick(View v) {
 
                 Map<String, Object> patientData = new HashMap<>();
-                patientData.put("Name(User)", uName);
-                patientData.put("Name(Doctor)", doc_Name);
+                patientData.put("NameUser", uName);
+                patientData.put("NameDoctor", doc_Name);
                 patientData.put("Email", docId);
                 patientData.put("PatientId", currentUser);
                 patientData.put("AppointmentDate", "NotScheduled");
@@ -289,6 +296,26 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
 
     @Override
     public void onPaymentSuccess(String s) {
+
+        db.collection("User").document(currentUser).collection("RequestList").document(docId)
+                .update("Payment", "true")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d("TAG", "Payment status updated!!!");
+                    }
+                });
+
+        db.collection("DoctorUser").document(docId).collection("RequestList").document(currentUser)
+                .update("Payment", "true")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        Log.d("TAG", "Payment status updated!!!");
+                    }
+                });
+
+
         //payment=true;
         String  currentDateTimeString = DateFormat.getDateTimeInstance()
                 .format(new Date());
@@ -299,13 +326,13 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         String output = sdf.format(c.getTime());
 
         Map<String, Object> patientData = new HashMap<>();
-        patientData.put("Name(User)", uName);
-        patientData.put("Name(Doctor)", doc_Name);
+        patientData.put("NameUser", uName);
+        patientData.put("NameDoctor", doc_Name);
         patientData.put("Email", docId);
         patientData.put("Time", currentDateTimeString);
         patientData.put("Validity", output);
         patientData.put("PatientId", currentUser);
-        patientData.put("AppointmentDate", "NotScheduled");
+        patientData.put("AppointmentDate", AppointmentDate);
 
         Task<Void> appointmentList = db.collection("DoctorUser").document(docId).collection("AppointmentList").document(currentUser)
                 .set(patientData)
