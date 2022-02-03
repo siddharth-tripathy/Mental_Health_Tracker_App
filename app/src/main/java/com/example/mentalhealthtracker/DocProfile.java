@@ -87,101 +87,112 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             DocumentSnapshot documentSnapshot = task.getResult();
                             //requestAppointment.setVisibility(View.GONE);
 
+
                             if (documentSnapshot.exists()) {
+                                Log.d(TAG, "Request is Sent!!!!");
+                                requestAppointment.setVisibility(View.GONE);
                                 call.setVisibility(View.VISIBLE);
                                 AppointmentDate = documentSnapshot.getString("AppointmentDate");
 
-                                if (AppointmentDate.equals("NotScheduled")){
-                                    Log.d(TAG, "Appointment not scheduled!!!!!!");
+                                if (AppointmentDate.equals("NotScheduled")) {
+                                    Log.d(TAG, "Appointment not scheduled!!!!!");
                                     appointmentDate.setText("Not Scheduled");
                                     bkApp.setVisibility(View.GONE);
-                                }
-                                else {
-                                    bkApp.setVisibility(View.VISIBLE);
+                                } else {
+                                    Log.d("TAG", "Appointment Scheduled");
                                     appointmentDate.setText(AppointmentDate);
-                                    Log.d("TAG", "Appointment Date Set");
                                     String payment = documentSnapshot.getString("Payment");
-                                    if (payment.equals("true")){
+
+
+                                    if (payment.equals("true")) {
                                         Log.d("TAG", "Payment Complete");
-                                        SimpleDateFormat Dt = new SimpleDateFormat("dd/MM/yyyy");
+                                        bkApp.setVisibility(View.GONE);
+
+                                        db.collection("User").document(currentUser).collection("AppointmentList").document(docId)
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                        if (task.isSuccessful()) {
+                                                            DocumentSnapshot document = task.getResult();
+                                                            if (document.exists()) {
+                                                                String validityDate = document.getString("Validity");
+                                                                Log.d("TAG", "Validity Date" + validityDate);
+
+                                                                SimpleDateFormat Dt = new SimpleDateFormat("dd/MM/yyyy");
+                                                                Date vDt = null;
+                                                                try {
+                                                                    vDt = Dt.parse(validityDate);
+                                                                } catch (ParseException e) {
+                                                                    e.printStackTrace();
+                                                                }
+                                                                if (new Date().after(vDt)) {
+                                                                    chat.setVisibility(View.GONE);
+                                                                    video.setVisibility(View.GONE);
+                                                                    requestAppointment.setVisibility(View.VISIBLE);
+                                                                    Log.d(TAG, "Crossed validity date");
+                                                                } else {
+                                                                    Log.d("TAG", "Subscription Valid");
+                                                                    contact.setVisibility(View.VISIBLE);
+                                                                    chat.setVisibility(View.VISIBLE);
+                                                                    video.setVisibility(View.VISIBLE);
+                                                                    requestAppointment.setVisibility(View.GONE);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                });
+
+                                        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd");
                                         Date aDt = null;
                                         try {
-                                            aDt = Dt.parse(AppointmentDate);
+                                            aDt = sdf.parse(AppointmentDate);
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         }
-                                        if (new Date().equals(aDt)){
+
+                                        if (new Date().before(aDt)) {
                                             //check timestamp
                                             //if timestamp matches make video call button visible
-                                            video.setVisibility(View.VISIBLE);
-                                        }
-                                        else {
-                                            //Not Appointment date
                                             video.setVisibility(View.GONE);
                                         }
+                                        else if (new Date().after(aDt)){
+                                            video.setVisibility(View.GONE);
+                                        }
+                                            else {
+                                            //Not Appointment date
+                                            video.setVisibility(View.VISIBLE);
+                                        }
+
+
                                         bkApp.setVisibility(View.GONE);
-                                    }
-                                    else
-                                    {
-                                        bkApp.setVisibility(View.VISIBLE);
+                                    } else {
+
+                                        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd");
+                                        Date aDt = null;
+                                        try {
+                                            aDt = sdf.parse(AppointmentDate);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+                                        Log.d("Tag", "Payment not complete!!!!");
+                                        if (new Date().after(aDt)) {
+                                            bkApp.setVisibility(View.VISIBLE);
+                                        } else {
+                                            bkApp.setVisibility(View.GONE);
+                                            requestAppointment.setVisibility(View.VISIBLE);
+                                        }
                                     }
                                 }
-
-
-                                Log.d(TAG, "document does exist");
-                                db.collection("DoctorUser").document(docId).collection("AppointmentList").document(currentUser)
-                                        .get()
-                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                            @RequiresApi(api = Build.VERSION_CODES.O)
-                                            @Override
-                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                if (task.isSuccessful()){
-                                                    DocumentSnapshot document = task.getResult();
-                                                    if (document.exists()){
-                                                        String validityDate = document.getString("Validity");
-                                                        Log.d("TAG", "Validity Date" + validityDate);
-
-                                                        SimpleDateFormat Dt = new SimpleDateFormat("dd/MM/yyyy");
-                                                        Date vDt = null;
-                                                        try {
-                                                            vDt = Dt.parse(validityDate);
-                                                        } catch (ParseException e) {
-                                                            e.printStackTrace();
-                                                        }
-                                                        if (new Date().after(vDt))
-                                                        {
-                                                            chat.setVisibility(View.GONE);
-                                                            video.setVisibility(View.GONE);
-                                                            requestAppointment.setVisibility(View.VISIBLE);
-                                                            Log.d(TAG, "Crossed validity date");
-                                                        }
-                                                        else
-                                                        {
-                                                            Log.d("TAG", "Subscription Valid");
-                                                            contact.setVisibility(View.VISIBLE);
-                                                            chat.setVisibility(View.VISIBLE);
-                                                            video.setVisibility(View.VISIBLE);
-                                                            requestAppointment.setVisibility(View.GONE);
-                                                        }
-                                                    }
-                                                    else {
-                                                        Log.d(TAG, "Appointment not scheduled yet!!!!!!!");
-                                                        requestAppointment.setVisibility(View.GONE);
-                                                    }
-                                                }
-                                            }
-                                        });
-                            }
-                            else {
+                            } else {
                                 Log.d(TAG, "Oopppssss!!!!");
                                 requestAppointment.setVisibility(View.VISIBLE);
                             }
-                        }
-                        else {
+                        } else {
                             Log.d(TAG, "Failed with: ", task.getException());
                         }
                     }
@@ -194,7 +205,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         DocumentSnapshot documentSnapshot = task.getResult();
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             doc_Name = documentSnapshot.getString("Name");
                             docName.setText(documentSnapshot.getString("Name"));
                         }
@@ -206,7 +217,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             DocumentSnapshot documentSnapshot = task.getResult();
                             uName = documentSnapshot.getString("Name");
                             uNumber = documentSnapshot.getString("Number");
@@ -252,6 +263,19 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
             @Override
             public void onClick(View v) {
 
+                Date c = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm aaa", Locale.getDefault());
+                String currentDate = df.format(c);
+
+                Date date = null;
+                try {
+                    date = df.parse(currentDate);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                Long TimeMilli = date.getTime();
+                String timeStamp = String.valueOf(TimeMilli);
+
                 Map<String, Object> patientData = new HashMap<>();
                 patientData.put("NameUser", uName);
                 patientData.put("NameDoctor", doc_Name);
@@ -260,6 +284,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 patientData.put("AppointmentDate", "NotScheduled");
                 patientData.put("Payment", "false");
                 patientData.put("Approval", "pending");
+                patientData.put("RequestTime", timeStamp);
 
                 db.collection("User").document(currentUser).collection("RequestList").document(docId)
                         .set(patientData)
@@ -276,7 +301,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                             }
                         });
 
-                Task<Void> appointmentList = db.collection("DoctorUser").document(docId).collection("RequestList").document(currentUser)
+                db.collection("DoctorUser").document(docId).collection("RequestList").document(currentUser)
                         .set(patientData)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -317,12 +342,12 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
 
 
         //payment=true;
-        String  currentDateTimeString = DateFormat.getDateTimeInstance()
+        String currentDateTimeString = DateFormat.getDateTimeInstance()
                 .format(new Date());
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar c = Calendar.getInstance();
-        c.add(Calendar.DATE, 7); // Adding 5 days
+        c.add(Calendar.DATE, 7); // Adding 7 days
         String output = sdf.format(c.getTime());
 
         Map<String, Object> patientData = new HashMap<>();

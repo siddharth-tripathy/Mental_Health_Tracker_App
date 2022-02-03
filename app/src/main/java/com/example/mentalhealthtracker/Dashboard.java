@@ -69,17 +69,14 @@ public class Dashboard extends AppCompatActivity {
 
     private ImageView profileImg, settings;
     private CardView account, yourTherapist;
-    private TextView userName, docName, trackHistory, profile, greetings;
-
+    private TextView userName, docName, trackHistory, profile, greetings, notification;
 
     //Graph
     private LineChart lineChart;
 
-
     //Firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
 
     private Dialog dialog;
     private Dialog doc_list;
@@ -107,7 +104,7 @@ public class Dashboard extends AppCompatActivity {
         userName = findViewById(R.id.userName);
         profile = findViewById(R.id.profile);
         greetings = findViewById(R.id.greetings);
-
+        notification = findViewById(R.id.notification);
 
         //Analysis list
         depression = findViewById(R.id.Depression);
@@ -412,6 +409,13 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Dashboard.this, TrackHistory.class));
+            }
+        });
+
+        notification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

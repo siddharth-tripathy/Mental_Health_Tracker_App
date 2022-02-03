@@ -90,8 +90,7 @@
                     android:id="@+id/AppointmentDate"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="NOT SCHEDULED"
-                    android:textColor="#FF0000"/>
+                    android:text="NOT SCHEDULED"/>
 
                 <ImageView
                     android:layout_width="25sp"
@@ -258,5 +257,6 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:text="Request Appointment" />
+        android:text="Request Appointment"
+        android:visibility="gone"/>
 </RelativeLayout>
