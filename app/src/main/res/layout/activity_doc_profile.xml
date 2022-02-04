@@ -106,8 +106,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal"
-                android:visibility="gone">
+                android:gravity="center_horizontal">
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -123,7 +122,8 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginLeft="30dp"
                         android:background="@drawable/ic_baseline_videocam_24"
-                        android:backgroundTint="@color/teal_700"/>
+                        android:backgroundTint="@color/teal_700"
+                        android:visibility="gone"/>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -141,7 +141,8 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginLeft="30dp"
                         android:background="@drawable/ic_baseline_call_24"
-                        android:backgroundTint="@color/teal_700"/>
+                        android:backgroundTint="@color/teal_700"
+                        android:visibility="gone"/>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -159,7 +160,8 @@
                         android:layout_marginRight="30dp"
                         android:layout_marginLeft="30dp"
                         android:background="@drawable/ic_baseline_chat_24"
-                        android:backgroundTint="@color/teal_700"/>
+                        android:backgroundTint="@color/teal_700"
+                        android:visibility="gone"/>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 

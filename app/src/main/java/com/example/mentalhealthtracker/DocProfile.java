@@ -139,34 +139,27 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                                                                     Log.d("TAG", "Subscription Valid");
                                                                     contact.setVisibility(View.VISIBLE);
                                                                     chat.setVisibility(View.VISIBLE);
-                                                                    video.setVisibility(View.VISIBLE);
                                                                     requestAppointment.setVisibility(View.GONE);
                                                                 }
                                                             }
                                                         }
                                                     }
                                                 });
+                                        Date c = Calendar.getInstance().getTime();
+                                        SimpleDateFormat df = new SimpleDateFormat("MMM dd", Locale.getDefault());
+                                        String currentDate = df.format(c);
 
-                                        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd");
-                                        Date aDt = null;
-                                        try {
-                                            aDt = sdf.parse(AppointmentDate);
-                                        } catch (ParseException e) {
-                                            e.printStackTrace();
-                                        }
-
-                                        if (new Date().before(aDt)) {
+                                        if (currentDate.compareTo(AppointmentDate)==0) {
                                             //check timestamp
                                             //if timestamp matches make video call button visible
-                                            video.setVisibility(View.GONE);
-                                        }
-                                        else if (new Date().after(aDt)){
-                                            video.setVisibility(View.GONE);
-                                        }
-                                            else {
-                                            //Not Appointment date
+                                            Log.d("TAG", "Yesss!!! Video Call"+AppointmentDate);
                                             video.setVisibility(View.VISIBLE);
                                         }
+                                        else {
+                                            Log.d("TAG", "No Video Call");
+                                            video.setVisibility(View.GONE);
+                                        }
+
 
 
                                         bkApp.setVisibility(View.GONE);
@@ -390,7 +383,6 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 });
 
         chat.setVisibility(View.VISIBLE);
-        video.setVisibility(View.VISIBLE);
         bkApp.setVisibility(View.INVISIBLE);
     }
 
