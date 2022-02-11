@@ -53,7 +53,7 @@ public class CreateAccount extends AppCompatActivity {
     CalendarView calendarView;
     RadioGroup radioGroup;
     RadioButton male, female, other;
-    Button save;
+    Button save, upload;
     CircleImageView profileImg;
     Uri url;
 
@@ -72,13 +72,16 @@ public class CreateAccount extends AppCompatActivity {
         //Checking mode
         editMode = "true";
 
-        //Intent i = getIntent();
-        //editMode = i.getStringExtra("EditMode");
-        //String frm = i.getStringExtra("From");
-        //if (frm.equals("signin"))
-        //{
-        //    uNumber = i.getStringExtra("Number");
-        //}
+        /*
+        Intent i = getIntent();
+        editMode = i.getStringExtra("EditMode");
+        String frm = i.getStringExtra("From");
+        if (frm.equals("signin") || frm.equals("dashboard"))
+        {
+            uNumber = i.getStringExtra("Number");
+        }
+
+         */
 
         //TextView
         name = (TextView) findViewById(R.id.name);
@@ -103,6 +106,7 @@ public class CreateAccount extends AppCompatActivity {
 
         //Button
         save = findViewById(R.id.save);
+        upload = findViewById(R.id.upload);
 
         //Profile Image
         profileImg = findViewById(R.id.profileImg);
@@ -142,6 +146,7 @@ public class CreateAccount extends AppCompatActivity {
             female.setVisibility(View.VISIBLE);
             other.setVisibility(View.VISIBLE);
             save.setVisibility(View.VISIBLE);
+            upload.setVisibility(View.VISIBLE);
         }
 
         if (editMode.equals("false")) {
@@ -159,6 +164,7 @@ public class CreateAccount extends AppCompatActivity {
             other.setVisibility(View.GONE);
             save.setVisibility(View.GONE);
             radioGroup.setVisibility(View.GONE);
+            upload.setVisibility(View.GONE);
 
             db.collection("User").document(currentUser)
                     .get()
@@ -182,8 +188,17 @@ public class CreateAccount extends AppCompatActivity {
                             }
                         }
                     });
-
         }
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, PICK_PROFILE_IMAGE);
+            }
+        });
 
         //Date of Birth
         eDob.setOnClickListener(new View.OnClickListener() {
@@ -264,8 +279,6 @@ public class CreateAccount extends AppCompatActivity {
 
                     //Toast.makeText(CreateAccount.this, radioButton.getText(), Toast.LENGTH_SHORT).show();
                 }
-
-
 
                 profileImg.setDrawingCacheEnabled(true);
                 profileImg.buildDrawingCache();

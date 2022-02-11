@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.mentalhealthtracker"
-        minSdkVersion 19
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -23,6 +23,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -72,4 +74,10 @@ dependencies {
 
     //Graph
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //SnackBar
+    implementation 'com.google.android.material:material:<version>'
+
+    //Jitsi Meet
+    implementation('org.jitsi.react:jitsi-meet-sdk:2.9.0') { transitive = true}
 }

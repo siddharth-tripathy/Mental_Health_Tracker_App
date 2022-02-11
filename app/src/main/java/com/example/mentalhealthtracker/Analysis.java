@@ -21,6 +21,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -77,7 +78,6 @@ public class Analysis extends AppCompatActivity {
             "Heart pounding / racing",
             "Unsteady",
             "Terrified or afraid",
-
             "Nervous",
             "Feeling of choking",
             "Hands trembling",
@@ -105,7 +105,7 @@ public class Analysis extends AppCompatActivity {
     };
 
     int flag = 0;
-    int result = 0;
+    float result = 0;
     String resultDB;
     int arLn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -146,12 +146,11 @@ public class Analysis extends AppCompatActivity {
             arLn= questions_anxiety.length;
             flag++;
         }
-        else if (testFor.equals("Anger")) {
+        else if (testFor.equals("Sleep")) {
             ques.setText(questions_sleep[flag]);
             arLn= questions_sleep.length;
             flag++;
         }
-
 
         radioGroup = findViewById(R.id.radioGroup);
         radioGroup.setOnCheckedChangeListener(
@@ -217,7 +216,7 @@ public class Analysis extends AppCompatActivity {
                 if (flag==arLn) {
                     //String  currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
                     Date c = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy hh:mm aaa", Locale.getDefault());
+                    SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.getDefault());
                     String currentDate = df.format(c);
 
                     Date date = null;
@@ -233,7 +232,23 @@ public class Analysis extends AppCompatActivity {
 
                     String test = s + " " + currentDate;
 
-                    resultDB = String.valueOf(result);
+                    if (testFor.equals("DDepression")) {
+                        result = (result/36)*100;
+                    }
+                    else if (testFor.equals("Anger")) {
+                        result = (result/80)*100;
+                    }
+                    else if (testFor.equals("Anxiety")) {
+                        result = (result/84)*100;
+                    }
+                    else if (testFor.equals("Anger")) {
+                        result = (result/36)*100;
+                    }
+
+                    DecimalFormat decimalFormat = new DecimalFormat("#");
+
+                    resultDB = decimalFormat.format(result);
+
                     Map<String, Object> resultData = new HashMap<>();
                     resultData.put(s, resultDB);
                     resultData.put("Date", timeStamp);

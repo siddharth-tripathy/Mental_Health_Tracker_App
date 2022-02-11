@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,6 +29,7 @@ public class AdapterDoctorList extends RecyclerView.Adapter<AdapterDoctorList.My
 
     Context context;
     ArrayList<ModelDoctorList> modelArrayList;
+    String bio;
 
     String validity;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -50,15 +54,30 @@ public class AdapterDoctorList extends RecyclerView.Adapter<AdapterDoctorList.My
         String name = model.Name;
         String id = model.UID;
 
-        holder.ModelDoctorListName.setText(name);
-        holder.ModelDoctorListId.setText(id);
+        db.collection("DoctorUser").document(id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful())
+                        {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            String bio = documentSnapshot.getString("Bio");
+                            holder.ModelDoctorListId.setText(bio);
+                            String profileImg = documentSnapshot.getString("Profileimage");
+                            Glide.with(context)
+                                    .load(profileImg)
+                                    .placeholder(R.drawable.profile)
+                                    .into(holder.ModelDocDp);
+                        }
+                    }
+                });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
+        holder.ModelDoctorListName.setText(name);
+
+        holder.viewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
-
                 Intent a = new Intent(context, DocProfile.class);
                 a.putExtra("Name", name);
                 a.putExtra("ID", id);
@@ -76,11 +95,15 @@ public class AdapterDoctorList extends RecyclerView.Adapter<AdapterDoctorList.My
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView ModelDoctorListName, ModelDoctorListId;
+        ImageView ModelDocDp;
+        Button viewMore;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             ModelDoctorListName = itemView.findViewById(R.id.ModelDoctorListName);
             ModelDoctorListId = itemView.findViewById(R.id.ModelDoctorListId);
+            ModelDocDp = itemView.findViewById(R.id.docDp);
+            viewMore = itemView.findViewById(R.id.viewMore);
         }
     }
 }

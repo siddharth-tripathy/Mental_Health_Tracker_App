@@ -129,6 +129,7 @@ public class Chat extends AppCompatActivity {
                                             public void onComplete(@NonNull Task<Void> task) {
                                                 finish();
                                                 overridePendingTransition( 0, 0);
+                                                startActivity(getIntent());
                                                 overridePendingTransition( 0, 0);
                                             }
                                         });

@@ -60,6 +60,7 @@ This page shares my best articles to read on topics like health, happiness, crea
 
 You’ll find interesting articles to read on topics like how to stop procrastinating as well as personal recommendations like my list of the best books to read and my minimalist travel guide. Ready to dive in? You can use the categories below to browse my best articles.
 "
+                    android:fontFamily="@font/ubuntu_light"
                     android:textSize="18sp"/>
             </ScrollView>
 
@@ -71,6 +72,7 @@ You’ll find interesting articles to read on topics like how to stop procrastin
                 android:layout_centerHorizontal="true"/>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="100dp"

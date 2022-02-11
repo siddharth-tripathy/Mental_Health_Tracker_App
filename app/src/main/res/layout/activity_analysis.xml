@@ -5,82 +5,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Analysis">
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:layout_margin="12dp">
+
         <TextView
+            android:id="@+id/headerIntro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
             android:text="Over the last 2 weeks, how often have you been bothered by any of the following problems?"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="italic" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="30dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/headerIntro"
+                android:layout_marginTop="30dp">
 
-        <TextView
-            android:id="@+id/ques"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:textColor="@color/black" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Q."
+                    android:fontFamily="@font/ubuntu_light"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="30dp"/>
+                <TextView
+                    android:id="@+id/ques"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
+            </LinearLayout>
 
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@id/bottomPg"
+            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
-            <RadioButton android:id="@+id/opt1"
-                android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/opt1"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Not at all"/>
+                android:layout_margin="10dp"
+                android:background="@drawable/border_radio_button"
+                android:text="Not at all" />
 
-            <RadioButton android:id="@+id/opt2"
-                android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/opt2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Several days"/>
+                android:layout_margin="10dp"
+                android:background="@drawable/border_radio_button"
+                android:text="Several days" />
 
-            <RadioButton android:id="@+id/opt3"
-                android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/opt3"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="More than half the days"/>
+                android:layout_margin="10dp"
+                android:background="@drawable/border_radio_button"
+                android:text="More than half the days" />
 
-            <RadioButton android:id="@+id/opt4"
-                android:layout_width="wrap_content"
+            <RadioButton
+                android:id="@+id/opt4"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/border_radio_button"
                 android:text="Nearly every day" />
         </RadioGroup>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="70dp"/>
-
         <LinearLayout
+            android:id="@+id/bottomPg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
             <Button
-                android:id="@+id/nxtQ"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Next Ques."/>
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="quit test" />
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/nxtQ"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="quit"/>
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:text="Next Ques." />
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/resultDisplay"

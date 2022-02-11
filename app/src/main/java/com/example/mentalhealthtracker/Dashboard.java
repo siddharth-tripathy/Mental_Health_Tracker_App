@@ -1,75 +1,44 @@
 package com.example.mentalhealthtracker;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
-import com.github.mikephil.charting.charts.BarChart;
+import com.bumptech.glide.Glide;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
-import com.github.mikephil.charting.listener.ChartTouchListener;
-import com.github.mikephil.charting.listener.OnChartGestureListener;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.razorpay.Checkout;
-import com.razorpay.PaymentResultListener;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
-import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
-import static android.content.ContentValues.TAG;
 
 public class Dashboard extends AppCompatActivity {
 
     private ImageView profileImg, settings;
     private CardView account, yourTherapist;
-    private TextView userName, docName, trackHistory, profile, greetings, notification;
+    private TextView userName, docName, trackHistory, profile, greetings, wwu;
 
     //Graph
     private LineChart lineChart;
@@ -78,11 +47,7 @@ public class Dashboard extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    private Dialog dialog;
-    private Dialog doc_list;
-
-    private boolean payment=false;
-    private String docUid = "0qPs6bVRiWheAMec8no2qo9Wuah2";
+    String n;
 
     private CardView depression, anxiety, anger, sleep;
 
@@ -104,7 +69,7 @@ public class Dashboard extends AppCompatActivity {
         userName = findViewById(R.id.userName);
         profile = findViewById(R.id.profile);
         greetings = findViewById(R.id.greetings);
-        notification = findViewById(R.id.notification);
+        wwu = findViewById(R.id.wwu);
 
         //Analysis list
         depression = findViewById(R.id.Depression);
@@ -199,7 +164,7 @@ public class Dashboard extends AppCompatActivity {
 
                                     set1.setFillAlpha(110);
 
-                                    set1.setCircleColor(R.drawable.gradient_drawable);
+                                    //set1.setCircleColor(R.drawable.gradient_drawable);
                                     ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                                     dataSets.add(set1);
 
@@ -412,10 +377,11 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
-        notification.setOnClickListener(new View.OnClickListener() {
+        wwu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + "example@exampl.com"));
+                startActivity(intent);
             }
         });
 
@@ -431,6 +397,13 @@ public class Dashboard extends AppCompatActivity {
 
                             if (document.exists()) {
                                 String n = document.getString("Name");
+                                String profileUrl = document.getString("ProfileImageUrl");
+                                if (profileUrl != null) {
+                                    Glide.with(Dashboard.this)
+                                            .load(profileUrl)
+                                            .placeholder(R.drawable.profile)
+                                            .into(profileImg);
+                                }
                                 userName.setText(n);
                             } else {
 
@@ -465,9 +438,23 @@ public class Dashboard extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                db.collection("User").document(currentUser)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                DocumentSnapshot documentSnapshot = task.getResult();
+                                if (documentSnapshot.exists())
+                                {
+                                    n = documentSnapshot.getString("Number");
+                                }
+                            }
+                        });
+
                 Intent intent = new Intent(Dashboard.this, CreateAccount.class);
-                intent.putExtra("editMode", "false");
+                intent.putExtra("EditMode", "false");
                 intent.putExtra("From", "dashboard");
+                intent.putExtra("Number", n);
                 startActivity(intent);
             }
         });
@@ -475,7 +462,7 @@ public class Dashboard extends AppCompatActivity {
 
 
 
-        Button articles = findViewById(R.id.articles);
+        ImageButton articles = findViewById(R.id.articles);
         articles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

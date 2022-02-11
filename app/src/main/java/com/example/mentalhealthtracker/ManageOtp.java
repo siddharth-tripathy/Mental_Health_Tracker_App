@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -40,7 +39,7 @@ public class ManageOtp extends AppCompatActivity {
     // string for storing our verification ID
     private String verificationId;
 
-    boolean doctor=false;
+    private String phone;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -50,10 +49,30 @@ public class ManageOtp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_otp);
 
+        //ProgressBar progressBar = new ProgressDialog(View.getContext());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-            startActivity(new Intent(ManageOtp.this, Dashboard.class));
-            finish();
+            String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            db.collection("User").document(currentUser)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            DocumentSnapshot documentSnapshot = task.getResult();
+                            if (documentSnapshot.exists()){
+                                startActivity(new Intent(ManageOtp.this, Dashboard.class));
+                                finish();
+                            }
+                            else{
+                                Intent i = new Intent(ManageOtp.this, CreateAccount.class);
+                                i.putExtra("EditMode","true");
+                                i.putExtra("From", "signin");
+                                i.putExtra("Number", phone);
+                                startActivity(i);
+                                finish();
+                            }
+                        }
+                    });
         }
 
         // below line is for getting instance
@@ -78,7 +97,7 @@ public class ManageOtp extends AppCompatActivity {
             } else {
                 // if the text field is not empty we are calling our
                 // send OTP method for getting OTP from Firebase.
-                String phone = "+91" + edtPhone.getText().toString();
+                phone = "+91" + edtPhone.getText().toString();
                 sendVerificationCode(phone);
             }
         });
@@ -121,12 +140,12 @@ public class ManageOtp extends AppCompatActivity {
                                         if (documentSnapshot.exists()) {
                                             startActivity(new Intent(ManageOtp.this, Dashboard.class));
                                         } else {
-                                            String n = edtPhone.getText().toString();
+                                            //String n = edtPhone.getText().toString();
                                             Toast.makeText(getApplicationContext(),"Sign In Sucessfull", Toast.LENGTH_LONG).show();
                                             Intent i = new Intent(ManageOtp.this, CreateAccount.class);
                                             i.putExtra("EditMode","true");
                                             i.putExtra("From", "signin");
-                                            i.putExtra("Number", n);
+                                            i.putExtra("Number", phone);
                                             startActivity(i);
                                         }
                                         finish();
