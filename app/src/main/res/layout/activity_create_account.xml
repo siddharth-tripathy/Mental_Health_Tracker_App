@@ -6,79 +6,100 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 tools:context=".CreateAccount">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp">
+
             <ImageView
                 android:id="@+id/DoctorProfileBackBtn"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
-                android:src="@drawable/arrow_back"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginStart="10dp"
+                android:src="@drawable/arrow_back" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:fontFamily="@font/ubuntu_light"
                 android:text="Your Profile"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/edit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="EDIT"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
-                android:textSize="18sp"
                 android:padding="10dp"
-                android:textColor="@color/teal_700"/>
+                android:text="EDIT"
+                android:textColor="#0080ff"
+                android:textSize="18sp" />
         </RelativeLayout>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="vertical">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/profileImg"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    app:civ_border_width="2dp"
-                    app:civ_border_color="#000000"
-                    android:scaleType="centerCrop"/>
+                    android:layout_margin="10dp"
+                    android:elevation="5dp"
+                    app:cardCornerRadius="30dp">
+
+                    <ImageView
+                        android:id="@+id/profileImg"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:scaleType="centerCrop"
+                        app:civ_border_color="#000000"
+                        app:civ_border_width="2dp" />
+                </androidx.cardview.widget.CardView>
 
                 <Button
                     android:id="@+id/upload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Upload"/>
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/button_pressed"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:text="Upload"
+                    android:textColor="@color/white" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="20dp">
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:orientation="vertical">
+
                     <TextView
                         android:id="@+id/name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_light"
                         android:gravity="center"
                         android:padding="15dp"
                         android:text="NAME"
@@ -89,148 +110,119 @@ tools:context=".CreateAccount">
                         android:id="@+id/editName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:gravity="center"
-                        android:ems="10"
                         android:background="@drawable/custom_input"
-                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:fontFamily="@font/ubuntu_light"
+                        android:gravity="center"
                         android:hint="Enter Name"
-                        android:visibility="gone"/>
+                        android:inputType="textPersonName"
+                        android:padding="10dp"
+                        android:visibility="gone" />
                 </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DATE OF BIRTH"
-                    android:textStyle="bold"
-                    android:textSize="16sp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"/>
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:text="DATE OF BIRTH"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/DoB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/custom_input"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="20dp"
                     android:drawablePadding="12dp"
+                    android:fontFamily="@font/ubuntu_light"
                     android:hint="--/--/----"
-                    android:textSize="18sp"/>
+                    android:paddingStart="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="12dp"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/EDoB"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:paddingTop="12dp"
-                    android:paddingBottom="12dp"
-                    android:drawablePadding="12dp"
                     android:background="@drawable/custom_input"
-                    android:hint="--/--/----"
-                    android:textSize="18sp"
                     android:drawableEnd="@drawable/ic_baseline_keyboard_arrow_down_24"
-                    android:visibility="gone"/>
-
-                <CalendarView
-                    android:id="@+id/calendarView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="30dp"/>
+                    android:drawablePadding="12dp"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:hint="--/--/----"
+                    android:paddingStart="12dp"
+                    android:paddingTop="12dp"
+                    android:paddingEnd="12dp"
+                    android:paddingBottom="12dp"
+                    android:textSize="18sp"
+                    android:visibility="gone" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
-                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/ubuntu_light"
                     android:text="GENDER"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/gender"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="5dp"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/ubuntu_light"
                     android:text="GENDER"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp">
-                    <!--
+                    android:layout_marginRight="20dp"
+                    android:orientation="horizontal">
+
                     <RadioGroup
                         android:id="@+id/groupradio"
-                        android:layout_marginLeft="10dp"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
-                        <RadioButton
-                            android:id="@+id/male"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="5dp"
-                            android:text="Male"
-                            android:onClick="onRadioButtonClicked"/>
-
-                        <RadioButton
-                            android:id="@+id/female"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="5dp"
-                            android:text="Female"
-                            android:onClick="onRadioButtonClicked"/>
-
-                        <RadioButton
-                            android:id="@+id/other"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:layout_margin="5dp"
-                            android:text="Other"
-                            android:onClick="onRadioButtonClicked"/>
-                    </RadioGroup>
-                    -->
-                    <RadioGroup
-                        android:layout_marginBottom="150dp"
-                        android:id="@+id/groupradio"
+                        android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_marginBottom="50dp">
                         <!-- In RadioGroup create the 1 Radio Button-->
                         <!-- like this we will add some more Radio Button-->
                         <RadioButton
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
                             android:id="@+id/male"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/ubuntu_light"
                             android:text="Male"
-                            android:textSize="20dp"/>
+                            android:textSize="20dp" />
 
                         <RadioButton
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
                             android:id="@+id/female"
-                            android:text="Female"
-                            android:textSize="20dp"/>
-
-                        <RadioButton
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/ubuntu_light"
+                            android:text="Female"
+                            android:textSize="20dp" />
+
+                        <RadioButton
                             android:id="@+id/other"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/ubuntu_light"
                             android:text="Other"
-                            android:textSize="20dp"/>
+                            android:textSize="20dp" />
                     </RadioGroup>
                 </LinearLayout>
             </LinearLayout>
@@ -244,6 +236,8 @@ tools:context=".CreateAccount">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="SAVE"
+        android:textColor="@color/white"
+        android:background="@drawable/button_style"
         android:layout_margin="20dp"
         android:layout_alignParentBottom="true"
         android:visibility="gone"/>

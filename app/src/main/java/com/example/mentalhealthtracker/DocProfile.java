@@ -140,6 +140,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                             if (documentSnapshot.exists()) {
                                 Log.d(TAG, "Request is Sent!!!!");
                                 requestAppointment.setVisibility(View.GONE);
+                                requestAppointmentBtn.setVisibility(View.GONE);
                                 appDt.setVisibility(View.VISIBLE);
                                 call.setVisibility(View.VISIBLE);
                                 AppointmentDate = documentSnapshot.getString("AppointmentDate");
@@ -253,11 +254,12 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                                     }
                                 }
                             } else {
-                                Log.d(TAG, "Oopppssss!!!!");
+                                Log.d(TAG, "Request not sent!!!");
                                 requestAppointmentBtn.setVisibility(View.VISIBLE);
                                 progressDialog.dismiss();
                             }
-                        } else {
+                        }
+                        else {
                             Log.d(TAG, "Failed with: ", task.getException());
                         }
                     }
@@ -358,7 +360,8 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 Intent intent = new Intent(DocProfile.this, Chat.class);
                 intent.putExtra("SenderId", currentUser);
                 intent.putExtra("ReceiverId", docId);
-                intent.putExtra("Name", uName);
+                intent.putExtra("Name", doc_Name);
+                intent.putExtra("Profile", profileImg);
                 startActivity(intent);
             }
         });

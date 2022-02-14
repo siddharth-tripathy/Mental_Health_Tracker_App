@@ -118,18 +118,21 @@
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="5dp">
-                    <ImageButton
-                        android:id="@+id/videoCallBtn"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:background="@drawable/ic_baseline_videocam_24"
-                        android:onClick="videoLaunch"
-                        android:backgroundTint="@color/teal_700"
-                        android:visibility="gone"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#308000FF">
+                        <ImageButton
+                            android:id="@+id/videoCallBtn"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginLeft="30dp"
+                            android:background="@drawable/video_logo"
+                            android:onClick="videoLaunch"/>
+                    </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -138,17 +141,20 @@
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="5dp">
-                    <ImageButton
-                        android:id="@+id/call"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:background="@drawable/ic_baseline_call_24"
-                        android:backgroundTint="@color/teal_700"
-                        android:visibility="gone"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#352B6E17">
+                        <ImageButton
+                            android:id="@+id/call"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginLeft="30dp"
+                            android:background="@drawable/phone_logo"/>
+                    </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
@@ -157,17 +163,20 @@
                     android:layout_margin="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardElevation="5dp">
-                    <ImageButton
-                        android:id="@+id/chatBtn"
-                        android:layout_width="24dp"
-                        android:layout_height="24dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:background="@drawable/ic_baseline_chat_24"
-                        android:backgroundTint="@color/teal_700"
-                        android:visibility="gone"/>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#300072ff">
+                        <ImageButton
+                            android:id="@+id/chatBtn"
+                            android:layout_width="24dp"
+                            android:layout_height="24dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginLeft="30dp"
+                            android:background="@drawable/chat_logo"/>
+                    </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
 
@@ -339,6 +348,8 @@
         android:layout_margin="20dp"
         android:text="Pay and confirm Appointment"
         android:background="@drawable/button_style"
+        android:textColor="@color/white"
+        android:textStyle="bold"
         android:fontFamily="@font/ubuntu_light"
         android:layout_alignParentBottom="true"
         android:visibility="gone"/>

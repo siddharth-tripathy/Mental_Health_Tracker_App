@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="success">#FF00FF00</color>
     <color name="failure">#FFD21404</color>
+    <color name="primaryB">#FF0072ff</color>
+    <color name="primary_b">#FF00c6ff</color>
 </resources>

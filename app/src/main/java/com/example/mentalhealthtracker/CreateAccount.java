@@ -1,17 +1,21 @@
 package com.example.mentalhealthtracker;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -24,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 //import com.google.android.gms.tasks.Task;
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,6 +43,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -50,11 +56,10 @@ public class CreateAccount extends AppCompatActivity {
     String editMode, uName, uDOB, uGender, eGender, uNumber;
     TextView name, age, edit, dob, eDob, gender;
     EditText eName, eAge;
-    CalendarView calendarView;
     RadioGroup radioGroup;
     RadioButton male, female, other;
     Button save, upload;
-    CircleImageView profileImg;
+    ImageView profileImg;
     Uri url;
 
     //Firebase
@@ -72,7 +77,6 @@ public class CreateAccount extends AppCompatActivity {
         //Checking mode
         editMode = "true";
 
-        /*
         Intent i = getIntent();
         editMode = i.getStringExtra("EditMode");
         String frm = i.getStringExtra("From");
@@ -81,7 +85,6 @@ public class CreateAccount extends AppCompatActivity {
             uNumber = i.getStringExtra("Number");
         }
 
-         */
 
         //TextView
         name = (TextView) findViewById(R.id.name);
@@ -92,9 +95,6 @@ public class CreateAccount extends AppCompatActivity {
 
         //EditText
         eName = findViewById(R.id.editName);
-
-        //Calendar
-        calendarView = findViewById(R.id.calendarView);
 
         //RadioGroup
         radioGroup = findViewById(R.id.groupradio);
@@ -115,7 +115,8 @@ public class CreateAccount extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(CreateAccount.this, CreateAccount.class);
-                i.putExtra("editMode", "true");
+                i.putExtra("EditMode", "true");
+                i.putExtra("From", "edit");
                 startActivity(i);
             }
         });
@@ -179,9 +180,14 @@ public class CreateAccount extends AppCompatActivity {
                                     String n = document.getString("Name");
                                     String db = document.getString("DateOfBirth");
                                     String g = document.getString("Gender");
+                                    String p = document.getString("ProfileImageUrl");
                                     name.setText(n);
                                     dob.setText(db);
                                     gender.setText(g);
+                                    Glide.with(CreateAccount.this)
+                                            .load(p)
+                                            .placeholder(R.drawable.profile)
+                                            .into(profileImg);
                                 } else {
                                     startActivity(new Intent(CreateAccount.this, TrackHistory.class));
                                 }
@@ -203,37 +209,10 @@ public class CreateAccount extends AppCompatActivity {
         //Date of Birth
         eDob.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                calendarView.setVisibility(View.VISIBLE);
+            public void onClick(View v)  {
+                handleDateButton();
             }
         });
-
-        calendarView.setOnDateChangeListener(
-                new CalendarView
-                        .OnDateChangeListener() {
-                    @Override
-
-                    // In this Listener have one method
-                    // and in this method we will
-                    // get the value of DAYS, MONTH, YEARS
-                    public void onSelectedDayChange(
-                            @NonNull CalendarView view,
-                            int year,
-                            int month,
-                            int dayOfMonth) {
-
-                        // Store the value of date with
-                        // format in String type Variable
-                        // Add 1 in month because month
-                        // index is start with 0
-                        String Date
-                                = dayOfMonth + "-"
-                                + (month + 1) + "-" + year;
-
-                        // set this date in TextView for Display
-                        eDob.setText(Date);
-                    }
-                });
 
         //Gender
         radioGroup.setOnCheckedChangeListener(
@@ -335,6 +314,31 @@ public class CreateAccount extends AppCompatActivity {
             }
         });
     }
+
+    private void handleDateButton() {
+        Calendar calendar = Calendar.getInstance();
+        int YEAR = calendar.get(Calendar.YEAR);
+        int MONTH = calendar.get(Calendar.MONTH);
+        int DATE = calendar.get(Calendar.DATE);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker datePicker, int year, int month, int date) {
+
+                Calendar calendar1 = Calendar.getInstance();
+                calendar1.set(Calendar.YEAR, year);
+                calendar1.set(Calendar.MONTH, month);
+                calendar1.set(Calendar.DATE, date);
+                String dateText = DateFormat.format("EEEE, MMM d, yyyy", calendar1).toString();
+
+                eDob.setText(dateText);
+            }
+        }, YEAR, MONTH, DATE);
+
+        datePickerDialog.show();
+    }
+
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == Activity.RESULT_OK) {

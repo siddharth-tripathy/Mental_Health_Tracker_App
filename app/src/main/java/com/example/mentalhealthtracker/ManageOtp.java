@@ -1,5 +1,6 @@
 package com.example.mentalhealthtracker;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -43,6 +44,7 @@ public class ManageOtp extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +54,13 @@ public class ManageOtp extends AppCompatActivity {
         //ProgressBar progressBar = new ProgressDialog(View.getContext());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
+            progressDialog = new ProgressDialog(this);
+
+            progressDialog.setMessage("Please Wait...");
+            progressDialog.setTitle("Loading...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+
             String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
             db.collection("User").document(currentUser)
                     .get()
@@ -61,6 +70,7 @@ public class ManageOtp extends AppCompatActivity {
                             DocumentSnapshot documentSnapshot = task.getResult();
                             if (documentSnapshot.exists()){
                                 startActivity(new Intent(ManageOtp.this, Dashboard.class));
+                                progressDialog.dismiss();
                                 finish();
                             }
                             else{
@@ -69,6 +79,7 @@ public class ManageOtp extends AppCompatActivity {
                                 i.putExtra("From", "signin");
                                 i.putExtra("Number", phone);
                                 startActivity(i);
+                                progressDialog.dismiss();
                                 finish();
                             }
                         }

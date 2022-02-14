@@ -1,16 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Loader">
+    android:orientation="vertical"
+    tools:context=".Loader"
+    android:background="#FFFFFF">
 
     <pl.droidsonroids.gif.GifImageView
-        android:id="@+id/gifImageView"
+        android:id="@+id/mindGIF"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/loader"
-        android:layout_centerInParent="true"/>
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_alignParentStart="true"
+        android:src="@drawable/brain2" />
 
-</RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/gradient_loader"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/quote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="30dp"
+                android:fontFamily="@font/cagliostro"
+                android:gravity="center"
+                android:text="Quote"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+</LinearLayout>

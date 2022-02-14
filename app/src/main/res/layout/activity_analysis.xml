@@ -18,39 +18,50 @@
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="20dp"
+            android:fontFamily="@font/ubuntu_light"
             android:text="Over the last 2 weeks, how often have you been bothered by any of the following problems?"
             android:textColor="@color/black"
             android:textSize="14sp"
             android:textStyle="italic" />
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            app:cardCornerRadius="20dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="35dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_above="@id/radioGroup"
+            android:layout_below="@id/headerIntro">
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_below="@id/headerIntro"
-                android:layout_marginTop="30dp">
-
+                android:gravity="center_vertical"
+                android:background="#200072ff">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Q."
                     android:fontFamily="@font/ubuntu_light"
+                    android:text="Q. "
+                    android:textColor="@color/black"
                     android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/ques"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
                     android:fontFamily="@font/ubuntu_light"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
         <RadioGroup
             android:id="@+id/radioGroup"
@@ -65,7 +76,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:padding="15dp"
                 android:background="@drawable/border_radio_button"
+                android:fontFamily="@font/ubuntu_light"
                 android:text="Not at all" />
 
             <RadioButton
@@ -73,7 +86,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:padding="15dp"
                 android:background="@drawable/border_radio_button"
+                android:fontFamily="@font/ubuntu_light"
                 android:text="Several days" />
 
             <RadioButton
@@ -81,7 +96,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:padding="15dp"
                 android:background="@drawable/border_radio_button"
+                android:fontFamily="@font/ubuntu_light"
                 android:text="More than half the days" />
 
             <RadioButton
@@ -89,7 +106,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
+                android:padding="15dp"
                 android:background="@drawable/border_radio_button"
+                android:fontFamily="@font/ubuntu_light"
                 android:text="Nearly every day" />
         </RadioGroup>
 
@@ -104,8 +123,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
+                android:background="@color/failure"
                 android:layout_weight="1"
-                android:text="quit test" />
+                android:text="quit test"
+                android:textColor="@color/white"
+                android:fontFamily="@font/ubuntu_light"/>
 
             <Button
                 android:id="@+id/nxtQ"
@@ -114,7 +136,10 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="Next Ques." />
+                android:text="Next Ques."
+                android:fontFamily="@font/ubuntu_light"
+                android:textColor="@color/white"
+                android:background="@drawable/button_pressed"/>
         </LinearLayout>
     </RelativeLayout>
 
@@ -131,6 +156,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:text="-"
+            android:fontFamily="@font/ubuntu_light"
             android:textSize="48sp"
             android:gravity="center"/>
     </LinearLayout>

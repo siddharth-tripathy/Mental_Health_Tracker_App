@@ -39,6 +39,7 @@ public class Dashboard extends AppCompatActivity {
     private ImageView profileImg, settings;
     private CardView account, yourTherapist;
     private TextView userName, docName, trackHistory, profile, greetings, wwu;
+    String n;
 
     //Graph
     private LineChart lineChart;
@@ -47,11 +48,9 @@ public class Dashboard extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-    String n;
-
     private CardView depression, anxiety, anger, sleep;
 
-    private Button analysis;
+    private Button analysis, doc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +62,6 @@ public class Dashboard extends AppCompatActivity {
         settings = findViewById(R.id.settings);
 
         analysis = findViewById(R.id.analysis);
-
 
         //TextView
         userName = findViewById(R.id.userName);
@@ -396,7 +394,7 @@ public class Dashboard extends AppCompatActivity {
                             DocumentSnapshot document = task.getResult();
 
                             if (document.exists()) {
-                                String n = document.getString("Name");
+                                n = document.getString("Name");
                                 String profileUrl = document.getString("ProfileImageUrl");
                                 if (profileUrl != null) {
                                     Glide.with(Dashboard.this)
@@ -469,11 +467,13 @@ public class Dashboard extends AppCompatActivity {
                 Dashboard.this.startActivity(new Intent(Dashboard.this, Reads.class));
             }
         });
-        FloatingActionButton doc = findViewById(R.id.doc);
+        doc = findViewById(R.id.doc);
         doc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Dashboard.this, DocList.class));
+                Intent i = new Intent(Dashboard.this, DocList.class);
+                i.putExtra("Name", n);
+                startActivity(i);
             }
         });
     }

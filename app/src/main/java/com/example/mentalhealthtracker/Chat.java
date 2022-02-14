@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Chat extends AppCompatActivity {
-    ImageView DoctorPatientChatBackBtn, DoctorPatientChatSendBtn;
+    ImageView DoctorPatientChatBackBtn, DoctorPatientChatSendBtn, profile;
     TextView DoctorPatientChatNameTxt;
     EditText DoctorPatientChatTxt;
     RecyclerView DoctorPatientChatRecyclerView;
@@ -48,6 +49,14 @@ public class Chat extends AppCompatActivity {
         String ReceiverId = i.getStringExtra("SenderId");
         String SenderId = i.getStringExtra("ReceiverId");
         String Name = i.getStringExtra("Name");
+        String Profile = i.getStringExtra("Profile");
+
+        profile = findViewById(R.id.profile);
+
+        Glide.with(Chat.this)
+                .load(Profile)
+                .placeholder(R.drawable.profile)
+                .into(profile);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

@@ -112,8 +112,6 @@ public class Analysis extends AppCompatActivity {
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     RadioGroup radioGroup;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

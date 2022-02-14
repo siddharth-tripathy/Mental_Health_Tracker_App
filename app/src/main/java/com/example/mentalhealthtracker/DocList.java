@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -54,6 +55,11 @@ public class DocList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_list);
+
+
+        Intent i = getIntent();
+        TextView nameUser = findViewById(R.id.nameUser);
+        nameUser.setText(i.getStringExtra("Name"));
 
 
 
