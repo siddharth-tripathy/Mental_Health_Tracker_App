@@ -80,4 +80,7 @@ dependencies {
 
     //Jitsi Meet
     implementation('org.jitsi.react:jitsi-meet-sdk:2.9.0') { transitive = true}
+
+    //App Restart
+    implementation 'com.jakewharton:process-phoenix:2.0.0'
 }

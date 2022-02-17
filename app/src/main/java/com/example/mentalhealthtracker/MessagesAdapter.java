@@ -36,8 +36,6 @@ public class MessagesAdapter extends RecyclerView.Adapter {
             View view = LayoutInflater.from(context).inflate(R.layout.receiverlayout,parent,false);
             return new ReceiverViewHolder(view);
         }
-
-
     }
 
     @Override

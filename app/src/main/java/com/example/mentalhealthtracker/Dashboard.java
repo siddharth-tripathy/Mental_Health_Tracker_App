@@ -59,7 +59,7 @@ public class Dashboard extends AppCompatActivity {
 
         //DashboardTop
         profileImg =findViewById(R.id.profileImage);
-        settings = findViewById(R.id.settings);
+        settings = findViewById(R.id.sett);
 
         analysis = findViewById(R.id.analysis);
 
@@ -81,11 +81,7 @@ public class Dashboard extends AppCompatActivity {
         //Line Chart
         lineChart = findViewById(R.id.lineChart);
 
-          //  lineChart.setOnChartGestureListener(Dashboard.this);
-          //  lineChart.setOnChartValueSelectedListener(Dashboard.this);
-
-        db.collection("User").document(currentUser)
-                .collection("Anxiety")
+        db.collection("User").document(currentUser).collection("Anxiety")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -101,7 +97,7 @@ public class Dashboard extends AppCompatActivity {
 
                             List<String> list = new ArrayList<>();
                             for (DocumentSnapshot documentSnapshot : task.getResult()) {
-                                String s = documentSnapshot.getString("DDepression");
+                                String s = documentSnapshot.getString("Anxiety");
 
                                 yValues.add(new Entry(i, Float.parseFloat(s)));
                                 i++;
@@ -135,8 +131,7 @@ public class Dashboard extends AppCompatActivity {
 
                 db = FirebaseFirestore.getInstance();
 
-                db.collection("User").document(currentUser)
-                        .collection("DDepression")
+                db.collection("User").document(currentUser).collection("DDepression")
                         .get()
                         .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                             @Override
@@ -150,13 +145,15 @@ public class Dashboard extends AppCompatActivity {
 
                                     int i = 1;
 
-                                    List<String> list = new ArrayList<>();
+                                    //List<String> list = new ArrayList<>();
                                     for (DocumentSnapshot documentSnapshot : task.getResult()) {
                                         String s = documentSnapshot.getString("DDepression");
 
                                         yValues.add(new Entry(i, Float.parseFloat(s)));
                                         i++;
                                     }
+
+
 
                                     LineDataSet set1 = new LineDataSet(yValues, "Data Set 1");
 
@@ -361,10 +358,11 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                account.setVisibility(View.VISIBLE);
+                startActivity(new Intent(Dashboard.this, Settings.class));
             }
         });
 

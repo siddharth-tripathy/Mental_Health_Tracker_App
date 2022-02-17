@@ -62,6 +62,16 @@
                         android:text="Psychiatrist"
                         android:fontFamily="@font/ubuntu_light"
                         android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:text="Fee - \u20B91000"
+                        android:textColor="@color/primaryB"
+                        android:fontFamily="@font/ubuntu_light"
+                        android:textSize="12sp" />
+
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
@@ -82,10 +92,6 @@
 
             <!---->
 
-
-
-
-
             <LinearLayout
                 android:id="@+id/appdt"
                 android:layout_width="match_parent"
@@ -104,7 +110,6 @@
                     android:layout_height="wrap_content"
                     android:text="NOT SCHEDULED"/>
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/contact"
@@ -131,7 +136,8 @@
                             android:layout_marginRight="30dp"
                             android:layout_marginLeft="30dp"
                             android:background="@drawable/video_logo"
-                            android:onClick="videoLaunch"/>
+                            android:onClick="videoLaunch"
+                            android:visibility="gone"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -153,7 +159,8 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="30dp"
                             android:layout_marginLeft="30dp"
-                            android:background="@drawable/phone_logo"/>
+                            android:background="@drawable/phone_logo"
+                            android:visibility="gone"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -205,6 +212,7 @@
                                 android:layout_height="100dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/patienticon"/>
+
                             <TextView
                                 android:id="@+id/totalPatients"
                                 android:layout_width="match_parent"
@@ -214,6 +222,7 @@
                                 android:fontFamily="@font/ubuntu_light"
                                 android:textStyle="bold"
                                 android:gravity="center"/>
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -222,7 +231,6 @@
                                 android:fontFamily="@font/ubuntu_light"
                                 android:gravity="center"/>
                         </LinearLayout>
-
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
@@ -242,6 +250,7 @@
                                 android:layout_height="100dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/exp"/>
+
                             <TextView
                                 android:id="@+id/exp"
                                 android:layout_width="match_parent"
@@ -251,6 +260,7 @@
                                 android:textColor="@color/black"
                                 android:fontFamily="@font/ubuntu_light"
                                 android:gravity="center"/>
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -283,6 +293,7 @@
                                 android:layout_height="100dp"
                                 android:layout_gravity="center"
                                 android:src="@drawable/location"/>
+
                             <TextView
                                 android:id="@+id/loc"
                                 android:layout_width="match_parent"
@@ -292,6 +303,7 @@
                                 android:fontFamily="@font/ubuntu_light"
                                 android:textStyle="bold"
                                 android:gravity="center"/>
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -331,7 +343,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="View Certificate"
                                 android:fontFamily="@font/ubuntu_light"
-                                android:textColor="#698BB2"
+                                android:textColor="@color/primaryB"
                                 android:gravity="center"/>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
@@ -342,7 +354,7 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/bkApp"
+        android:id="@+id/bkAppShow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
@@ -408,6 +420,144 @@
 
                 <TextView
                     android:id="@+id/requestAppointment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="CONTINUE"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:textColor="#00c6ff"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/requestAppointmentSentMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/reqMsgSent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_alignParentTop="true"
+                android:text="Your Request for Appointment is sent.\nYou will be contacted soon for Appointment Confirmation."
+                android:fontFamily="@font/ubuntu_light"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:layout_below="@id/reqMsgSent"
+                android:layout_alignParentEnd="true">
+
+                <TextView
+                    android:id="@+id/requestApp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="OK"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:textColor="#00c6ff"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/paynconfirmMsg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/payMsg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_alignParentTop="true"
+                android:text="A request for Appointment will be sent to the Doctor.
+            \n\nDo you want to continue"
+                android:fontFamily="@font/ubuntu_light"
+                android:textSize="16sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                android:layout_below="@id/payMsg"
+                android:layout_alignParentEnd="true">
+                <TextView
+                    android:id="@+id/bkAppointmentCancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="CANCEL"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/bkApp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"

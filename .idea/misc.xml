@@ -16,6 +16,7 @@
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/drawable/button_pressed.xml" value="0.16" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/drawable/button_radius.xml" value="0.16" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/drawable/button_style.xml" value="0.16" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/drawable/gradient_btn.xml" value="0.16" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/drawable/ic_baseline_call_24.xml" value="0.19" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/drawable/ic_baseline_keyboard_arrow_down_24.xml" value="0.19" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.19" />
@@ -30,24 +31,30 @@
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_analysis.xml" value="0.144" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_chat.xml" value="0.1" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_create_account.xml" value="0.176" />
-        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_dashboard.xml" value="0.176" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_dashboard.xml" value="0.12" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_doc_list.xml" value="0.11372950819672131" />
-        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_doc_profile.xml" value="0.2" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_doc_profile.xml" value="0.176" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_loader.xml" value="0.136" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_manage_otp.xml" value="0.12260928961748634" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_notification.xml" value="0.16114864864864864" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_payment_history.xml" value="0.16114864864864864" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_reads.xml" value="0.1" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_request_appointment.xml" value="0.16114864864864864" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_settings.xml" value="0.176" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_splash_screen.xml" value="0.1" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/activity_track_history.xml" value="0.128" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/app_bar_main.xml" value="0.1" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/appointment_date_faq.xml" value="0.1" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/content_main.xml" value="0.1" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/depression_result_layout.xml" value="0.16114864864864864" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/doc_list.xml" value="0.1" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/doctor_list_layout.xml" value="0.16799999999999998" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/fragment_gallery.xml" value="0.11407103825136612" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/fragment_home.xml" value="0.11407103825136612" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/nav_header_main.xml" value="0.16114864864864864" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/notification_layout.xml" value="0.16114864864864864" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/payment_history.xml" value="0.16114864864864864" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/progress_report_layout.xml" value="0.16114864864864864" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/receiverlayout.xml" value="0.12260928961748634" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/senderlayout.xml" value="0.1" />
       </map>

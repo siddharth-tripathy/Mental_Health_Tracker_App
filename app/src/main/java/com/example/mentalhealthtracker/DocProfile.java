@@ -68,14 +68,14 @@ import static android.content.ContentValues.TAG;
 
 public class DocProfile extends AppCompatActivity implements PaymentResultListener {
 
-    TextView docName, temp, appointmentDate, requestAppointment, requestAppointmentCancel;
+    TextView docName, temp, appointmentDate, requestAppointment, requestAppointmentCancel, requestApp, bkApp, bkAppointmentCancel;
     TextView dBio, dLocation, dExp, dPatients;
     ImageButton chat, video, call;
     String uName, docId, doc_Name, uNumber, docBio;
     LinearLayout contact, appDt;
-    Button bkApp;
+    Button bkAppShow;
     String AppointmentDate, AppointmentTime;
-    CardView requestAppointmentMsg;
+    CardView requestAppointmentMsg, requestAppointmentSentMsg, paynconfirmMsg;
     CoordinatorLayout coordinatorLayout;
     Button requestAppointmentBtn;
     ImageView docProfileImg;
@@ -117,7 +117,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         appDt = findViewById(R.id.appdt);
 
         contact = findViewById(R.id.contact);
-        bkApp = findViewById(R.id.bkApp);
+
 
         chat = findViewById(R.id.chatBtn);
         call = findViewById(R.id.call);
@@ -127,6 +127,13 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         requestAppointmentBtn = findViewById(R.id.requestAppointmentBtn);
         requestAppointmentCancel = findViewById(R.id.requestAppointmentCancel);
         requestAppointmentMsg = findViewById(R.id.requestAppointmentMsg);
+        requestAppointmentSentMsg = findViewById(R.id.requestAppointmentSentMsg);
+        requestApp = findViewById(R.id.requestApp);
+
+        bkApp = findViewById(R.id.bkApp);
+        bkAppShow = findViewById(R.id.bkAppShow);
+        paynconfirmMsg = findViewById(R.id.paynconfirmMsg);
+        bkAppointmentCancel = findViewById(R.id.bkAppointmentCancel);
 
         db.collection("DoctorUser").document(docId).collection("RequestList").document(currentUser)
                 .get()
@@ -217,7 +224,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                                                     }
                                                 });
                                         Date c = Calendar.getInstance().getTime();
-                                        SimpleDateFormat df = new SimpleDateFormat("MMM dd", Locale.getDefault());
+                                        SimpleDateFormat df = new SimpleDateFormat("MMMM dd", Locale.getDefault());
                                         String currentDate = df.format(c);
 
                                         if (currentDate.compareTo(AppointmentDate)==0) {
@@ -235,7 +242,6 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
 
                                         bkApp.setVisibility(View.GONE);
                                     } else {
-
                                         SimpleDateFormat sdf = new SimpleDateFormat("MMM dd");
                                         Date aDt = null;
                                         try {
@@ -253,9 +259,11 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                                         progressDialog.dismiss();
                                     }
                                 }
-                            } else {
+                            }
+                            else {
                                 Log.d(TAG, "Request not sent!!!");
                                 requestAppointmentBtn.setVisibility(View.VISIBLE);
+                                contact.setVisibility(View.GONE);
                                 progressDialog.dismiss();
                             }
                         }
@@ -350,6 +358,23 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+
+        bkAppShow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bkAppShow.setVisibility(View.GONE);
+                paynconfirmMsg.setVisibility(View.VISIBLE);
+            }
+        });
+
+        bkAppointmentCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bkAppShow.setVisibility(View.VISIBLE);
+                paynconfirmMsg.setVisibility(View.GONE);
             }
         });
 
@@ -463,7 +488,16 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                         });
 
                 requestAppointmentMsg.setVisibility(View.GONE);
+                requestAppointmentSentMsg.setVisibility(View.VISIBLE);
                 //Context contextView = findViewById(R.id.context_view)
+            }
+        });
+
+        requestApp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestAppointmentSentMsg.setVisibility(View.GONE);
+
                 Snackbar snackbar = Snackbar.make(v, "Request Sent!!!", Snackbar.LENGTH_SHORT);
                 View sbView = snackbar.getView();
                 sbView.setBackgroundColor(getResources().getColor(R.color.teal_700));
@@ -477,30 +511,52 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         View v = findViewById(R.id.bkApp);
         Snackbar snackbar = Snackbar.make(v, "PAYMENT SUCCESSFUL!!!", Snackbar.LENGTH_SHORT);
         View sbView = snackbar.getView();
-        sbView.setBackgroundColor(getResources().getColor(R.color.success));
-        snackbar.setTextColor(getResources().getColor(R.color.black));
+        sbView.setBackgroundColor(getResources().getColor(R.color.primaryB));
+        snackbar.setTextColor(getResources().getColor(R.color.white));
         snackbar.show();
 
-        db.collection("User").document(currentUser).collection("RequestList").document(docId)
-                .update("Payment", "true")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+        String currentDateTimeString = DateFormat.getDateTimeInstance()
+                .format(new Date());
+
+        Map<String, Object> paymentData = new HashMap<>();
+        paymentData.put("PaymentDate", currentDateTimeString);
+        paymentData.put("PaymentAmount", "Rs. 1000");
+        paymentData.put("PaidTo", doc_Name);
+        paymentData.put("PaidBy", uName);
+        paymentData.put("PaymentStatus", "Successful");
+
+        db.collection("User").document(currentUser).collection("PaymentHistory")
+                .add(paymentData)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                    public void onSuccess(@NonNull DocumentReference documentReference) {
                         Log.d("TAG", "Payment status updated!!!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG", "Error updating data!!!");
                     }
                 });
 
-        db.collection("DoctorUser").document(docId).collection("RequestList").document(currentUser)
-                .update("Payment", "true")
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
+        db.collection("DoctorUser").document(docId).collection("PaymentHistory")
+                .add(paymentData)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
+                    public void onSuccess(@NonNull DocumentReference documentReference) {
                         Log.d("TAG", "Payment status updated!!!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG", "Error updating data!!!");
                     }
                 });
 
         //Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("MMM dd h:mm a", Locale.getDefault());
+        SimpleDateFormat df = new SimpleDateFormat("MMMM dd h:mm a", Locale.getDefault());
         //String currentDate = df.format(c);
 
         Date date = null;
@@ -513,8 +569,6 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         String timeStamp = String.valueOf(TimeMilli);
 
         //payment=true;
-        String currentDateTimeString = DateFormat.getDateTimeInstance()
-                .format(new Date());
 
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar cal = Calendar.getInstance();
@@ -593,6 +647,45 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         sbView.setBackgroundColor(getResources().getColor(R.color.failure));
         snackbar.setTextColor(getResources().getColor(R.color.white));
         snackbar.show();
+
+        String currentDateTimeString = DateFormat.getDateTimeInstance()
+                .format(new Date());
+
+        Map<String, Object> paymentData = new HashMap<>();
+        paymentData.put("PaymentDate", currentDateTimeString);
+        paymentData.put("PaymentAmount", "Rs. 1000");
+        paymentData.put("PaidTo", doc_Name);
+        paymentData.put("PaymentStatus", "Failure");
+
+        db.collection("User").document(currentUser).collection("PaymentHistory")
+                .add(paymentData)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(@NonNull DocumentReference documentReference) {
+                        Log.d("TAG", "Payment status updated!!!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG", "Error updating data!!!");
+                    }
+                });
+
+        db.collection("DoctorUser").document(docId).collection("PaymentHistory")
+                .add(paymentData)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(@NonNull DocumentReference documentReference) {
+                        Log.d("TAG", "Payment status updated!!!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d("TAG", "Error updating data!!!");
+                    }
+                });
     }
 
     private void requestPermission(){

@@ -39,7 +39,10 @@
         android:layout_below="@id/idEdtPhoneNumber"
         android:layout_margin="10dp"
         android:text="Get OTP"
-        android:textAllCaps="false" />
+        android:fontFamily="@font/ubuntu_light"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/gradient_btn"/>
 
     <!--Edittext for getting otp from user-->
     <EditText
@@ -60,5 +63,8 @@
         android:layout_below="@id/idEdtOtp"
         android:layout_margin="10dp"
         android:text="Verify OTP"
-        android:textAllCaps="false" />
+        android:fontFamily="@font/ubuntu_light"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/gradient_btn" />
 </LinearLayout>

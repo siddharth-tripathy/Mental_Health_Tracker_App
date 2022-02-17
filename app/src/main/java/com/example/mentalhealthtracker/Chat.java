@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -28,6 +29,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Chat extends AppCompatActivity {
     ImageView DoctorPatientChatBackBtn, DoctorPatientChatSendBtn, profile;
@@ -86,9 +89,7 @@ public class Chat extends AppCompatActivity {
         messagesAdapter = new MessagesAdapter(Chat.this, messagesArrayList);
         DoctorPatientChatRecyclerView.setAdapter(messagesAdapter);
 
-        firebaseFirestore.collection("Chats")
-                .document(SenderRoom)
-                .collection("messages").orderBy("timeStamp", Query.Direction.ASCENDING)
+        firebaseFirestore.collection("Chats").document(SenderRoom).collection("messages").orderBy("timeStamp", Query.Direction.ASCENDING)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -97,6 +98,7 @@ public class Chat extends AppCompatActivity {
                             messagesArrayList.clear();
                             messagesAdapter.notifyDataSetChanged();
                             for (DocumentSnapshot document : task.getResult()){
+
                                 Messages messages = document.toObject(Messages.class);
                                 messagesArrayList.add(messages);
                                 messagesAdapter.notifyDataSetChanged();
@@ -142,6 +144,26 @@ public class Chat extends AppCompatActivity {
                                                 overridePendingTransition( 0, 0);
                                             }
                                         });
+                            }
+                        });
+
+                Long tsLong = System.currentTimeMillis()/1000;
+                String ts = tsLong.toString();
+
+                Map<String, Object> chatData = new HashMap<>();
+                chatData.put("By", ReceiverId);
+                chatData.put("TimeStemp", ts);
+
+
+
+                firebaseFirestore.collection("DoctorUser").document(SenderId).collection("ChatList").document(ReceiverId)
+                        .set(chatData)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    Log.d("TAG", "timestamp set");
+                                }
                             }
                         });
             }
