@@ -25,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -56,6 +57,11 @@ public class Dashboard extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(firebaseUser == null){
+            finish();
+        }
 
         //DashboardTop
         profileImg =findViewById(R.id.profileImage);
@@ -418,7 +424,7 @@ public class Dashboard extends AppCompatActivity {
         } else if(hour >= 17 && hour < 21){
             greetings.setText("Good Evening");
         } else if(hour >= 21 && hour < 24){
-            greetings.setText("Good Night");
+            greetings.setText("Good Evening");
         } else {
             greetings.setText("Good Morning");
         }

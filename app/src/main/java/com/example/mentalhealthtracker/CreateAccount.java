@@ -297,7 +297,13 @@ public class CreateAccount extends AppCompatActivity {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         Log.d("TAG", "DocumentSnapshot successfully written!");
-                                                        startActivity(new Intent(CreateAccount.this, Dashboard.class));
+                                                        Toast.makeText(CreateAccount.this, "Saving Data", Toast.LENGTH_LONG).show();
+                                                        if (frm.equals("signin")){
+                                                            startActivity(new Intent(CreateAccount.this, Intro.class));
+                                                        }
+                                                        else {
+                                                            startActivity(new Intent(CreateAccount.this, Dashboard.class));
+                                                        }
                                                         finish();
                                                     }
                                                 })

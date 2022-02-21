@@ -42,6 +42,8 @@ public class ManageOtp extends AppCompatActivity {
 
     private String phone;
 
+    private Button verifyOTPBtn;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     ProgressDialog progressDialog;
@@ -94,7 +96,7 @@ public class ManageOtp extends AppCompatActivity {
         edtPhone = findViewById(R.id.idEdtPhoneNumber);
         edtOTP = findViewById(R.id.idEdtOtp);
         // buttons for generating OTP and verifying OTP
-        Button verifyOTPBtn = findViewById(R.id.idBtnVerify);
+        verifyOTPBtn = findViewById(R.id.idBtnVerify);
         Button generateOTPBtn = findViewById(R.id.idBtnGetOtp);
 
         // setting onclick listener for generate OTP button.
@@ -110,6 +112,8 @@ public class ManageOtp extends AppCompatActivity {
                 // send OTP method for getting OTP from Firebase.
                 phone = "+91" + edtPhone.getText().toString();
                 sendVerificationCode(phone);
+                Toast.makeText(ManageOtp.this, "Processing Request...", Toast.LENGTH_LONG).show();
+
             }
         });
 
@@ -127,6 +131,7 @@ public class ManageOtp extends AppCompatActivity {
                     // if OTP field is not empty calling
                     // method to verify the OTP.
                     ManageOtp.this.verifyCode(edtOTP.getText().toString());
+                    Toast.makeText(ManageOtp.this, "Verifying OTP", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -159,6 +164,7 @@ public class ManageOtp extends AppCompatActivity {
                                             i.putExtra("Number", phone);
                                             startActivity(i);
                                         }
+                                        //progressDialog.dismiss();
                                         finish();
                                     }
                                 });
@@ -200,6 +206,9 @@ public class ManageOtp extends AppCompatActivity {
             // we are storing in our string
             // which we have already created.
             verificationId = s;
+            edtOTP.setVisibility(View.VISIBLE);
+            verifyOTPBtn.setVisibility(View.VISIBLE);
+            //progressDialog.dismiss();
         }
 
         // this method is called when user
@@ -243,6 +252,11 @@ public class ManageOtp extends AppCompatActivity {
         // calling sign in method.
         signInWithCredential(credential);
     }
-
-
+    @Override
+    public void onBackPressed(){
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+    }
 }

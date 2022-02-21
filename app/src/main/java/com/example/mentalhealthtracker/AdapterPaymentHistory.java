@@ -43,6 +43,7 @@ public class AdapterPaymentHistory extends RecyclerView.Adapter<AdapterPaymentHi
         if (PaymentStatus.equals("Failure"))
         {
             holder.st.setText("    FAILURE");
+            holder.st.setBackgroundColor(R.drawable.gradient_red);
         }
 
         holder.amt.setText(PaymentAmount);

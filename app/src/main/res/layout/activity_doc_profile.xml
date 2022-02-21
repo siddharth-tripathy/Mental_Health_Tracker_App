@@ -182,7 +182,8 @@
                             android:layout_marginBottom="10dp"
                             android:layout_marginRight="30dp"
                             android:layout_marginLeft="30dp"
-                            android:background="@drawable/chat_logo"/>
+                            android:background="@drawable/chat_logo"
+                            android:visibility="gone"/>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
@@ -535,7 +536,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
                 android:layout_alignParentTop="true"
-                android:text="A request for Appointment will be sent to the Doctor.
+                android:text="Payment of Rs.1000
             \n\nDo you want to continue"
                 android:fontFamily="@font/ubuntu_light"
                 android:textSize="16sp"/>

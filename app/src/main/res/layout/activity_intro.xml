@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Intro">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:layout_margin="20dp"
+        android:text="Welcome to Mental Health Tracker
+        \nYour All in one solution for your mental health fitness
+        \n\n\nYou Can:
+        \nUse Analysis to Track your mental health status
+        \nBook Appointment with Doctors
+        \nUse the Reads section to learn and improve your Mental Health"
+        android:textSize="20sp"
+        android:fontFamily="@font/ubuntu_light"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Get Started"
+        android:textColor="@color/white"
+        android:background="@drawable/button_style"/>
+</LinearLayout>

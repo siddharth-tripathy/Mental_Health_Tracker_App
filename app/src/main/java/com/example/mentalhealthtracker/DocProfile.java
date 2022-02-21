@@ -251,7 +251,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                                         }
                                         Log.d("Tag", "Payment not complete!!!!");
                                         if (new Date().after(aDt)) {
-                                            bkApp.setVisibility(View.VISIBLE);
+                                            bkAppShow.setVisibility(View.VISIBLE);
                                         } else {
                                             bkApp.setVisibility(View.GONE);
                                             requestAppointment.setVisibility(View.VISIBLE);

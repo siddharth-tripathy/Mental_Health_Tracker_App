@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -98,7 +99,6 @@ public class Chat extends AppCompatActivity {
                             messagesArrayList.clear();
                             messagesAdapter.notifyDataSetChanged();
                             for (DocumentSnapshot document : task.getResult()){
-
                                 Messages messages = document.toObject(Messages.class);
                                 messagesArrayList.add(messages);
                                 messagesAdapter.notifyDataSetChanged();
@@ -152,11 +152,20 @@ public class Chat extends AppCompatActivity {
 
                 Map<String, Object> chatData = new HashMap<>();
                 chatData.put("By", ReceiverId);
-                chatData.put("TimeStemp", ts);
+                chatData.put("TimeStamp", ts);
 
+                firebaseFirestore.collection("DoctorUser").document(SenderId).collection("UnreadChatsList").document(ReceiverId)
+                        .set(chatData)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    Log.d("TAG", "timestamp set");
+                                }
+                            }
+                        });
 
-
-                firebaseFirestore.collection("DoctorUser").document(SenderId).collection("ChatList").document(ReceiverId)
+                firebaseFirestore.collection("DoctorUser").document(SenderId).collection("AllChatsList").document(ReceiverId)
                         .set(chatData)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override

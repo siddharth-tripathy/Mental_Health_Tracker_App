@@ -7,13 +7,11 @@
     android:orientation="vertical"
     android:background="#FFFFFF"
     tools:context=".Dashboard">
-
     <RelativeLayout
         android:id="@+id/dashboardTop"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true">
-
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,7 +19,6 @@
             android:elevation="5dp"
             android:padding="10dp"
             app:cardCornerRadius="25dp">
-
             <ImageView
                 android:id="@+id/profileImage"
                 android:layout_width="70dp"
