@@ -118,7 +118,6 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
 
         contact = findViewById(R.id.contact);
 
-
         chat = findViewById(R.id.chatBtn);
         call = findViewById(R.id.call);
         video = findViewById(R.id.videoCallBtn);
@@ -634,7 +633,6 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                         Log.d("TAG", "Request status updated!!!");
                     }
                 });
-
         chat.setVisibility(View.VISIBLE);
         bkApp.setVisibility(View.INVISIBLE);
     }
