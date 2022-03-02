@@ -39,7 +39,7 @@ public class Dashboard extends AppCompatActivity {
 
     private ImageView profileImg, settings;
     private CardView account, yourTherapist;
-    private TextView userName, docName, trackHistory, profile, greetings, wwu;
+    private TextView userName, docName, trackHistory, profile, greetings, wwu, articlesMore;
     String n;
 
     //Graph
@@ -74,6 +74,7 @@ public class Dashboard extends AppCompatActivity {
         profile = findViewById(R.id.profile);
         greetings = findViewById(R.id.greetings);
         wwu = findViewById(R.id.wwu);
+        articlesMore = findViewById(R.id.articlesMore);
 
         //Analysis list
         depression = findViewById(R.id.Depression);
@@ -125,7 +126,7 @@ public class Dashboard extends AppCompatActivity {
         depression.setBackground(getResources().getDrawable(R.drawable.border));
         anxiety.setBackground(getResources().getDrawable(R.drawable.no_border));
         anger.setBackground(getResources().getDrawable(R.drawable.no_border));
-        sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
+//        sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
 
         depression.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,7 +134,7 @@ public class Dashboard extends AppCompatActivity {
                 depression.setBackground(getResources().getDrawable(R.drawable.border));
                 anxiety.setBackground(getResources().getDrawable(R.drawable.no_border));
                 anger.setBackground(getResources().getDrawable(R.drawable.no_border));
-                sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
+               // sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
 
                 db = FirebaseFirestore.getInstance();
 
@@ -195,7 +196,7 @@ public class Dashboard extends AppCompatActivity {
                 anxiety.setBackground(getResources().getDrawable(R.drawable.border));
                 depression.setBackground(getResources().getDrawable(R.drawable.no_border));
                 anger.setBackground(getResources().getDrawable(R.drawable.no_border));
-                sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
+       //         sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
 
                 db.collection("User").document(currentUser)
                         .collection("Anxiety")
@@ -254,7 +255,7 @@ public class Dashboard extends AppCompatActivity {
                 anger.setBackground(getResources().getDrawable(R.drawable.border));
                 anxiety.setBackground(getResources().getDrawable(R.drawable.no_border));
                 depression.setBackground(getResources().getDrawable(R.drawable.no_border));
-                sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
+           //     sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
 
                 db.collection("User").document(currentUser)
                         .collection("Anger")
@@ -306,10 +307,11 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+        /*
         sleep.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sleep.setBackground(getResources().getDrawable(R.drawable.border));
+             //   sleep.setBackground(getResources().getDrawable(R.drawable.border));
                 anxiety.setBackground(getResources().getDrawable(R.drawable.no_border));
                 anger.setBackground(getResources().getDrawable(R.drawable.no_border));
                 depression.setBackground(getResources().getDrawable(R.drawable.no_border));
@@ -364,6 +366,8 @@ public class Dashboard extends AppCompatActivity {
             }
         });
 
+
+         */
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -464,7 +468,7 @@ public class Dashboard extends AppCompatActivity {
 
 
 
-        ImageButton articles = findViewById(R.id.articles);
+        ImageView articles = findViewById(R.id.articles);
         articles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -480,5 +484,14 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(i);
             }
         });
+
+        articlesMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Dashboard.this, Articles.class));
+            }
+        });
+
+
     }
 }

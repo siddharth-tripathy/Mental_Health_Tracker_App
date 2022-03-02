@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MentalHealthTracker">
         <activity
+            android:name=".AppointmentHistory"
+            android:exported="false" />
+        <activity
+            android:name=".Articles"
+            android:exported="false" />
+        <activity
             android:name=".Intro"
             android:exported="false" />
         <activity

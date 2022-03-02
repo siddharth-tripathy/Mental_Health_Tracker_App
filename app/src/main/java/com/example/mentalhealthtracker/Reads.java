@@ -28,13 +28,10 @@ public class Reads extends AppCompatActivity {
                 playAudio("https://firebasestorage.googleapis.com/v0/b/mental-health-tracker-bf577.appspot.com/o/f4966aa0-89bf-11ec-be00-2df43e5f9fa9.mp3?alt=media&token=f9d22bc5-f3a0-4756-ac0a-456e957b92a2");
             }
         });
-
     }
-    private void playAudio(String audioUrl)
-    {
 
-        if(haveNetwork())
-        {
+    private void playAudio(String audioUrl) {
+        if(haveNetwork()) {
             Toast.makeText(getApplicationContext(), "Loading Audio", Toast.LENGTH_LONG).show();
             mediaPlayer = new MediaPlayer();
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
@@ -43,13 +40,11 @@ public class Reads extends AppCompatActivity {
                 mediaPlayer.prepare();
                 mediaPlayer.start();
             }
-            catch (IOException e)
-            {
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
-        else
-        {
+        else {
             Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_LONG).show();
         }
     }

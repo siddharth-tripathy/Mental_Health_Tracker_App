@@ -173,15 +173,6 @@
                         android:padding="10dp"/>
 
                     <TextView
-                        android:id="@+id/th"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Analysis History"
-                        android:fontFamily="@font/ubuntu_light"
-                        android:textSize="18sp"
-                        android:padding="10dp"/>
-
-                    <TextView
                         android:id="@+id/ah"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

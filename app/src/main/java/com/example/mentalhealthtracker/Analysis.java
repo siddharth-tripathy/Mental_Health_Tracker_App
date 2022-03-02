@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -126,7 +127,7 @@ public class Analysis extends AppCompatActivity {
         RadioButton r4 = findViewById(R.id.opt4);
         TextView ques = findViewById(R.id.ques);
         Button nxtQ = findViewById(R.id.nxtQ);
-        LinearLayout resultDisplay = findViewById(R.id.resultDisplay);
+        RelativeLayout resultDisplay = findViewById(R.id.resultDisplay);
         TextView resD = findViewById(R.id.resD);
 
         if (testFor.equals("DDepression")) {

@@ -76,9 +76,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:padding="15dp"
                 android:background="@drawable/border_radio_button"
                 android:fontFamily="@font/ubuntu_light"
+                android:minHeight="48dp"
+                android:padding="15dp"
                 android:text="Not at all" />
 
             <RadioButton
@@ -86,9 +87,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:padding="15dp"
                 android:background="@drawable/border_radio_button"
                 android:fontFamily="@font/ubuntu_light"
+                android:minHeight="48dp"
+                android:padding="15dp"
                 android:text="Several days" />
 
             <RadioButton
@@ -143,7 +145,7 @@
         </LinearLayout>
     </RelativeLayout>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/resultDisplay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -151,13 +153,32 @@
         android:background="@color/white"
         android:visibility="gone">
         <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="Your Score is..."
+            android:textSize="24sp"
+            android:fontFamily="@font/ubuntu_light"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/resD"/>
+
+        <TextView
             android:id="@+id/resD"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="-"
+            android:textColor="@color/primaryB"
             android:fontFamily="@font/ubuntu_light"
             android:textSize="48sp"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="'Since the questionnaire relies on patient self-report, all responses should be verified by the clinician.'"
+            android:textSize="14sp"
+            android:layout_alignParentBottom="true"
             android:gravity="center"/>
-    </LinearLayout>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
