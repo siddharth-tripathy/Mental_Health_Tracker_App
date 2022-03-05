@@ -2,6 +2,7 @@ package com.example.mentalhealthtracker;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -54,18 +55,20 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class CreateAccount extends AppCompatActivity {
     String editMode, uName, uDOB, uGender, eGender, uNumber;
-    TextView name, age, edit, dob, eDob, gender;
+    TextView name, age, dob, eDob, gender;
     EditText eName, eAge;
     RadioGroup radioGroup;
     RadioButton male, female, other;
     Button save, upload;
     ImageView profileImg;
     Uri url;
+    ImageView edit;
 
     //Firebase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     StorageReference storageReference = FirebaseStorage.getInstance().getReference();
+    ProgressDialog progressDialog;
 
     private static final int PICK_PROFILE_IMAGE = 100;
 
@@ -214,32 +217,20 @@ public class CreateAccount extends AppCompatActivity {
             }
         });
 
-        //Gender
-        radioGroup.setOnCheckedChangeListener(
-                new RadioGroup
-                        .OnCheckedChangeListener() {
-                    @Override
-
-                    // The flow will come here when
-                    // any of the radio buttons in the radioGroup
-                    // has been clicked
-
-                    // Check which radio button has been clicked
-                    public void onCheckedChanged(RadioGroup group,
-                                                 int checkedId) {
-
-                        // Get the selected Radio Button
-                        RadioButton
-                                radioButton
-                                = (RadioButton) group
-                                .findViewById(checkedId);
-                    }
-                });
-
         //Saving data to database
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+                progressDialog = new ProgressDialog(CreateAccount.this);
+
+                progressDialog.setMessage("Please Wait...");
+                progressDialog.setTitle("Saving Data...");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
+
+
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 if (selectedId == -1) {
                     Toast.makeText(CreateAccount.this,
@@ -305,12 +296,14 @@ public class CreateAccount extends AppCompatActivity {
                                                             startActivity(new Intent(CreateAccount.this, Dashboard.class));
                                                         }
                                                         finish();
+                                                        progressDialog.dismiss();
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
                                                         Log.w("TAG", "Error writing document", e);
+                                                        progressDialog.dismiss();
                                                     }
                                                 });
                                     }

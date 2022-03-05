@@ -4,9 +4,13 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,13 +26,14 @@ import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class ManageOtp extends AppCompatActivity {
+public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     // variable for FirebaseAuth class
     private FirebaseAuth mAuth;
@@ -44,14 +49,27 @@ public class ManageOtp extends AppCompatActivity {
 
     private Button verifyOTPBtn;
 
+    Spinner spinner_join_as;
+
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     ProgressDialog progressDialog;
+    String joinAs, newUser="false";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_otp);
+
+        //Spinner
+        spinner_join_as = findViewById(R.id.spinner_join_as);
+        ArrayAdapter<CharSequence> adapterC = ArrayAdapter.createFromResource(this, R.array.spinner_join_options, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapterC.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinner_join_as.setAdapter(adapterC);
+        spinner_join_as.setOnItemSelectedListener(this);
+
 
         //ProgressBar progressBar = new ProgressDialog(View.getContext());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -70,10 +88,8 @@ public class ManageOtp extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                             DocumentSnapshot documentSnapshot = task.getResult();
-                            if (documentSnapshot.exists()){
+                             if (documentSnapshot.exists()){
                                 startActivity(new Intent(ManageOtp.this, Dashboard.class));
-                                progressDialog.dismiss();
-                                finish();
                             }
                             else{
                                 Intent i = new Intent(ManageOtp.this, CreateAccount.class);
@@ -81,9 +97,9 @@ public class ManageOtp extends AppCompatActivity {
                                 i.putExtra("From", "signin");
                                 i.putExtra("Number", phone);
                                 startActivity(i);
-                                progressDialog.dismiss();
-                                finish();
                             }
+                            progressDialog.dismiss();
+                            finish();
                         }
                     });
         }
@@ -103,6 +119,8 @@ public class ManageOtp extends AppCompatActivity {
         generateOTPBtn.setOnClickListener(v -> {
             // below line is for checking weather the user
             // has entered his mobile number or not.
+            phone = "+91" + edtPhone.getText().toString();
+
             if (TextUtils.isEmpty(edtPhone.getText().toString())) {
                 // when mobile number text field is empty
                 // displaying a toast message.
@@ -110,10 +128,71 @@ public class ManageOtp extends AppCompatActivity {
             } else {
                 // if the text field is not empty we are calling our
                 // send OTP method for getting OTP from Firebase.
-                phone = "+91" + edtPhone.getText().toString();
-                sendVerificationCode(phone);
-                Toast.makeText(ManageOtp.this, "Processing Request...", Toast.LENGTH_LONG).show();
+                if (joinAs.equals("Doctor")){
+                    db.collection("DoctorUser").whereEqualTo("Number", phone)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    QuerySnapshot documentSnapshot = task.getResult();
+                                    if (documentSnapshot.isEmpty()){
+                                        db.collection("User").whereEqualTo("Number",phone)
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        QuerySnapshot querySnapshot = task.getResult();
+                                                        if (querySnapshot.isEmpty()){
+                                                            //sendVerificationCode(phone);
+                                                            Toast.makeText(ManageOtp.this, "Processing Request...", Toast.LENGTH_LONG).show();
+                                                            newUser = "true";
+                                                        }
+                                                        else {
+                                                            Toast.makeText(ManageOtp.this, "Enter Correct Credentials", Toast.LENGTH_LONG).show();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                    else {
+                                        //sendVerificationCode(phone);
+                                        Toast.makeText(ManageOtp.this, "Processing Request...", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                }
 
+                if (joinAs.equals("Patient")){
+                    db.collection("User").whereEqualTo("Number", phone)
+                            .get()
+                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                    QuerySnapshot documentSnapshot = task.getResult();
+                                    if (documentSnapshot.isEmpty()){
+                                        db.collection("DoctorUser").whereEqualTo("Number",phone)
+                                                .get()
+                                                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        QuerySnapshot querySnapshot = task.getResult();
+                                                        if (querySnapshot.isEmpty()){
+                                                            newUser = "true";
+                                                            sendVerificationCode(phone);
+                                                            Toast.makeText(ManageOtp.this, "Processing Request..."+newUser+"Doc", Toast.LENGTH_LONG).show();
+                                                        }
+                                                        else {
+                                                            Toast.makeText(ManageOtp.this, "Enter Correct Credentials"+newUser, Toast.LENGTH_LONG).show();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                    else {
+                                        sendVerificationCode(phone);
+                                        Toast.makeText(ManageOtp.this, "Processing Request...", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            });
+                }
             }
         });
 
@@ -147,22 +226,70 @@ public class ManageOtp extends AppCompatActivity {
                         // we are sending our user to new activity.
 
                         String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        db.collection("User").document(currentUser)
+                        String val= "User";
+                        if (joinAs.equals("Doctor")){
+                            val = "DoctorUser";
+                        }
+                        else if (joinAs.equals("Patient")){
+                            val = "User";
+                        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        db.collection(val).document(currentUser)
                                 .get()
                                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                         DocumentSnapshot documentSnapshot = task.getResult();
                                         if (documentSnapshot.exists()) {
-                                            startActivity(new Intent(ManageOtp.this, Dashboard.class));
+                                            if (joinAs.equals("Doctor")){
+                                                startActivity(new Intent(ManageOtp.this, Reads.class));
+                                            }
+                                            else if (joinAs.equals("Patient")){
+                                                startActivity(new Intent(ManageOtp.this, Dashboard.class));
+                                            }
                                         } else {
-                                            //String n = edtPhone.getText().toString();
-                                            Toast.makeText(getApplicationContext(),"Sign In Sucessfull", Toast.LENGTH_LONG).show();
-                                            Intent i = new Intent(ManageOtp.this, CreateAccount.class);
-                                            i.putExtra("EditMode","true");
-                                            i.putExtra("From", "signin");
-                                            i.putExtra("Number", phone);
-                                            startActivity(i);
+                                            if (joinAs.equals("Patient")){
+                                                //String n = edtPhone.getText().toString();
+                                                Toast.makeText(getApplicationContext(),"Patient", Toast.LENGTH_LONG).show();
+                                                Intent i = new Intent(ManageOtp.this, CreateAccount.class);
+                                                i.putExtra("EditMode","true");
+                                                i.putExtra("From", "signin");
+                                                i.putExtra("Number", phone);
+                                                startActivity(i);
+                                            }
+                                            else if(joinAs.equals("Doctors")){
+                                                //TO BE COMPLETED
+                                                Toast.makeText(getApplicationContext(),"Doctor", Toast.LENGTH_LONG).show();
+                                            }
                                         }
                                         //progressDialog.dismiss();
                                         finish();
@@ -205,6 +332,8 @@ public class ManageOtp extends AppCompatActivity {
             // contains a unique id which
             // we are storing in our string
             // which we have already created.
+            spinner_join_as.setEnabled(false);
+            edtPhone.setEnabled(false);
             verificationId = s;
             edtOTP.setVisibility(View.VISIBLE);
             verifyOTPBtn.setVisibility(View.VISIBLE);
@@ -258,5 +387,16 @@ public class ManageOtp extends AppCompatActivity {
         a.addCategory(Intent.CATEGORY_HOME);
         a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(a);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        joinAs = adapterView.getItemAtPosition(i).toString();
+        Log.d("TAG", joinAs);
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

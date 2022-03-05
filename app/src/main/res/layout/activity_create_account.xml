@@ -4,6 +4,7 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
+    android:background="@drawable/background"
 android:orientation="vertical"
 tools:context=".CreateAccount">
 
@@ -24,34 +25,34 @@ tools:context=".CreateAccount">
                 android:layout_height="25dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="20dp"
                 android:src="@drawable/arrow_back" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:fontFamily="@font/ubuntu_light"
-                android:text="Your Profile"
-                android:textSize="18sp" />
-
-            <TextView
+            <ImageView
                 android:id="@+id/edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="20dp"
                 android:padding="10dp"
-                android:text="EDIT"
-                android:textColor="#0080ff"
-                android:textSize="18sp" />
+                android:src="@drawable/edit_icon" />
         </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/ubuntu_light"
+            android:text="Your Profile"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="50dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -80,7 +81,7 @@ tools:context=".CreateAccount">
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="10dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/button_pressed"
                     android:fontFamily="@font/ubuntu_light"
                     android:text="Upload"
@@ -196,36 +197,43 @@ tools:context=".CreateAccount">
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="50dp">
+                        android:layout_marginBottom="100dp"
+                        android:orientation="horizontal">
                         <!-- In RadioGroup create the 1 Radio Button-->
                         <!-- like this we will add some more Radio Button-->
                         <RadioButton
                             android:id="@+id/male"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/ubuntu_light"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_margin="20dp"
+                            android:background="@drawable/male"
                             android:text="Male"
-                            android:textSize="20dp" />
+                            android:textColor="#00FFFFFF"
+                            android:buttonTint="#00FFFFFF" />
 
                         <RadioButton
                             android:id="@+id/female"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/ubuntu_light"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_margin="20dp"
                             android:text="Female"
-                            android:textSize="20dp" />
+                            android:textSize="8sp"
+                            android:textColor="#00FFFFFF"
+                            android:background="@drawable/female"
+                            android:buttonTint="#00FFFFFF" />
 
                         <RadioButton
                             android:id="@+id/other"
-                            android:layout_width="fill_parent"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/ubuntu_light"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_margin="20dp"
                             android:text="Other"
-                            android:textSize="20dp" />
+                            android:textColor="#00FFFFFF"
+                            android:background="@drawable/other"
+                            android:buttonTint="#00FFFFFF" />
                     </RadioGroup>
                 </LinearLayout>
             </LinearLayout>
-
         </ScrollView>
 
     </LinearLayout>
