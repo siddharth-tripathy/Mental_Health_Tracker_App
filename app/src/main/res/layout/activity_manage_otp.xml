@@ -138,7 +138,8 @@
                 android:importantForAutofill="no"
                 android:inputType="phone"
                 android:padding="10dp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:visibility="gone"/>
 
             <!--button for verifying user OTP-->
             <Button
@@ -154,7 +155,8 @@
                 android:fontFamily="@font/ubuntu_light"
                 android:text="Verify OTP"
                 android:textColor="@color/white"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

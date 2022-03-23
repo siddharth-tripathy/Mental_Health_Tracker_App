@@ -67,7 +67,6 @@ import java.util.Map;
 import static android.content.ContentValues.TAG;
 
 public class DocProfile extends AppCompatActivity implements PaymentResultListener {
-
     TextView docName, temp, appointmentDate, requestAppointment, requestAppointmentCancel, requestApp, bkApp, bkAppointmentCancel;
     TextView dBio, dLocation, dExp, dPatients;
     ImageButton chat, video, call;
@@ -84,7 +83,6 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     String bio, exp, location, patients, profileImg;
     ProgressDialog progressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -393,20 +391,31 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         call.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intentCall = new Intent(Intent.ACTION_CALL);
-                String number = "123456789";
-                intentCall.setData(Uri.parse("tel:"+number));
-                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
-                    Snackbar snackbar = Snackbar.make(v, "Please grant permission!!!", Snackbar.LENGTH_SHORT);
-                    View sbView = snackbar.getView();
-                    sbView.setBackgroundColor(getResources().getColor(R.color.failure));
-                    snackbar.setTextColor(getResources().getColor(R.color.white));
-                    snackbar.show();
-                    requestPermission();
-                }
-                else {
-                    startActivity(intentCall);
-                }
+                db.collection("DoctorUser").document(docId)
+                        .get()
+                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()){
+                                    DocumentSnapshot documentSnapshot = task.getResult();
+                                    String number = documentSnapshot.getString("Number");
+
+                                    Intent intentCall = new Intent(Intent.ACTION_CALL);
+                                    intentCall.setData(Uri.parse("tel:"+number));
+                                    if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CALL_PHONE)!= PackageManager.PERMISSION_GRANTED){
+                                        Snackbar snackbar = Snackbar.make(v, "Please grant permission!!!", Snackbar.LENGTH_SHORT);
+                                        View sbView = snackbar.getView();
+                                        sbView.setBackgroundColor(getResources().getColor(R.color.failure));
+                                        snackbar.setTextColor(getResources().getColor(R.color.white));
+                                        snackbar.show();
+                                        requestPermission();
+                                    }
+                                    else {
+                                        startActivity(intentCall);
+                                    }
+                                }
+                            }
+                        });
             }
         });
 
@@ -514,6 +523,8 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         snackbar.setTextColor(getResources().getColor(R.color.white));
         snackbar.show();
 
+        requestAppointmentMsg.setVisibility(View.GONE);
+
         String currentDateTimeString = DateFormat.getDateTimeInstance()
                 .format(new Date());
 
@@ -574,9 +585,21 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         cal.add(Calendar.DATE, 7); // Adding 7 days
         String output = sdf.format(cal.getTime());
 
+        Date date2 = null;
+        try {
+            date2 = sdf.parse(output);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Long time = date2.getTime();
+        String timeStampV = String.valueOf(time);
+
+
+
         Map<String, Object> patientData = new HashMap<>();
         patientData.put("NameUser", uName);
         patientData.put("NameDoctor", doc_Name);
+        patientData.put("DocImg", profileImg);
         patientData.put("Email", docId);
         patientData.put("Time", currentDateTimeString);
         patientData.put("Validity", output);
@@ -585,6 +608,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         patientData.put("AppointmentTime", AppointmentTime);
         patientData.put("timeStamp", timeStamp);
         patientData.put("Payment", "true");
+        patientData.put("ValidityTimeStamp", timeStampV);
 
         db.collection("DoctorUser").document(docId).collection("AppointmentList")
                 .add(patientData)

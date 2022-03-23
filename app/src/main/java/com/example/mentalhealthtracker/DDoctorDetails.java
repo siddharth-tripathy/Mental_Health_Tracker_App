@@ -2,7 +2,6 @@ package com.example.mentalhealthtracker;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -26,16 +25,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 
-//import com.google.android.gms.tasks.Task;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -43,52 +40,51 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.net.URL;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import static android.content.ContentValues.TAG;
+public class DDoctorDetails extends AppCompatActivity {
 
-import de.hdodenhof.circleimageview.CircleImageView;
+    EditText DoctorDetailsName, DoctorDetailsEmail;
+    Button DoctorDetailsSubmitBtn;
+    LinearLayout biodata;
 
-public class CreateAccount extends AppCompatActivity {
-    String editMode, uName, uDOB, uGender, eGender, uNumber;
-    TextView name, age, dob, eDob, gender;
-    EditText eName, eAge;
+    FirebaseFirestore firebaseFirestore;
+    FirebaseAuth mAuth;
+    FirebaseUser muser;
+
+    String editMode, uName, uDOB, uGender, eGender, uBio, uLocation, uExp, uPatients, frm;
+    TextView name, age, edit, dob, eDob, gender;
+    EditText eName, eAge, eBio, eLocation, eExp, ePatients;
+    CalendarView calendarView;
     RadioGroup radioGroup;
     RadioButton male, female, other;
     Button save, upload;
     ImageView profileImg;
     Uri url;
-    ImageView edit;
 
     //Firebase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     StorageReference storageReference = FirebaseStorage.getInstance().getReference();
-    ProgressDialog progressDialog;
-
+    String uNumber;
     private static final int PICK_PROFILE_IMAGE = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_account);
+        setContentView(R.layout.activity_d_doctor_details);
 
-        //Checking mode
-        editMode = "true";
+        //editMode = "false";
 
         Intent i = getIntent();
         editMode = i.getStringExtra("EditMode");
-        String frm = i.getStringExtra("From");
-        if (frm.equals("signin") || frm.equals("dashboard"))
-        {
-            uNumber = i.getStringExtra("Number");
-        }
+        uNumber = i.getStringExtra("Number");
+        frm = i.getStringExtra("Frm");
 
-        if (frm.equals("dashboard")){
+        /*
+        if (frm.equals("settings")){
             db.collection("User").document(currentUser)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -102,24 +98,27 @@ public class CreateAccount extends AppCompatActivity {
                                     String n = document.getString("Name");
                                     String db = document.getString("DateOfBirth");
                                     String g = document.getString("Gender");
-                                    String p = document.getString("ProfileImageUrl");
+                                    String p = document.getString("Profileimage");
                                     eName.setText(n);
                                     eDob.setText(db);
                                     gender.setText(g);
-                                    Glide.with(CreateAccount.this)
+                                    Glide.with(DDoctorDetails.this)
                                             .load(p)
                                             .placeholder(R.drawable.profile)
                                             .into(profileImg);
                                 } else {
-                                    startActivity(new Intent(CreateAccount.this, TrackHistory.class));
+                                    startActivity(new Intent(DDoctorDetails.this, TrackHistory.class));
                                 }
                             }
                         }
                     });
         }
 
+         */
+
+
         //TextView
-        name = (TextView) findViewById(R.id.name);
+        name  = (TextView)findViewById(R.id.name);
         edit = findViewById(R.id.edit);
         dob = findViewById(R.id.DoB);
         eDob = findViewById(R.id.EDoB);
@@ -127,6 +126,13 @@ public class CreateAccount extends AppCompatActivity {
 
         //EditText
         eName = findViewById(R.id.editName);
+        eBio = findViewById(R.id.bio);
+        eExp = findViewById(R.id.exp);
+        ePatients = findViewById(R.id.totalPatients);
+        eLocation = findViewById(R.id.location);
+
+        //Calendar
+        calendarView = findViewById(R.id.calendarView);
 
         //RadioGroup
         radioGroup = findViewById(R.id.groupradio);
@@ -140,39 +146,27 @@ public class CreateAccount extends AppCompatActivity {
         save = findViewById(R.id.save);
         upload = findViewById(R.id.upload);
 
-        //Profile Image
+        //ImageView
         profileImg = findViewById(R.id.profileImg);
+
+        biodata = findViewById(R.id.biodata);
 
         edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(CreateAccount.this, CreateAccount.class);
-                i.putExtra("EditMode", "true");
-                i.putExtra("From", "dashboard");
-                i.putExtra("Number", uNumber);
+                Intent i = new Intent(DDoctorDetails.this, DDoctorDetails.class);
+                i.putExtra("EditMode" , "true");
                 startActivity(i);
             }
         });
 
         //Applying settings based on edit mode
-        if (editMode.equals(true)) {
-            profileImg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(
-                            Intent.ACTION_PICK,
-                            android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, PICK_PROFILE_IMAGE);
-                }
-            });
-        }
-
         if (editMode.equals("true")) {
             name.setVisibility(View.GONE);
             edit.setVisibility(View.GONE);
             dob.setVisibility(View.GONE);
             gender.setVisibility(View.GONE);
-
+            biodata.setVisibility(View.GONE);
 
             eName.setVisibility(View.VISIBLE);
             eDob.setVisibility(View.VISIBLE);
@@ -180,15 +174,22 @@ public class CreateAccount extends AppCompatActivity {
             female.setVisibility(View.VISIBLE);
             other.setVisibility(View.VISIBLE);
             save.setVisibility(View.VISIBLE);
-            upload.setVisibility(View.VISIBLE);
+            eBio.setVisibility(View.VISIBLE);
+            eLocation.setVisibility(View.VISIBLE);
+            ePatients.setVisibility(View.VISIBLE);
+            eExp.setVisibility(View.VISIBLE);
         }
 
+
         if (editMode.equals("false")) {
+
 
             name.setVisibility(View.VISIBLE);
             edit.setVisibility(View.VISIBLE);
             dob.setVisibility(View.VISIBLE);
             gender.setVisibility(View.VISIBLE);
+            biodata.setVisibility(View.VISIBLE);
+
 
 
             eName.setVisibility(View.GONE);
@@ -198,78 +199,126 @@ public class CreateAccount extends AppCompatActivity {
             other.setVisibility(View.GONE);
             save.setVisibility(View.GONE);
             radioGroup.setVisibility(View.GONE);
+            eBio.setVisibility(View.GONE);
+            eLocation.setVisibility(View.GONE);
+            ePatients.setVisibility(View.GONE);
+            eExp.setVisibility(View.GONE);
             upload.setVisibility(View.GONE);
 
-            db.collection("User").document(currentUser)
+
+
+
+
+
+            db.collection("DoctorUser").document(currentUser)
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                         @RequiresApi(api = Build.VERSION_CODES.O)
                         @Override
-                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                            if (task.isSuccessful()) {
+                        public void onComplete(@NonNull Task< DocumentSnapshot > task) {
+                            if (task.isSuccessful()){
                                 DocumentSnapshot document = task.getResult();
 
                                 if (document.exists()) {
                                     String n = document.getString("Name");
                                     String db = document.getString("DateOfBirth");
                                     String g = document.getString("Gender");
-                                    String p = document.getString("ProfileImageUrl");
+                                    String ProfileUrl = document.getString("Profileimage");
+                                    String e = document.getString("Experience");
+                                    String B = document.getString("Bio");
+                                    String TP = document.getString("TotalPatients");
+
                                     name.setText(n);
                                     dob.setText(db);
                                     gender.setText(g);
-                                    Glide.with(CreateAccount.this)
-                                            .load(p)
-                                            .placeholder(R.drawable.profile)
+                                    Glide.with(DDoctorDetails.this)
+                                            .load(ProfileUrl)
                                             .into(profileImg);
-                                } else {
-                                    startActivity(new Intent(CreateAccount.this, TrackHistory.class));
+
                                 }
                             }
                         }
                     });
-        }
 
-        upload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, PICK_PROFILE_IMAGE);
-            }
-        });
+        }
 
         //Date of Birth
         eDob.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)  {
+            public void onClick(View v) {
                 handleDateButton();
             }
         });
+
+
+
+        calendarView.setOnDateChangeListener(
+                new CalendarView
+                        .OnDateChangeListener() {
+                    @Override
+
+                    // In this Listener have one method
+                    // and in this method we will
+                    // get the value of DAYS, MONTH, YEARS
+                    public void onSelectedDayChange(
+                            @NonNull CalendarView view,
+                            int year,
+                            int month,
+                            int dayOfMonth)
+                    {
+
+                        // Store the value of date with
+                        // format in String type Variable
+                        // Add 1 in month because month
+                        // index is start with 0
+                        String Date
+                                = dayOfMonth + "-"
+                                + (month + 1) + "-" + year;
+
+                        // set this date in TextView for Display
+                        eDob.setText(Date);
+                    }
+                });
+
+        //Gender
+        radioGroup.setOnCheckedChangeListener(
+                new RadioGroup
+                        .OnCheckedChangeListener() {
+                    @Override
+
+                    // The flow will come here when
+                    // any of the radio buttons in the radioGroup
+                    // has been clicked
+
+                    // Check which radio button has been clicked
+                    public void onCheckedChanged(RadioGroup group,
+                                                 int checkedId)
+                    {
+
+                        // Get the selected Radio Button
+                        RadioButton
+                                radioButton
+                                = (RadioButton)group
+                                .findViewById(checkedId);
+                    }
+                });
 
         //Saving data to database
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-
-                progressDialog = new ProgressDialog(CreateAccount.this);
-
-                progressDialog.setMessage("Please Wait...");
-                progressDialog.setTitle("Saving Data...");
-                progressDialog.setCanceledOnTouchOutside(false);
-                progressDialog.show();
-
-
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 if (selectedId == -1) {
-                    Toast.makeText(CreateAccount.this,
+                    Toast.makeText(DDoctorDetails.this,
                             "No answer has been selected",
                             Toast.LENGTH_SHORT)
                             .show();
-                } else {
+                }
+                else {
+
                     RadioButton radioButton
-                            = (RadioButton) radioGroup
+                            = (RadioButton)radioGroup
                             .findViewById(selectedId);
 
                     // Now display the value of selected item
@@ -279,6 +328,7 @@ public class CreateAccount extends AppCompatActivity {
 
                     //Toast.makeText(CreateAccount.this, radioButton.getText(), Toast.LENGTH_SHORT).show();
                 }
+
 
                 profileImg.setDrawingCacheEnabled(true);
                 profileImg.buildDrawingCache();
@@ -301,39 +351,48 @@ public class CreateAccount extends AppCompatActivity {
                                     @Override
                                     public void onComplete(@NonNull Task<Uri> task) {
                                         String profileImgUrl = task.getResult().toString();
+
+
                                         uName = eName.getText().toString();
                                         uDOB = eDob.getText().toString();
                                         uGender = eGender.toString();
+                                        uBio = eBio.getText().toString();
+                                        uExp = eExp.getText().toString();
+                                        uLocation = eLocation.getText().toString();
+                                        uPatients = ePatients.getText().toString();
 
                                         Map<String, Object> accountData = new HashMap<>();
                                         accountData.put("Name", uName);
                                         accountData.put("DateOfBirth", uDOB);
                                         accountData.put("Gender", uGender);
+                                        accountData.put("UID",currentUser);
+                                        accountData.put("Bio", uBio);
+                                        accountData.put("Experience", uExp);
+                                        accountData.put("TotalPatients", uPatients);
+                                        accountData.put("Location", uLocation);
+                                        accountData.put("Profileimage", profileImgUrl);
                                         accountData.put("Number", uNumber);
-                                        accountData.put("ProfileImageUrl", profileImgUrl);
+                                        if (frm.equals("signin")){
+                                            accountData.put("Approval", "false");
+                                        }
+                                        else {
+                                            accountData.put("Approval", "true");
+                                        }
 
-                                        db.collection("User").document(currentUser)
+                                        db.collection("DoctorUser").document(currentUser)
                                                 .set(accountData)
                                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                     @Override
                                                     public void onSuccess(Void aVoid) {
                                                         Log.d("TAG", "DocumentSnapshot successfully written!");
-                                                        Toast.makeText(CreateAccount.this, "Task Successful!!!", Toast.LENGTH_LONG).show();
-                                                        if (frm.equals("signin")){
-                                                            startActivity(new Intent(CreateAccount.this, Intro.class));
-                                                        }
-                                                        else {
-                                                            startActivity(new Intent(CreateAccount.this, Dashboard.class));
-                                                        }
+                                                        startActivity(new Intent(DDoctorDetails.this, DocMainActivity.class));
                                                         finish();
-                                                        progressDialog.dismiss();
                                                     }
                                                 })
                                                 .addOnFailureListener(new OnFailureListener() {
                                                     @Override
                                                     public void onFailure(@NonNull Exception e) {
                                                         Log.w("TAG", "Error writing document", e);
-                                                        progressDialog.dismiss();
                                                     }
                                                 });
                                     }
@@ -342,6 +401,17 @@ public class CreateAccount extends AppCompatActivity {
                 });
             }
         });
+
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, PICK_PROFILE_IMAGE);
+            }
+        });
+
 
     }
 
@@ -366,6 +436,10 @@ public class CreateAccount extends AppCompatActivity {
         }, YEAR, MONTH, DATE);
 
         datePickerDialog.show();
+
+
+
+
     }
 
     @Override

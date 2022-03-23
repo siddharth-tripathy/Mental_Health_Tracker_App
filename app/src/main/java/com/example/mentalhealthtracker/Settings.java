@@ -107,15 +107,14 @@ public class Settings extends AppCompatActivity {
                                 if (documentSnapshot.exists())
                                 {
                                     n = documentSnapshot.getString("Number");
+                                    Intent intent = new Intent(Settings.this, CreateAccount.class);
+                                    intent.putExtra("EditMode", "false");
+                                    intent.putExtra("From", "dashboard");
+                                    intent.putExtra("Number", n);
+                                    startActivity(intent);
                                 }
                             }
                         });
-
-                Intent intent = new Intent(Settings.this, CreateAccount.class);
-                intent.putExtra("EditMode", "false");
-                intent.putExtra("From", "dashboard");
-                intent.putExtra("Number", n);
-                startActivity(intent);
             }
         });
 

@@ -12,6 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MentalHealthTracker">
         <activity
+            android:name=".Approval"
+            android:exported="false" />
+        <activity
+            android:name=".PayAdmin"
+            android:exported="false" />
+        <activity
             android:name=".AppointmentHistory"
             android:exported="false" />
         <activity
@@ -54,6 +60,18 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.MentalHealthTracker.NoActionBar" />
+        <activity
+            android:name=".DocSettings"
+            android:exported="false" />
+        <activity android:name=".DPatientDetails" />
+        <activity
+            android:name=".DDoctorPatientchat"
+            android:exported="false" />
+        <activity
+            android:name=".DDoctorDetails"
+            android:exported="false" />
+        <activity android:name=".DocMainActivity" />
+        <activity android:name=".DPaymentHistory" />
 
         <meta-data
             android:name="preloaded_fonts"

@@ -203,34 +203,27 @@ tools:context=".CreateAccount">
                         <!-- like this we will add some more Radio Button-->
                         <RadioButton
                             android:id="@+id/male"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
                             android:layout_margin="20dp"
-                            android:background="@drawable/male"
                             android:text="Male"
+                            style="@style/RadioButtonMale"
                             android:textColor="#00FFFFFF"
                             android:buttonTint="#00FFFFFF" />
 
                         <RadioButton
                             android:id="@+id/female"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
                             android:layout_margin="20dp"
                             android:text="Female"
-                            android:textSize="8sp"
                             android:textColor="#00FFFFFF"
-                            android:background="@drawable/female"
-                            android:buttonTint="#00FFFFFF" />
+                            android:buttonTint="#00FFFFFF"
+                            style="@style/RadioButtonFemale"/>
 
                         <RadioButton
                             android:id="@+id/other"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
                             android:layout_margin="20dp"
                             android:text="Other"
                             android:textColor="#00FFFFFF"
-                            android:background="@drawable/other"
-                            android:buttonTint="#00FFFFFF" />
+                            android:buttonTint="#00FFFFFF"
+                            style="@style/RadioButtonOther"/>
                     </RadioGroup>
                 </LinearLayout>
             </LinearLayout>

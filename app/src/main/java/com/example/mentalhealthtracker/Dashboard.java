@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -28,19 +29,21 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 public class Dashboard extends AppCompatActivity {
-
     private ImageView profileImg, settings;
-    private CardView account, yourTherapist;
+    private CardView account, appDash;
     private TextView userName, docName, trackHistory, profile, greetings, wwu, articlesMore;
-    String n;
+    private String n;
 
     //Graph
     private LineChart lineChart;
@@ -48,9 +51,7 @@ public class Dashboard extends AppCompatActivity {
     //Firebase
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
     private CardView depression, anxiety, anger, sleep;
-
     private Button analysis, doc;
 
     @Override
@@ -68,6 +69,8 @@ public class Dashboard extends AppCompatActivity {
         settings = findViewById(R.id.sett);
 
         analysis = findViewById(R.id.analysis);
+
+        appDash = findViewById(R.id.appDash);
 
         //TextView
         userName = findViewById(R.id.userName);
@@ -88,13 +91,12 @@ public class Dashboard extends AppCompatActivity {
         //Line Chart
         lineChart = findViewById(R.id.lineChart);
 
-        db.collection("User").document(currentUser).collection("Anxiety")
+        db.collection("User").document(currentUser).collection("DDepression")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-
                             lineChart.setDragEnabled(true);
                             lineChart.setScaleEnabled(true);
 
@@ -102,10 +104,11 @@ public class Dashboard extends AppCompatActivity {
 
                             int i = 1;
 
-                            List<String> list = new ArrayList<>();
+                            //List<String> list = new ArrayList<>();
                             for (DocumentSnapshot documentSnapshot : task.getResult()) {
-                                String s = documentSnapshot.getString("Anxiety");
+                                String s = documentSnapshot.getString("DDepression");
 
+                                assert s != null;
                                 yValues.add(new Entry(i, Float.parseFloat(s)));
                                 i++;
                             }
@@ -114,6 +117,7 @@ public class Dashboard extends AppCompatActivity {
 
                             set1.setFillAlpha(110);
 
+                            //set1.setCircleColor(R.drawable.gradient_drawable);
                             ArrayList<ILineDataSet> dataSets = new ArrayList<>();
                             dataSets.add(set1);
 
@@ -126,7 +130,7 @@ public class Dashboard extends AppCompatActivity {
         depression.setBackground(getResources().getDrawable(R.drawable.border));
         anxiety.setBackground(getResources().getDrawable(R.drawable.no_border));
         anger.setBackground(getResources().getDrawable(R.drawable.no_border));
-//        sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
+        //sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
 
         depression.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,7 +138,7 @@ public class Dashboard extends AppCompatActivity {
                 depression.setBackground(getResources().getDrawable(R.drawable.border));
                 anxiety.setBackground(getResources().getDrawable(R.drawable.no_border));
                 anger.setBackground(getResources().getDrawable(R.drawable.no_border));
-               // sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
+                //sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
 
                 db = FirebaseFirestore.getInstance();
 
@@ -144,7 +148,6 @@ public class Dashboard extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                 if (task.isSuccessful()) {
-
                                     lineChart.setDragEnabled(true);
                                     lineChart.setScaleEnabled(true);
 
@@ -156,11 +159,10 @@ public class Dashboard extends AppCompatActivity {
                                     for (DocumentSnapshot documentSnapshot : task.getResult()) {
                                         String s = documentSnapshot.getString("DDepression");
 
+                                        assert s != null;
                                         yValues.add(new Entry(i, Float.parseFloat(s)));
                                         i++;
                                     }
-
-
 
                                     LineDataSet set1 = new LineDataSet(yValues, "Data Set 1");
 
@@ -369,6 +371,39 @@ public class Dashboard extends AppCompatActivity {
 
          */
 
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar cal1 = Calendar.getInstance();
+        //cal1.add(Calendar.DATE, 0); // Adding 7 days
+        String output = sdf.format(cal1.getTime());
+
+        Date date2 = null;
+        try {
+            date2 = sdf.parse(output);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        Long time = date2.getTime();
+        String timeStampV = String.valueOf(time);
+
+        db.collection("User").document(currentUser).collection("AppointmentList").whereGreaterThanOrEqualTo("timeStampV", timeStampV)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            QuerySnapshot querySnapshot = task.getResult();
+                            if (querySnapshot.isEmpty()){
+                                appDash.setVisibility(View.GONE);
+                            }
+                            else{
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d("TAG", document.getId() + " => " + document.getData());
+                                }
+                            }
+                        }
+                    }
+                });
+
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -466,8 +501,6 @@ public class Dashboard extends AppCompatActivity {
         });
         account = findViewById(R.id.account);
 
-
-
         ImageView articles = findViewById(R.id.articles);
         articles.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -491,7 +524,5 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(new Intent(Dashboard.this, Articles.class));
             }
         });
-
-
     }
 }

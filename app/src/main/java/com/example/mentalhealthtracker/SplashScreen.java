@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -34,22 +35,58 @@ public class SplashScreen extends AppCompatActivity {
                     if(firebaseUser != null)
                     {
                         String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                        db.collection("User").document(currentUser)
+                        db.collection("List").document(currentUser)
                                 .get()
                                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                                     @Override
                                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                        DocumentSnapshot documentSnapshot = task.getResult();
-                                        if (documentSnapshot.exists()){
-                                            startActivity(new Intent(SplashScreen.this, Dashboard.class));
+                                        if (task.isSuccessful()){
+                                            DocumentSnapshot documentSnapshot = task.getResult();
+                                            String joinAs = documentSnapshot.getString("JoinAs");
+                                            Log.d("TAG", "The user is..."+joinAs);
+
+                                            if (joinAs.equals("User")){
+                                                db.collection("User").document(currentUser)
+                                                        .get()
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                DocumentSnapshot documentSnapshot = task.getResult();
+                                                                if (documentSnapshot.exists()){
+                                                                    startActivity(new Intent(SplashScreen.this, Dashboard.class));
+                                                                }
+                                                                else{
+                                                                    Intent i = new Intent(SplashScreen.this, ManageOtp.class);
+                                                                    startActivity(i);
+                                                                }
+                                                                finish();
+                                                            }
+                                                        });
+                                            }
+                                            if (joinAs.equals("DoctorUser")){
+                                                db.collection("DoctorUser").document(currentUser)
+                                                        .get()
+                                                        .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                                DocumentSnapshot documentSnapshot = task.getResult();
+                                                                if (documentSnapshot.exists()){
+                                                                    startActivity(new Intent(SplashScreen.this, DocMainActivity.class));
+                                                                }
+                                                                else{
+                                                                    Log.d("TAG", "Opening activity ManageOTP");
+                                                                    Intent i = new Intent(SplashScreen.this, ManageOtp.class);
+                                                                    startActivity(i);
+                                                                }
+                                                                finish();
+                                                            }
+                                                        });
+                                            }
                                         }
-                                        else{
-                                            Intent i = new Intent(SplashScreen.this, ManageOtp.class);
-                                            startActivity(i);
-                                        }
-                                        finish();
                                     }
                                 });
+
+
                     }
                     else
                     {

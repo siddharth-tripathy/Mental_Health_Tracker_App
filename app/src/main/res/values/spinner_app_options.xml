@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="app_options">
+        <item>Upcoming</item>
+        <item>Past 7 Days</item>
+        <item>Past 30 Days</item>
+        <item>Past Year</item>
+        <item>All Time</item>
+    </string-array>
+</resources>
