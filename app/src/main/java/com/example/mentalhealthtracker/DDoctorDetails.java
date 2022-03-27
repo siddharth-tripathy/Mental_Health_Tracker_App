@@ -2,6 +2,7 @@ package com.example.mentalhealthtracker;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.DatePicker;
@@ -19,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,7 +48,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DDoctorDetails extends AppCompatActivity {
+public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     EditText DoctorDetailsName, DoctorDetailsEmail;
     Button DoctorDetailsSubmitBtn;
@@ -56,6 +60,7 @@ public class DDoctorDetails extends AppCompatActivity {
 
     String editMode, uName, uDOB, uGender, eGender, uBio, uLocation, uExp, uPatients, frm;
     TextView name, age, edit, dob, eDob, gender;
+    TextView totalPatients, speciality, exp, location;
     EditText eName, eAge, eBio, eLocation, eExp, ePatients;
     CalendarView calendarView;
     RadioGroup radioGroup;
@@ -63,7 +68,9 @@ public class DDoctorDetails extends AppCompatActivity {
     Button save, upload;
     ImageView profileImg;
     Uri url;
+    Spinner spec;
 
+    ProgressDialog progressDialog;
     //Firebase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -77,6 +84,7 @@ public class DDoctorDetails extends AppCompatActivity {
         setContentView(R.layout.activity_d_doctor_details);
 
         //editMode = "false";
+        frm = "signin";
 
         Intent i = getIntent();
         editMode = i.getStringExtra("EditMode");
@@ -124,6 +132,11 @@ public class DDoctorDetails extends AppCompatActivity {
         eDob = findViewById(R.id.EDoB);
         gender = findViewById(R.id.gender);
 
+        speciality = findViewById(R.id.speciality);
+        totalPatients = findViewById(R.id.totalPatients);
+        exp = findViewById(R.id.expp);
+        location = findViewById(R.id.loc);
+
         //EditText
         eName = findViewById(R.id.editName);
         eBio = findViewById(R.id.bio);
@@ -149,6 +162,9 @@ public class DDoctorDetails extends AppCompatActivity {
         //ImageView
         profileImg = findViewById(R.id.profileImg);
 
+        //Spinner
+        spec = findViewById(R.id.specs);
+
         biodata = findViewById(R.id.biodata);
 
         edit.setOnClickListener(new View.OnClickListener() {
@@ -166,7 +182,10 @@ public class DDoctorDetails extends AppCompatActivity {
             edit.setVisibility(View.GONE);
             dob.setVisibility(View.GONE);
             gender.setVisibility(View.GONE);
-            biodata.setVisibility(View.GONE);
+            speciality.setVisibility(View.GONE);
+            totalPatients.setVisibility(View.GONE);
+            exp.setVisibility(View.GONE);
+            location.setVisibility(View.GONE);
 
             eName.setVisibility(View.VISIBLE);
             eDob.setVisibility(View.VISIBLE);
@@ -174,23 +193,23 @@ public class DDoctorDetails extends AppCompatActivity {
             female.setVisibility(View.VISIBLE);
             other.setVisibility(View.VISIBLE);
             save.setVisibility(View.VISIBLE);
-            eBio.setVisibility(View.VISIBLE);
+            //eBio.setVisibility(View.VISIBLE);
+            spec.setVisibility(View.VISIBLE);
             eLocation.setVisibility(View.VISIBLE);
             ePatients.setVisibility(View.VISIBLE);
             eExp.setVisibility(View.VISIBLE);
         }
 
-
         if (editMode.equals("false")) {
-
-
             name.setVisibility(View.VISIBLE);
             edit.setVisibility(View.VISIBLE);
             dob.setVisibility(View.VISIBLE);
             gender.setVisibility(View.VISIBLE);
             biodata.setVisibility(View.VISIBLE);
-
-
+            speciality.setVisibility(View.VISIBLE);
+            totalPatients.setVisibility(View.VISIBLE);
+            exp.setVisibility(View.VISIBLE);
+            location.setVisibility(View.VISIBLE);
 
             eName.setVisibility(View.GONE);
             eDob.setVisibility(View.GONE);
@@ -200,15 +219,11 @@ public class DDoctorDetails extends AppCompatActivity {
             save.setVisibility(View.GONE);
             radioGroup.setVisibility(View.GONE);
             eBio.setVisibility(View.GONE);
+            spec.setVisibility(View.GONE);
             eLocation.setVisibility(View.GONE);
             ePatients.setVisibility(View.GONE);
             eExp.setVisibility(View.GONE);
             upload.setVisibility(View.GONE);
-
-
-
-
-
 
             db.collection("DoctorUser").document(currentUser)
                     .get()
@@ -227,6 +242,12 @@ public class DDoctorDetails extends AppCompatActivity {
                                     String e = document.getString("Experience");
                                     String B = document.getString("Bio");
                                     String TP = document.getString("TotalPatients");
+                                    String l = document.getString("Location");
+
+                                    speciality.setText(B);
+                                    totalPatients.setText(TP);
+                                    location.setText(l);
+                                    exp.setText(e);
 
                                     name.setText(n);
                                     dob.setText(db);
@@ -303,20 +324,33 @@ public class DDoctorDetails extends AppCompatActivity {
                     }
                 });
 
+
+        //Spinner Speciality
+
+        ////////////////////////Chat Options Spinner
+        spec = (Spinner) findViewById(R.id.specs);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapterC = ArrayAdapter.createFromResource(this, R.array.bio, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapterC.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spec.setAdapter(adapterC);
+        spec.setOnItemSelectedListener(this);
+
         //Saving data to database
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+
                 int selectedId = radioGroup.getCheckedRadioButtonId();
                 if (selectedId == -1) {
                     Toast.makeText(DDoctorDetails.this,
-                            "No answer has been selected",
+                            "Please set Gender",
                             Toast.LENGTH_SHORT)
                             .show();
                 }
                 else {
-
                     RadioButton radioButton
                             = (RadioButton)radioGroup
                             .findViewById(selectedId);
@@ -327,78 +361,118 @@ public class DDoctorDetails extends AppCompatActivity {
                     eGender = radioButton.getText().toString();
 
                     //Toast.makeText(CreateAccount.this, radioButton.getText(), Toast.LENGTH_SHORT).show();
+
+
+
+
+                    progressDialog = new ProgressDialog(DDoctorDetails.this);
+
+                    progressDialog.setMessage("Please Wait...");
+                    progressDialog.setTitle("Saving Data...");
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.show();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    profileImg.setDrawingCacheEnabled(true);
+                    profileImg.buildDrawingCache();
+                    Bitmap bitmap = ((BitmapDrawable) profileImg.getDrawable()).getBitmap();
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] data = baos.toByteArray();
+
+                    UploadTask uploadTask = storageReference.child("User").child("ProfileImage").child(currentUser + ".jpg").putBytes(data);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            Toast.makeText(getApplicationContext(), "Try Again", Toast.LENGTH_LONG).show();
+                        }
+                    }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                            storageReference.child("User").child("ProfileImage").child(currentUser + ".jpg").getDownloadUrl()
+                                    .addOnCompleteListener(new OnCompleteListener<Uri>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Uri> task) {
+                                            String profileImgUrl = task.getResult().toString();
+
+
+                                            uName = eName.getText().toString();
+                                            uDOB = eDob.getText().toString();
+                                            uGender = eGender.toString();
+                                            uBio = eBio.getText().toString();
+                                            uExp = eExp.getText().toString();
+                                            uLocation = eLocation.getText().toString();
+                                            uPatients = ePatients.getText().toString();
+
+                                            Map<String, Object> accountData = new HashMap<>();
+                                            accountData.put("Name", uName);
+                                            accountData.put("DateOfBirth", uDOB);
+                                            accountData.put("Gender", uGender);
+                                            accountData.put("UID",currentUser);
+                                            accountData.put("Bio", uBio);
+                                            accountData.put("Experience", uExp);
+                                            accountData.put("TotalPatients", uPatients);
+                                            accountData.put("Location", uLocation);
+                                            accountData.put("Profileimage", profileImgUrl);
+                                            accountData.put("Number", uNumber);
+                                            /*
+                                            if (frm.equals("signin")){
+                                                accountData.put("Approval", "false");
+                                            }
+                                            else {
+                                                accountData.put("Approval", "true");
+                                            }
+                                             */
+
+                                            db.collection("DoctorUser").document(currentUser)
+                                                    .set(accountData)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            Log.d("TAG", "DocumentSnapshot successfully written!");
+                                                            startActivity(new Intent(DDoctorDetails.this, DocMainActivity.class));
+                                                            finish();
+                                                            progressDialog.dismiss();
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
+                                                            Log.w("TAG", "Error writing document", e);
+                                                            progressDialog.dismiss();
+                                                        }
+                                                    });
+                                        }
+                                    });
+                        }
+                    });
+
+
+
+
+
+
+
+
+
+
+
+
                 }
 
-
-                profileImg.setDrawingCacheEnabled(true);
-                profileImg.buildDrawingCache();
-                Bitmap bitmap = ((BitmapDrawable) profileImg.getDrawable()).getBitmap();
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-                byte[] data = baos.toByteArray();
-
-                UploadTask uploadTask = storageReference.child("User").child("ProfileImage").child(currentUser + ".jpg").putBytes(data);
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception exception) {
-                        Toast.makeText(getApplicationContext(), "Try Again", Toast.LENGTH_LONG).show();
-                    }
-                }).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
-                        storageReference.child("User").child("ProfileImage").child(currentUser + ".jpg").getDownloadUrl()
-                                .addOnCompleteListener(new OnCompleteListener<Uri>() {
-                                    @Override
-                                    public void onComplete(@NonNull Task<Uri> task) {
-                                        String profileImgUrl = task.getResult().toString();
-
-
-                                        uName = eName.getText().toString();
-                                        uDOB = eDob.getText().toString();
-                                        uGender = eGender.toString();
-                                        uBio = eBio.getText().toString();
-                                        uExp = eExp.getText().toString();
-                                        uLocation = eLocation.getText().toString();
-                                        uPatients = ePatients.getText().toString();
-
-                                        Map<String, Object> accountData = new HashMap<>();
-                                        accountData.put("Name", uName);
-                                        accountData.put("DateOfBirth", uDOB);
-                                        accountData.put("Gender", uGender);
-                                        accountData.put("UID",currentUser);
-                                        accountData.put("Bio", uBio);
-                                        accountData.put("Experience", uExp);
-                                        accountData.put("TotalPatients", uPatients);
-                                        accountData.put("Location", uLocation);
-                                        accountData.put("Profileimage", profileImgUrl);
-                                        accountData.put("Number", uNumber);
-                                        if (frm.equals("signin")){
-                                            accountData.put("Approval", "false");
-                                        }
-                                        else {
-                                            accountData.put("Approval", "true");
-                                        }
-
-                                        db.collection("DoctorUser").document(currentUser)
-                                                .set(accountData)
-                                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                    @Override
-                                                    public void onSuccess(Void aVoid) {
-                                                        Log.d("TAG", "DocumentSnapshot successfully written!");
-                                                        startActivity(new Intent(DDoctorDetails.this, DocMainActivity.class));
-                                                        finish();
-                                                    }
-                                                })
-                                                .addOnFailureListener(new OnFailureListener() {
-                                                    @Override
-                                                    public void onFailure(@NonNull Exception e) {
-                                                        Log.w("TAG", "Error writing document", e);
-                                                    }
-                                                });
-                                    }
-                                });
-                    }
-                });
             }
         });
 
@@ -450,5 +524,35 @@ public class DDoctorDetails extends AppCompatActivity {
             if (requestCode == PICK_PROFILE_IMAGE)
                 profileImg.setImageURI(url);
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+
+        String choice = parent.getItemAtPosition(pos).toString();
+
+        if (choice.equals("General")){
+            eBio.setText("General");
+        }
+        else if (choice.equals("Psychiatrist")){
+            eBio.setText("Psychiatrist");
+        }
+        else if (choice.equals("Cognitive therapy")){
+            eBio.setText("Cognitive therapy");
+        }
+        else if (choice.equals("Behavior therapy")){
+            eBio.setText("Behavior therapy");
+        }
+        else if (choice.equals("Integrative therapy")){
+            eBio.setText("Integrative therapy");
+        }
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

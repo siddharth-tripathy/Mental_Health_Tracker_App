@@ -72,6 +72,7 @@ public class DocMainActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_main);
 
+        /*
         db.collection("DoctorUser").document(currentUser)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -87,6 +88,8 @@ public class DocMainActivity extends AppCompatActivity implements AdapterView.On
                         }
                     }
                 });
+
+         */
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

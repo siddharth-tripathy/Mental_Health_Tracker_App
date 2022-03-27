@@ -72,7 +72,6 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
         spinner_join_as.setAdapter(adapterC);
         spinner_join_as.setOnItemSelectedListener(this);
 
-
         //ProgressBar progressBar = new ProgressDialog(View.getContext());
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {

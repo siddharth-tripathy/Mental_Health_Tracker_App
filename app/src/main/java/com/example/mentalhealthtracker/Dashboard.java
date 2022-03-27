@@ -509,6 +509,7 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         doc = findViewById(R.id.doc);
+        /*
         doc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -517,6 +518,7 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(i);
             }
         });
+         */
 
         articlesMore.setOnClickListener(new View.OnClickListener() {
             @Override

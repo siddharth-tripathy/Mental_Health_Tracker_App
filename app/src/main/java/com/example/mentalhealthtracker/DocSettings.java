@@ -19,7 +19,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DocSettings extends AppCompatActivity {
-    TextView ah, ca, logout, ph, pa;
+    TextView ah, ca, logout, ph, pa, name;
     CardView profile;
     String n;
     ImageView profile_image;
@@ -37,6 +37,7 @@ public class DocSettings extends AppCompatActivity {
         profile = findViewById(R.id.profile);
         ca = findViewById(R.id.mailUs);
         profile_image = findViewById(R.id.profile_image);
+        name = findViewById(R.id.name);
 
         pa = findViewById(R.id.payAdmin);
         pa.setOnClickListener(new View.OnClickListener() {
@@ -53,7 +54,6 @@ public class DocSettings extends AppCompatActivity {
             }
         });
 
-
         db.collection("DoctorUser").document(currentUser)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -61,6 +61,8 @@ public class DocSettings extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot documentSnapshot = task.getResult();
+                            String n = documentSnapshot.getString("Name");
+                            name.setText(n);
                             String url = documentSnapshot.getString("Profileimage");
                             Glide.with(DocSettings.this)
                                     .load(url)
