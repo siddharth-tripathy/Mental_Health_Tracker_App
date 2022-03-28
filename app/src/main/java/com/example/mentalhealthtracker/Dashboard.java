@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -509,16 +510,15 @@ public class Dashboard extends AppCompatActivity {
             }
         });
         doc = findViewById(R.id.doc);
-        /*
+
         doc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Dashboard.this, DocList.class);
+                Intent i = new Intent(Dashboard.this, UserDoctorList.class);
                 i.putExtra("Name", n);
                 startActivity(i);
             }
         });
-         */
 
         articlesMore.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -133,7 +133,7 @@ public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnI
         gender = findViewById(R.id.gender);
 
         speciality = findViewById(R.id.speciality);
-        totalPatients = findViewById(R.id.totalPatients);
+        totalPatients = findViewById(R.id.totalPatient);
         exp = findViewById(R.id.expp);
         location = findViewById(R.id.loc);
 
@@ -248,7 +248,6 @@ public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnI
                                     totalPatients.setText(TP);
                                     location.setText(l);
                                     exp.setText(e);
-
                                     name.setText(n);
                                     dob.setText(db);
                                     gender.setText(g);
@@ -256,11 +255,14 @@ public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnI
                                             .load(ProfileUrl)
                                             .into(profileImg);
 
+                                    eLocation.setText(l);
+                                    ePatients.setText(TP);
+                                    eExp.setText(e);
+                                    eName.setText(n);
                                 }
                             }
                         }
                     });
-
         }
 
         //Date of Birth

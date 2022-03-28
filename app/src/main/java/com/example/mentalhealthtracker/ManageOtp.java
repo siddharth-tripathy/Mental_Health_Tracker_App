@@ -101,6 +101,7 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
                                                  if (task.isSuccessful()){
                                                      DocumentSnapshot documentSnapshot = task.getResult();
                                                      String join = documentSnapshot.getString("JoinAs");
+                                                     String n = documentSnapshot.getString("Number");
                                                      Log.d("TAG", "The user is"+joinAs);
 
                                                      Intent i;
@@ -113,8 +114,9 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
                                                      }
                                                      i.putExtra("EditMode","true");
                                                      i.putExtra("From", "signin");
-                                                     i.putExtra("Number", phone);
+                                                     i.putExtra("Number", n);
                                                      startActivity(i);
+                                                     finish();
                                                  }
                                              }
                                          });
@@ -165,7 +167,7 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
                                                         QuerySnapshot querySnapshot = task.getResult();
                                                         if (querySnapshot.isEmpty()){
                                                             sendVerificationCode(phone);
-                                                            Toast.makeText(ManageOtp.this, "Processing Request...", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(ManageOtp.this, "Processing Request for new User", Toast.LENGTH_LONG).show();
                                                             newUser = "true";
                                                         }
                                                         else {
@@ -176,7 +178,7 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
                                     }
                                     else {
                                         sendVerificationCode(phone);
-                                        Toast.makeText(ManageOtp.this, "Processing Request...", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(ManageOtp.this, "Processing Your Request Doctor...", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
@@ -199,7 +201,7 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
                                                         if (querySnapshot.isEmpty()){
                                                             newUser = "true";
                                                             sendVerificationCode(phone);
-                                                            Toast.makeText(ManageOtp.this, "Processing Request..."+newUser+"Doc", Toast.LENGTH_LONG).show();
+                                                            Toast.makeText(ManageOtp.this, "Processing Request for new User", Toast.LENGTH_LONG).show();
                                                         }
                                                         else {
                                                             Toast.makeText(ManageOtp.this, "Enter Correct Credentials"+newUser, Toast.LENGTH_LONG).show();
@@ -209,13 +211,19 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
                                     }
                                     else {
                                         sendVerificationCode(phone);
-                                        Toast.makeText(ManageOtp.this, "Processing Request...", Toast.LENGTH_LONG).show();
+                                        Toast.makeText(ManageOtp.this, "Processing Your Request...", Toast.LENGTH_LONG).show();
                                     }
                                 }
                             });
+
+
                 }
+
             }
         });
+
+
+
 
         // initializing on click listener
         // for verify otp button
@@ -257,6 +265,7 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
 
                         Map<String, Object> signInDet = new HashMap<>();
                         signInDet.put("JoinAs", val);
+                        signInDet.put("Number", phone);
 
                         db.collection("List").document(currentUser)
                                 .set(signInDet)
@@ -292,7 +301,7 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
                                                 i.putExtra("Number", phone);
                                                 startActivity(i);
                                             }
-                                            else if(joinAs.equals("Doctors")){
+                                            else if(joinAs.equals("Doctor")){
                                                 //TO BE COMPLETED
                                                 Toast.makeText(getApplicationContext(),"Doctor", Toast.LENGTH_LONG).show();
                                                 Intent i = new Intent(ManageOtp.this, DDoctorDetails.class);

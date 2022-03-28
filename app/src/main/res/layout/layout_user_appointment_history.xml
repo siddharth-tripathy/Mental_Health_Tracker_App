@@ -14,17 +14,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/st"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:text="    SUCCESS"
-                android:fontFamily="@font/ubuntu_light"
-                android:textColor="@color/white"
-                android:textStyle="bold"
-                android:background="@drawable/gradient"
-                android:gravity="center_vertical"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,11 +28,22 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/ubuntu_light"
-                        android:text="Paid to: "
+                        android:text="Appointment Date "
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/paidTo"
+                        android:id="@+id/userAppDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_light"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="  "/>
+
+                    <TextView
+                        android:id="@+id/userAppTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ubuntu_light"/>
@@ -56,12 +56,12 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Payment Date: "
+                        android:text="Name of Doctor: "
                         android:textStyle="bold"
                         android:fontFamily="@font/ubuntu_light"/>
 
                     <TextView
-                        android:id="@+id/paymentDate"
+                        android:id="@+id/userAppDocName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ubuntu_light"/>
@@ -74,18 +74,17 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Amount: "
+                        android:text="Booked on: "
                         android:textStyle="bold"
                         android:fontFamily="@font/ubuntu_light"/>
 
                     <TextView
-                        android:id="@+id/amt"
+                        android:id="@+id/userAppBookDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/ubuntu_light"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
-
     </androidx.cardview.widget.CardView>
 </LinearLayout>

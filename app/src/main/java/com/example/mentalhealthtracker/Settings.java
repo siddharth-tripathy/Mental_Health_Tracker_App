@@ -24,7 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 public class Settings extends AppCompatActivity {
-    TextView tH, wwu, logout, ph, name;
+    TextView tH, wwu, logout, ph, name, aph;
     ImageView profileImg, SettingsBackBtn;
     String n;
     CardView profile;
@@ -42,6 +42,14 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        aph = findViewById(R.id.ah);
+        aph.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Settings.this, UserAppointmentHistory.class));
             }
         });
 

@@ -100,72 +100,6 @@
             </RelativeLayout>
         </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/dateLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/ScheduleNow"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:text="Schedule Now"
-                android:textColor="@color/white"
-                android:fontFamily="@font/ubuntu_light"
-                android:padding="5dp"
-                android:background="@drawable/button_style"/>
-
-            <LinearLayout
-                android:id="@+id/DateSetter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:visibility="gone">
-                <TextView
-                    android:id="@+id/AppointmentDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Not Scheduled"
-                    android:textColor="#FF0000" />
-
-                <Spinner
-                    android:id="@+id/date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/TimeSetter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:gravity="center"
-                android:visibility="gone">
-                <TextView
-                    android:id="@+id/timeTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="--Schedule Time--"
-                    android:textColor="@color/teal_700"/>
-
-                <Button
-                    android:id="@+id/timeButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Set Time"
-                    android:textColor="@color/white"
-                    android:fontFamily="@font/ubuntu_light"
-                    android:padding="5dp"
-                    android:background="@drawable/button_style"/>
-            </LinearLayout>
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/contact"
@@ -246,28 +180,89 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
-            <Button
-                android:id="@+id/confirm"
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_alignParentBottom="true"
+        android:text="Confirm"
+        android:visibility="gone"
+        android:textColor="@color/white"
+        android:fontFamily="@font/ubuntu_light"
+        android:padding="5dp"
+        android:background="@drawable/button_style"/>
+
+    <Button
+        android:id="@+id/ScheduleNow"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:layout_alignParentBottom="true"
+        android:text="Schedule Now"
+        android:textColor="@color/white"
+        android:fontFamily="@font/ubuntu_light"
+        android:padding="5dp"
+        android:background="@drawable/button_style"/>
+
+    <LinearLayout
+        android:id="@+id/dateLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_above="@id/confirm"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/DateSetter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/AppointmentDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Confirm"
-                android:visibility="gone"
+                android:text="Not Scheduled"
+                android:textColor="#FF0000" />
+
+            <Spinner
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/TimeSetter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/timeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="--Schedule Time--"
+                android:textColor="@color/teal_700"/>
+
+            <Button
+                android:id="@+id/timeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Set Time"
                 android:textColor="@color/white"
                 android:fontFamily="@font/ubuntu_light"
                 android:padding="5dp"
                 android:background="@drawable/button_style"/>
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="Analysis Report by MentalHealthTracker"
-            android:textSize="16sp" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </ScrollView>
     </LinearLayout>
 </RelativeLayout>

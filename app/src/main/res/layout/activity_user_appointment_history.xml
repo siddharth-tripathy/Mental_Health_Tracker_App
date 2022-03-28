@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background"
-    tools:context=".PaymentHistory">
+    tools:context=".UserAppointmentHistory">
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
@@ -31,14 +31,12 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/top"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
         android:layout_gravity="center"
         android:fontFamily="@font/ubuntu_light"
-        android:text="Payment History"
-        android:textSize="24sp" />
-
+        android:text="Appointment History"
+        android:textSize="24sp"/>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/paymentHistory"
+        android:id="@+id/userAppointmentHistory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"/>

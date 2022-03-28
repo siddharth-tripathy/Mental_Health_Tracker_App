@@ -19,36 +19,37 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class Articles extends AppCompatActivity {
-
-    RecyclerView readList;
-    ArrayList<ModelReadList> modelArrayList;
-    AdapterReadList myAdapter;
+public class UserAppointmentHistory extends AppCompatActivity {
+    RecyclerView UserAppList;
+    ArrayList<ModelUserAppoinmentHistory> modelArrayList;
+    AdapterUserAppointmentHistory myAdapter;
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
+    String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_articles);
+        setContentView(R.layout.activity_user_appointment_history);
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         String Uid = mUser.getUid();
 
-        readList = findViewById(R.id.readList);
-        readList.setHasFixedSize(true);
-        readList.setLayoutManager(new LinearLayoutManager(this));
+        UserAppList = findViewById(R.id.userAppointmentHistory);
+        UserAppList.setHasFixedSize(true);
+        UserAppList.setLayoutManager(new LinearLayoutManager(this));
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         modelArrayList = new ArrayList<>();
-        myAdapter = new AdapterReadList(this, modelArrayList);
-        readList.setAdapter(myAdapter);
+        myAdapter = new AdapterUserAppointmentHistory(this, modelArrayList);
+        UserAppList.setAdapter(myAdapter);
 
         modelArrayList.clear();
         myAdapter.notifyDataSetChanged();
-        firebaseFirestore.collection("Reads").orderBy("Name", Query.Direction.ASCENDING)
+        firebaseFirestore.collection("User").document(currentUser).collection("AppointmentList").orderBy("NameDoctor", Query.Direction.ASCENDING)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -58,7 +59,7 @@ public class Articles extends AppCompatActivity {
                         }
                         for (DocumentChange dc : value.getDocumentChanges()){
                             if (dc.getType() == DocumentChange.Type.ADDED) {
-                                modelArrayList.add(dc.getDocument().toObject(ModelReadList.class));
+                                modelArrayList.add(dc.getDocument().toObject(ModelUserAppoinmentHistory.class));
                             }
                             myAdapter.notifyDataSetChanged();
                         }

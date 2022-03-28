@@ -3,6 +3,7 @@ package com.example.mentalhealthtracker;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,7 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class DocSettings extends AppCompatActivity {
-    TextView ah, ca, logout, ph, pa, name;
+    TextView ah, ca, logout, ph, pa, name, abtus;
     CardView profile;
     String n;
     ImageView profile_image;
@@ -38,6 +39,10 @@ public class DocSettings extends AppCompatActivity {
         ca = findViewById(R.id.mailUs);
         profile_image = findViewById(R.id.profile_image);
         name = findViewById(R.id.name);
+
+        abtus = findViewById(R.id.au);
+        abtus.setMovementMethod(LinkMovementMethod.getInstance());
+
 
         pa = findViewById(R.id.payAdmin);
         pa.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +114,8 @@ public class DocSettings extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseAuth.getInstance().signOut();
                 Intent intent = new Intent(DocSettings.this, SplashScreen.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
-                finish();
+                finishAffinity();
             }
         });
     }

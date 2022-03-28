@@ -12,4 +12,6 @@
     <string name="menu_slideshow">Slideshow</string>
 
     <string name="image">Image</string>
+
+    <string name="messageWithLink"><a href="https://www.google.com/">About App</a></string>
 </resources>
