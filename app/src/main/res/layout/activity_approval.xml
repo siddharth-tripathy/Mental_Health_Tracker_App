@@ -6,21 +6,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Approval">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="WAIT FOR APPROVAL"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
-
+        android:layout_centerInParent="true"
+        android:text="CONTACT ADMIN TO CLEAR APPROVAL" />
     <Button
+        android:id="@+id/paa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:text="CALL ADMIN"
+        android:text="PAY ADMIN"
         android:background="@color/primaryB"
         android:textColor="@color/white"
         android:fontFamily="@font/ubuntu_light"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/caa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/paa"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/primaryB"
+        android:fontFamily="@font/ubuntu_light"
+        android:layout_centerHorizontal="true"
+        android:text="CONTACT ADMIN"
+        android:textColor="@color/white" />
+
 </RelativeLayout>

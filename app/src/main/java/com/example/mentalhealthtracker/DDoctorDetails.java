@@ -89,7 +89,7 @@ public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnI
         Intent i = getIntent();
         editMode = i.getStringExtra("EditMode");
         uNumber = i.getStringExtra("Number");
-        frm = i.getStringExtra("Frm");
+        frm = i.getStringExtra("From");
 
         /*
         if (frm.equals("settings")){
@@ -415,7 +415,6 @@ public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnI
                                         public void onComplete(@NonNull Task<Uri> task) {
                                             String profileImgUrl = task.getResult().toString();
 
-
                                             uName = eName.getText().toString();
                                             uDOB = eDob.getText().toString();
                                             uGender = eGender.toString();
@@ -438,14 +437,12 @@ public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnI
                                             accountData.put("RazorpayId", erp);
                                             accountData.put("Fees", fs);
 
-                                            /*
                                             if (frm.equals("signin")){
                                                 accountData.put("Approval", "false");
                                             }
                                             else {
                                                 accountData.put("Approval", "true");
                                             }
-                                             */
 
                                             db.collection("DoctorUser").document(currentUser)
                                                     .set(accountData)
