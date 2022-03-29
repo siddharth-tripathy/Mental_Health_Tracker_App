@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="spinner_doc_lst">
+        <item>--FILTER--</item>
+        <item>All</item>
+        <item>General</item>
+        <item>Psychiatrist</item>
+        <item>Cognitive therapy</item>
+        <item>Behavior therapy</item>
+        <item>Integrative therapy</item>
+    </string-array>
+</resources>
