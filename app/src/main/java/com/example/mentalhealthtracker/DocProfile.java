@@ -343,8 +343,8 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 Log.w("TAG", "Successful Written Data" + AppointmentDate+" "+AppointmentTime + timeStamp);
 
 
-                fss = fss+"00";
-                float fsss = Float.parseFloat(fss);
+                String fssk = fss+"00";
+                float fsss = Float.parseFloat(fssk);
                 Checkout checkout = new Checkout();
                 checkout.setKeyID(rzp);
                 //checkout.setImage(R.drawable.nev_cart);
@@ -542,7 +542,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
 
         Map<String, Object> paymentData = new HashMap<>();
         paymentData.put("PaymentDate", currentDateTimeString);
-        paymentData.put("PaymentAmount", "Rs. 1000");
+        paymentData.put("PaymentAmount", fss);
         paymentData.put("PaidTo", doc_Name);
         paymentData.put("PaidBy", uName);
         paymentData.put("PaymentStatus", "Successful");

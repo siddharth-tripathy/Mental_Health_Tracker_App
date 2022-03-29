@@ -397,7 +397,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="70dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/gradient"
                     android:orientation="vertical">
 
@@ -534,12 +534,11 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="90dp"
                     android:background="@drawable/gradient2"
                     android:orientation="vertical">
 
@@ -558,17 +557,6 @@
                             android:text="Yog"
                             android:textColor="@color/white"
                             android:textSize="20sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:layout_margin="15dp"
-                            android:fontFamily="@font/ubuntu_light"
-                            android:text="MORE"
-                            android:textColor="@color/white"
-                            android:textSize="14sp" />
                     </RelativeLayout>
 
                     <LinearLayout
@@ -591,9 +579,11 @@
                                 app:cardCornerRadius="20dp">
 
                                 <ImageView
+                                    android:id="@+id/anjj"
                                     android:layout_width="match_parent"
                                     android:layout_height="125dp"
-                                    android:src="@drawable/read" />
+                                    android:src="@drawable/anj"
+                                    android:scaleType="centerCrop"/>
                             </androidx.cardview.widget.CardView>
 
                             <TextView
@@ -602,7 +592,7 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginBottom="20dp"
                                 android:fontFamily="@font/ubuntu_light"
-                                android:text="Smiles"
+                                android:text="Anjaneyasana"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -622,9 +612,11 @@
                                 app:cardCornerRadius="20dp">
 
                                 <ImageView
+                                    android:id="@+id/virr"
                                     android:layout_width="match_parent"
                                     android:layout_height="125dp"
-                                    android:src="@drawable/read" />
+                                    android:src="@drawable/vir"
+                                    android:scaleType="centerCrop"/>
                             </androidx.cardview.widget.CardView>
 
                             <TextView
@@ -633,7 +625,7 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginBottom="20dp"
                                 android:fontFamily="@font/ubuntu_light"
-                                android:text="Smiles"
+                                android:text="Virabhadrasana"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -653,9 +645,11 @@
                                 app:cardCornerRadius="20dp">
 
                                 <ImageView
+                                    android:id="@+id/vajrr"
                                     android:layout_width="match_parent"
                                     android:layout_height="125dp"
-                                    android:src="@drawable/read" />
+                                    android:src="@drawable/vajr"
+                                    android:scaleType="centerCrop"/>
                             </androidx.cardview.widget.CardView>
 
                             <TextView
@@ -664,14 +658,12 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginBottom="20dp"
                                 android:fontFamily="@font/ubuntu_light"
-                                android:text="Smiles"
+                                android:text="Vajrasana"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
-
                 </LinearLayout>
-                -->
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

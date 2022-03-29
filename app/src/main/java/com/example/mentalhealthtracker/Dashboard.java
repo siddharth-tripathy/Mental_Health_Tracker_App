@@ -622,5 +622,70 @@ public class Dashboard extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        
+        
+        ImageView anjj, vajrr, virr;
+
+        String a1 = "\n" +
+                "1. While standing, lunge one leg forward.\n\n" +
+                "2. Bend the front knee, make sure your knee is in line with your ankle, stretch your back leg.\n\n" +
+                "3. Press your ankle flat against the ground on both ankles.\n\n" +
+                "4. Raise your arms to the sky and connect your palms.\n\n" +
+                "5. Breathe in deeply and breathe out in an even flow.\n\n" +
+                "6. Repeat 5 times per leg.\n\n" +
+                "\n\n" +
+                "Caution \n" +
+                "Ensure your knee is in line with your ankle and your front knee is at a 90-degree angle. If you perform it incorrectly, it could harm your joints.";
+        anjj = findViewById(R.id.anjj);
+        anjj.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Dashboard.this, Anjaneyasana.class);
+                i.putExtra("Title", "Anjaneyasana");
+                i.putExtra("Content", a1);
+                startActivity(i);
+            }
+        });
+
+        String v1 = "\n" +
+                "1. While on two feet, spread your legs wide, turn your hips to one side, turn your ankles to the side you are facing.\n\n" +
+                "2. Bend the front leg to a 90-degree angle.\n\n" +
+                "3. Stretch your arms to your sides and breathe in deeply and evenly for 10 seconds.\n\n" +
+                "\n\n" +
+                "Caution \n" +
+                "\n" +
+                "Make sure your ankles are always in line with your knee, breathe evenly and do not hold the pose for long periods if your body is shaking. Ensure you only do this pose under  the supervision of a professional.";
+
+        vajrr = findViewById(R.id.vajrr);
+        vajrr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Dashboard.this, Anjaneyasana.class);
+                i.putExtra("Title", "Virabhadrasana");
+                i.putExtra("Content", v1);
+                startActivity(i);
+            }
+        });
+
+
+        String v2 = "\n" +
+                "1. Slowly, begin by sitting on your knees, stretch your ankles outward, bring your thighs and calves together.\n\n" +
+                "2. Then place your palms on your knees.\n\n" +
+                "3. Breathe in and out deeply for 30 seconds to a minute.\n\n" +
+                "\n\n" +
+                "Caution \n" +
+                "\n" +
+                "This is a fairly basic yoga pose, ensure you keep an eye on your knees and ankles, if they hurt, stretch them out. Do not do this pose for too long at one time as it can affect the blood circulation in your legs.";
+
+        virr = findViewById(R.id.virr);
+        virr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Dashboard.this, Anjaneyasana.class);
+                i.putExtra("Title", "Virabhadrasana");
+                i.putExtra("Content", v2);
+                startActivity(i);
+            }
+        });
     }
 }
