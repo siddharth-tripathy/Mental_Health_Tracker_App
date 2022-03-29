@@ -1,6 +1,7 @@
 package com.example.mentalhealthtracker;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,17 @@ public class AdapterReadList extends RecyclerView.Adapter<AdapterReadList.MyView
                 .load(url)
                 .placeholder(R.drawable.profile)
                 .into(holder.ModelReadDp);
+
+        holder.viewMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent a = new Intent(context, Reads.class);
+                a.putExtra("Name", name);
+                a.putExtra("URL", url);
+                a.putExtra("ID", id);
+                context.startActivity(a);
+            }
+        });
     }
 
     @Override
@@ -54,11 +66,13 @@ public class AdapterReadList extends RecyclerView.Adapter<AdapterReadList.MyView
     public class MyViewHolder extends RecyclerView.ViewHolder {
         TextView ModelReadListName;
         ImageView ModelReadDp;
+        Button viewMore;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             ModelReadListName = itemView.findViewById(R.id.ModelReadListName);
             ModelReadDp = itemView.findViewById(R.id.readDp);
+            viewMore = itemView.findViewById(R.id.viewMore);
         }
     }
 }

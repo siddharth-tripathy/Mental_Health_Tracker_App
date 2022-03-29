@@ -32,14 +32,15 @@
         android:layout_below="@id/top"
         android:layout_centerHorizontal="true"
         android:layout_gravity="center"
-        android:fontFamily="@font/ubuntu_light"
+        android:fontFamily="@font/dancing_script"
         android:text="Reads"
-        android:textSize="24sp" />
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/readList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_margin="10dp"
         android:background="#EFF6FF"/>
 </LinearLayout>

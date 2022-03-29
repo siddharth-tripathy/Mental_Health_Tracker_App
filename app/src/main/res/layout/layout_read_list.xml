@@ -12,19 +12,22 @@
         app:cardCornerRadius="10dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:layout_gravity="center_vertical"
             android:layout_margin="10dp"
-            android:layout_gravity="center_vertical">
+            android:orientation="horizontal">
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/dImg"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_margin="5dp"
                 android:elevation="5dp"
-                app:cardCornerRadius="15dp"
-                android:layout_margin="5dp">
+                app:cardCornerRadius="15dp">
+
                 <ImageView
                     android:id="@+id/readDp"
                     android:layout_width="55dp"
@@ -33,21 +36,22 @@
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
-                android:layout_toRightOf="@id/dImg"
-                android:layout_toLeftOf="@+id/viewMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_centerVertical="true"
                 android:layout_margin="10dp"
-                android:layout_centerVertical="true">
+                android:layout_toLeftOf="@+id/viewMore"
+                android:layout_toRightOf="@id/dImg"
+                android:orientation="vertical">
+
                 <TextView
                     android:id="@+id/ModelReadListName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="name"
                     android:fontFamily="@font/ubuntu_light"
+                    android:text="name"
                     android:textColor="@color/black"
-                    android:textSize="14sp"/>
+                    android:textSize="14sp" />
             </LinearLayout>
 
             <Button

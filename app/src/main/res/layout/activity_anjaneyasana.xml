@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Anjaneyasana">
+    <RelativeLayout
+        android:id="@+id/vowel_video"
+        android:paddingTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <VideoView
+                android:id="@+id/videoViewV"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"/>
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/playVidV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="12dp"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:text="Play Video"
+                android:background="@drawable/button_pressed"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

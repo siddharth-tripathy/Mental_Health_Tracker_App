@@ -98,13 +98,12 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         Intent i = getIntent();
         docId = i.getStringExtra("ID");
         doc_Name = i.getStringExtra("Name");
-        docBio = i.getStringExtra("Bio");
 
         docName = findViewById(R.id.DocName);
         docName.setText(docId);
 
         temp = findViewById(R.id.temp);
-        temp.setText(bio);
+        //temp.setText(bio);
 
         dLocation = findViewById(R.id.loc);
         dExp = findViewById(R.id.exp);

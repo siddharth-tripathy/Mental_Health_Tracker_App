@@ -1,26 +1,75 @@
 package com.example.mentalhealthtracker;
 
+import static android.content.ContentValues.TAG;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 
 public class Reads extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     CardView play;
+    String Id, Name, Url;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    TextView content, artName;
+    ImageView arImg;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reads);
 
+        Intent i = getIntent();
+        Id = i.getStringExtra("ID");
+        Name = i.getStringExtra("Name");
+        Url = i.getStringExtra("URL");
+        content = findViewById(R.id.content);
+        artName = findViewById(R.id.ArticleName);
+        arImg = findViewById(R.id.arImg);
+
+        artName.setText(Name);
+
+        Glide.with(Reads.this)
+                .load(Url)
+                .placeholder(R.drawable.profile)
+                .into(arImg);
+
+        Log.d(TAG, "The tag is......."+Id);
+
+        db.collection("Reads").document(Id)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()){
+                            DocumentSnapshot documentSnapshot= task.getResult();
+                            String con = documentSnapshot.getString("Content");
+                            content.setText(con);
+                        }
+                    }
+                });
+
+        /*
         play = findViewById(R.id.play);
         play.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,6 +96,8 @@ public class Reads extends AppCompatActivity {
         else {
             Toast.makeText(getApplicationContext(), "Check your internet connection", Toast.LENGTH_LONG).show();
         }
+
+         */
     }
 
     private boolean haveNetwork(){

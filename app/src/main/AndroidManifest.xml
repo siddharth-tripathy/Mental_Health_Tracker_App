@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MentalHealthTracker">
         <activity
+            android:name=".Anjaneyasana"
+            android:exported="false" />
+        <activity
             android:name=".UserAppointmentHistory"
             android:exported="false" />
         <activity

@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,7 +25,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.jakewharton.processphoenix.ProcessPhoenix;
 
 public class Settings extends AppCompatActivity {
-    TextView tH, wwu, logout, ph, name, aph;
+    TextView tH, wwu, logout, ph, name, aph, abtus;
     ImageView profileImg, SettingsBackBtn;
     String n;
     CardView profile;
@@ -44,6 +45,9 @@ public class Settings extends AppCompatActivity {
                 finish();
             }
         });
+
+        abtus = findViewById(R.id.au);
+        abtus.setMovementMethod(LinkMovementMethod.getInstance());
 
         aph = findViewById(R.id.ah);
         aph.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +90,7 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        /*
         wwu = findViewById(R.id.wwu);
         wwu.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +99,8 @@ public class Settings extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+         */
         /*
         tH.setOnClickListener(new View.OnClickListener() {
             @Override

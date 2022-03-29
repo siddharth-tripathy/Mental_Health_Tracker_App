@@ -6,8 +6,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -36,11 +38,19 @@ public class UserDoctorList extends AppCompatActivity {
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     String docUid;
 
+    TextView nameUser;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_doctor_list);
+
+        nameUser = findViewById(R.id.nameUser);
+
+        Intent i = getIntent();
+
+        nameUser.setText(i.getStringExtra("Name"));
 
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();

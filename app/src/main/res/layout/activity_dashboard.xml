@@ -137,65 +137,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginBottom="10dp"
-                    android:fontFamily="@font/ubuntu_light"
-                    android:text="How are you feeling???"
-                    android:textSize="14sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:id="@+id/happy"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/excellent" />
-
-                    <ImageView
-                        android:id="@+id/fine"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/good" />
-
-                    <ImageView
-                        android:id="@+id/notOk"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/ok" />
-
-                    <ImageView
-                        android:id="@+id/sad"
-                        android:layout_width="0dp"
-                        android:layout_height="50dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image"
-                        android:src="@drawable/bad" />
-                </LinearLayout>
-
                 <androidx.cardview.widget.CardView
                     android:id="@+id/appDash"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="5dp"
                     app:cardCornerRadius="20dp"
-                    android:layout_margin="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
                     app:cardBackgroundColor="@color/primaryB">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -206,124 +156,109 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Your Appointment"
-                            android:textStyle="bold"
                             android:textColor="@color/white"
                             android:fontFamily="@font/ubuntu_light"
-                            android:textAllCaps="true"/>
+                            android:textSize="15sp"/>
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
-                            <ImageView
-                                android:layout_width="50dp"
-                                android:layout_height="50dp"
-                                android:layout_margin="10dp"
-                                android:src="@drawable/profile"/>
-                            <LinearLayout
+
+                            <androidx.cardview.widget.CardView
+                                android:id="@+id/dcddpp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:layout_gravity="center_vertical"
-                                android:gravity="center_vertical">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    android:text="Name"
-                                    android:textColor="@color/white"
-                                    android:fontFamily="@font/ubuntu_light"/>
+                                android:layout_marginStart="3dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="10dp"
+                                app:cardCornerRadius="15dp">
+                                <ImageView
+                                    android:id="@+id/docProfileDP"
+                                    android:layout_width="60dp"
+                                    android:layout_height="60dp"
+                                    android:layout_centerVertical="true"
+                                    android:scaleType="centerCrop"
+                                    android:src="@drawable/profile" />
+                            </androidx.cardview.widget.CardView>
+
+                            <TextView
+                                android:id="@+id/dcnm"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/dcddpp"
+                                android:fontFamily="@font/ubuntu_light"
+                                android:text="Name"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"/>
+
+                            <LinearLayout
+                                android:id="@+id/fn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toRightOf="@id/dcddpp"
+                                android:layout_below="@id/dcnm"
+                                android:orientation="vertical">
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="3dp"
-                                    android:text="Appointment Date"
-                                    android:textColor="@color/white"
-                                    android:fontFamily="@font/ubuntu_light"/>
+                                    android:fontFamily="@font/ubuntu_light"
+                                    android:text="Appointment On: "
+                                    android:textColor="@color/white" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="@font/ubuntu_light"
+                                    android:text="Valid Till: "
+                                    android:textColor="@color/white" />
                             </LinearLayout>
-                        </LinearLayout>
 
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
                             <LinearLayout
-                                android:id="@+id/contact"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal"
-                                android:layout_margin="5dp"
-                                android:gravity="center_horizontal">
-                                <androidx.cardview.widget.CardView
+                                android:layout_toRightOf="@id/fn"
+                                android:layout_below="@id/dcnm"
+                                android:orientation="vertical">
+                                <TextView
+                                    android:id="@+id/addt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="10dp"
-                                    app:cardCornerRadius="20dp"
-                                    app:cardElevation="5dp">
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:background="#308000FF">
-                                        <ImageButton
-                                            android:id="@+id/videoCallBtn"
-                                            android:layout_width="24dp"
-                                            android:layout_height="24dp"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_marginBottom="10dp"
-                                            android:layout_marginRight="30dp"
-                                            android:layout_marginLeft="30dp"
-                                            android:background="@drawable/video_logo"/>
-                                    </LinearLayout>
-                                </androidx.cardview.widget.CardView>
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="@font/ubuntu_light"
+                                    android:text="Appointment Date"
+                                    android:textColor="@color/white" />
 
-                                <androidx.cardview.widget.CardView
+                                <TextView
+                                    android:id="@+id/vddt"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="10dp"
-                                    app:cardCornerRadius="20dp"
-                                    app:cardElevation="5dp">
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:background="#352B6E17">
-                                        <ImageButton
-                                            android:id="@+id/call"
-                                            android:layout_width="24dp"
-                                            android:layout_height="24dp"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_marginBottom="10dp"
-                                            android:layout_marginRight="30dp"
-                                            android:layout_marginLeft="30dp"
-                                            android:background="@drawable/phone_logo"/>
-                                    </LinearLayout>
-                                </androidx.cardview.widget.CardView>
+                                    android:layout_marginTop="3dp"
+                                    android:fontFamily="@font/ubuntu_light"
+                                    android:text="Valid Till"
+                                    android:textColor="@color/white" />
 
-                                <androidx.cardview.widget.CardView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_margin="10dp"
-                                    app:cardCornerRadius="20dp"
-                                    app:cardElevation="5dp">
-                                    <LinearLayout
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:background="#300072ff">
-                                        <ImageButton
-                                            android:id="@+id/chatBtn"
-                                            android:layout_width="24dp"
-                                            android:layout_height="24dp"
-                                            android:layout_marginTop="10dp"
-                                            android:layout_marginBottom="10dp"
-                                            android:layout_marginRight="30dp"
-                                            android:layout_marginLeft="30dp"
-                                            android:background="@drawable/chat_logo"/>
-                                    </LinearLayout>
-                                </androidx.cardview.widget.CardView>
                             </LinearLayout>
 
-                        </LinearLayout>
+                            <Button
+                                android:id="@+id/docPButton"
+                                android:layout_width="18dp"
+                                android:layout_height="18dp"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="10dp"
+                                android:layout_marginBottom="10dp"
+                                android:background="@drawable/ic_baseline_arrow_forward_ios_24"
+                                android:padding="20dp" />
+                        </RelativeLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
 
@@ -343,7 +278,7 @@
                             android:layout_height="wrap_content"
                             android:layout_margin="15dp"
                             android:fontFamily="@font/ubuntu_light"
-                            android:text="YOUR TRACKER" />
+                            android:text="Your Tracker" />
 
                         <HorizontalScrollView
                             android:layout_width="match_parent"
@@ -354,7 +289,6 @@
                             android:layout_marginBottom="10dp"
                             android:scrollbarSize="10dp"
                             android:scrollbars="horizontal">
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -463,7 +397,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="70dp"
                     android:background="@drawable/gradient"
                     android:orientation="vertical">
 
@@ -477,11 +411,11 @@
                             android:layout_alignParentStart="true"
                             android:layout_marginStart="20dp"
                             android:layout_marginTop="15dp"
-                            android:fontFamily="@font/ubuntu_light"
+                            android:fontFamily="@font/dancing_script"
                             android:gravity="bottom"
                             android:text="Reads"
                             android:textColor="@color/white"
-                            android:textSize="18sp" />
+                            android:textSize="24sp" />
 
                         <TextView
                             android:id="@+id/articlesMore"
@@ -511,7 +445,7 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="15dp"
+                                android:layout_margin="5dp"
                                 android:elevation="5dp"
                                 app:cardCornerRadius="20dp">
 
@@ -519,7 +453,7 @@
                                     android:id="@+id/articles"
                                     android:layout_width="match_parent"
                                     android:layout_height="125dp"
-                                    android:src="@drawable/read" />
+                                    android:scaleType="centerCrop"/>
                             </androidx.cardview.widget.CardView>
 
                             <TextView
@@ -528,7 +462,8 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginBottom="20dp"
                                 android:fontFamily="@font/ubuntu_light"
-                                android:text="Smiles"
+                                android:text="What Is Mental Health?"
+                                android:gravity="center"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -543,14 +478,14 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="15dp"
+                                android:layout_margin="5dp"
                                 android:elevation="5dp"
                                 app:cardCornerRadius="20dp">
-
                                 <ImageView
+                                    android:id="@+id/articles2"
                                     android:layout_width="match_parent"
                                     android:layout_height="125dp"
-                                    android:src="@drawable/read" />
+                                    android:scaleType="centerCrop"/>
                             </androidx.cardview.widget.CardView>
 
                             <TextView
@@ -559,7 +494,8 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginBottom="20dp"
                                 android:fontFamily="@font/ubuntu_light"
-                                android:text="Smiles"
+                                android:text="Cognitive behavioral therapy"
+                                android:gravity="center"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
                         </LinearLayout>
@@ -574,14 +510,15 @@
                             <androidx.cardview.widget.CardView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_margin="15dp"
+                                android:layout_margin="5dp"
                                 android:elevation="5dp"
                                 app:cardCornerRadius="20dp">
 
                                 <ImageView
+                                    android:id="@+id/articles3"
                                     android:layout_width="match_parent"
                                     android:layout_height="125dp"
-                                    android:src="@drawable/read" />
+                                    android:scaleType="centerCrop"/>
                             </androidx.cardview.widget.CardView>
 
                             <TextView
@@ -590,13 +527,15 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginBottom="20dp"
                                 android:fontFamily="@font/ubuntu_light"
-                                android:text="Smiles"
+                                android:text="31 Tips To Boost Your Mental Health"
+                                android:gravity="center"
                                 android:textColor="@color/white"
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
+                <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -731,7 +670,9 @@
                                 android:textSize="14sp" />
                         </LinearLayout>
                     </LinearLayout>
+
                 </LinearLayout>
+                -->
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

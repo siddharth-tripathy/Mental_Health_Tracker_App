@@ -41,10 +41,10 @@ import java.util.Date;
 import java.util.List;
 
 public class Dashboard extends AppCompatActivity {
-    private ImageView profileImg, settings;
+    private ImageView profileImg, settings, article1, artcle2, artcle3, docP;
     private CardView account, appDash;
-    private TextView userName, docName, trackHistory, profile, greetings, wwu, articlesMore;
-    private String n;
+    private TextView userName, docName, trackHistory, profile, greetings, wwu, articlesMore, dcnm, addt, vddt;
+    private String n, docProfileDP, ad, vd, nm, iddd;
 
     //Graph
     private LineChart lineChart;
@@ -53,7 +53,7 @@ public class Dashboard extends AppCompatActivity {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private CardView depression, anxiety, anger, sleep;
-    private Button analysis, doc;
+    private Button analysis, doc, docPButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +68,10 @@ public class Dashboard extends AppCompatActivity {
         //DashboardTop
         profileImg =findViewById(R.id.profileImage);
         settings = findViewById(R.id.sett);
+
+        docP = findViewById(R.id.docProfileDP);
+
+        docPButton = findViewById(R.id.docPButton);
 
         analysis = findViewById(R.id.analysis);
 
@@ -372,6 +376,10 @@ public class Dashboard extends AppCompatActivity {
 
          */
 
+        addt = findViewById(R.id.addt);
+        vddt = findViewById(R.id.vddt);
+        dcnm = findViewById(R.id.dcnm);
+
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         Calendar cal1 = Calendar.getInstance();
         //cal1.add(Calendar.DATE, 0); // Adding 7 days
@@ -386,7 +394,7 @@ public class Dashboard extends AppCompatActivity {
         Long time = date2.getTime();
         String timeStampV = String.valueOf(time);
 
-        db.collection("User").document(currentUser).collection("AppointmentList").whereGreaterThanOrEqualTo("timeStampV", timeStampV)
+        db.collection("User").document(currentUser).collection("AppointmentList").whereGreaterThanOrEqualTo("ValidityTimeStamp", timeStampV)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -398,7 +406,33 @@ public class Dashboard extends AppCompatActivity {
                             }
                             else{
                                 for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d("TAG", document.getId() + " => " + document.getData());
+                                    appDash.setVisibility(View.VISIBLE);
+                                    Log.d("TAG", document.getId() + " => " + document.getData()+timeStampV);
+                                    String idd = document.getId();
+                                    db.collection("User").document(currentUser).collection("AppointmentList").document(idd)
+                                            .get()
+                                            .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                                    if (task.isSuccessful()){
+                                                        DocumentSnapshot documentSnapshot = task.getResult();
+                                                        nm = documentSnapshot.getString("NameDoctor");
+                                                        vd = documentSnapshot.getString("Validity");
+                                                        ad = documentSnapshot.getString("AppointmentDate");
+                                                        docProfileDP = documentSnapshot.getString("DocImg");
+                                                        iddd = documentSnapshot.getString("Email");
+
+                                                        dcnm.setText(nm);
+                                                        addt.setText(ad);
+                                                        vddt.setText(vd);
+
+                                                        Glide.with(Dashboard.this)
+                                                                .load(docProfileDP)
+                                                                .placeholder(R.drawable.profile)
+                                                                .into(docP);
+                                                    }
+                                                }
+                                            });
                                 }
                             }
                         }
@@ -502,13 +536,55 @@ public class Dashboard extends AppCompatActivity {
         });
         account = findViewById(R.id.account);
 
+
         ImageView articles = findViewById(R.id.articles);
+        Glide.with(Dashboard.this)
+                .load("https://firebasestorage.googleapis.com/v0/b/mental-health-tracker-bf577.appspot.com/o/Reads%2FWhat%20Is%20Mental%20Health.jpg?alt=media&token=4cde2048-e470-4a54-9c54-efea0c2b05a5")
+                .placeholder(R.drawable.profile)
+                .into(articles);
         articles.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Dashboard.this.startActivity(new Intent(Dashboard.this, Reads.class));
+                Intent a = new Intent(Dashboard.this, Reads.class);
+                a.putExtra("Name", "What is Mental Health");
+                a.putExtra("URL", "https://firebasestorage.googleapis.com/v0/b/mental-health-tracker-bf577.appspot.com/o/Reads%2FWhat%20Is%20Mental%20Health.jpg?alt=media&token=4cde2048-e470-4a54-9c54-efea0c2b05a5");
+                a.putExtra("ID", "RZVCKdSjf1XnZJMvioIJ");
+                startActivity(a);
             }
         });
+
+        artcle2 = findViewById(R.id.articles2);
+        Glide.with(Dashboard.this)
+                .load("https://firebasestorage.googleapis.com/v0/b/mental-health-tracker-bf577.appspot.com/o/Reads%2FCognitive%20behavioral%20therapy.jpeg?alt=media&token=9d4ef02b-5231-4f09-b3e4-bbf6cee1ff07")
+                .placeholder(R.drawable.profile)
+                .into(artcle2);
+        artcle2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(Dashboard.this, Reads.class);
+                a.putExtra("Name", "Cognitive behavioral therapy");
+                a.putExtra("URL", "https://firebasestorage.googleapis.com/v0/b/mental-health-tracker-bf577.appspot.com/o/Reads%2FCognitive%20behavioral%20therapy.jpeg?alt=media&token=9d4ef02b-5231-4f09-b3e4-bbf6cee1ff07");
+                a.putExtra("ID", "2g406B7Oa5J8LeKJmisD");
+                startActivity(a);
+            }
+        });
+
+        artcle3 = findViewById(R.id.articles3);
+        Glide.with(Dashboard.this)
+                .load("https://firebasestorage.googleapis.com/v0/b/mental-health-tracker-bf577.appspot.com/o/Reads%2F31%20Tips%20To%20Boost%20Your%20Mental%20Health.jfif?alt=media&token=cb44e2d6-b780-4f66-ac64-8664db701c07")
+                .placeholder(R.drawable.profile)
+                .into(artcle3);
+        artcle3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(Dashboard.this, Reads.class);
+                a.putExtra("Name", "31 Tips To Boost Your Mental Health");
+                a.putExtra("URL", "https://firebasestorage.googleapis.com/v0/b/mental-health-tracker-bf577.appspot.com/o/Reads%2F31%20Tips%20To%20Boost%20Your%20Mental%20Health.jfif?alt=media&token=cb44e2d6-b780-4f66-ac64-8664db701c07");
+                a.putExtra("ID", "RZVCKdSjf1XnZJMvioIJ");
+                startActivity(a);
+            }
+        });
+
         doc = findViewById(R.id.doc);
 
         doc.setOnClickListener(new View.OnClickListener() {
@@ -524,6 +600,16 @@ public class Dashboard extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Dashboard.this, Articles.class));
+            }
+        });
+
+        docPButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(Dashboard.this, DocProfile.class);
+                i.putExtra("Name", nm);
+                i.putExtra("ID", iddd);
+                startActivity(i);
             }
         });
     }

@@ -74,7 +74,7 @@ public class AdapterDocList extends RecyclerView.Adapter<AdapterDocList.MyViewHo
         holder.viewMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "The user id is ............:" + id);
+                //Log.d(TAG, "The user id is ............:" + id);
                 Intent a = new Intent(context, DocProfile.class);
                 a.putExtra("Name", name);
                 a.putExtra("ID", id);
