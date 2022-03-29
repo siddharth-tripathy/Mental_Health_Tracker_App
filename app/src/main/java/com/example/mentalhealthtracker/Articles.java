@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,6 +29,7 @@ public class Articles extends AppCompatActivity {
     FirebaseFirestore firebaseFirestore;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
+    ImageView SettingsBackBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +39,14 @@ public class Articles extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
         String Uid = mUser.getUid();
+
+        SettingsBackBtn = findViewById(R.id.SettingsBackBtn);
+        SettingsBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         readList = findViewById(R.id.readList);
         readList.setHasFixedSize(true);

@@ -62,7 +62,7 @@ public class CreateAccount extends AppCompatActivity {
     Button save, upload;
     ImageView profileImg;
     Uri url;
-    ImageView edit;
+    ImageView edit, UserProfileBackBtn;
 
     //Firebase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -340,6 +340,14 @@ public class CreateAccount extends AppCompatActivity {
                                 });
                     }
                 });
+            }
+        });
+
+        UserProfileBackBtn = findViewById(R.id.UserProfileBackBtn);
+        UserProfileBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 

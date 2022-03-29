@@ -18,16 +18,20 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.razorpay.Checkout;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DocSettings extends AppCompatActivity {
-    TextView ah, ca, logout, ph, pa, name, abtus;
+    TextView ah, ca, logout, ph, pa, name, abtus, deleteAcc;
     CardView profile;
     String n;
-    ImageView profile_image;
+    ImageView profile_image, SettingsBackBtn;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
+    String no;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,14 +47,16 @@ public class DocSettings extends AppCompatActivity {
         abtus = findViewById(R.id.au);
         abtus.setMovementMethod(LinkMovementMethod.getInstance());
 
-
-        pa = findViewById(R.id.payAdmin);
-        pa.setOnClickListener(new View.OnClickListener() {
+        SettingsBackBtn = findViewById(R.id.SettingsBackBtn);
+        SettingsBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(DocSettings.this, PayAdmin.class));
+                finish();
             }
         });
+
+        pa = findViewById(R.id.payAdmin);
+
 
         ph.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +73,7 @@ public class DocSettings extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot documentSnapshot = task.getResult();
                             String n = documentSnapshot.getString("Name");
+                            no = documentSnapshot.getString("Number");
                             name.setText(n);
                             String url = documentSnapshot.getString("Profileimage");
                             Glide.with(DocSettings.this)
@@ -76,6 +83,27 @@ public class DocSettings extends AppCompatActivity {
                         }
                     }
                 });
+
+        pa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Checkout checkout = new Checkout();
+                checkout.setKeyID("rzp_test_m8Mx6M6wvVB1qu");
+                //checkout.setImage(R.drawable.nev_cart);
+                JSONObject object = new JSONObject();
+                try {
+                    object.put("name", String.valueOf(name));
+                    //object.put("description", "Test Payment");
+                    object.put("theme.color", "#FF8C00");
+                    object.put("currency", "INR");
+                    object.put("amount", 500000);
+                    object.put("prefill.contact", no);
+                    checkout.open(DocSettings.this, object);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +129,15 @@ public class DocSettings extends AppCompatActivity {
         });
 
         ca.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + "example@example.com"));
+                startActivity(intent);
+            }
+        });
+
+        deleteAcc = findViewById(R.id.deleteAcc);
+        deleteAcc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + "example@example.com"));

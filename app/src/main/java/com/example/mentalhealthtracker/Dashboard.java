@@ -137,6 +137,16 @@ public class Dashboard extends AppCompatActivity {
         anger.setBackground(getResources().getDrawable(R.drawable.no_border));
         //sleep.setBackground(getResources().getDrawable(R.drawable.no_border));
 
+        analysis.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String testFor = "DDepression";
+                Intent i = new Intent(Dashboard.this, Analysis.class);
+                i.putExtra("AnalysisFor", testFor);
+                Dashboard.this.startActivity(i);
+            }
+        });
+
         depression.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

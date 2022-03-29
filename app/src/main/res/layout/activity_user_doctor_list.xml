@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
-        android:text="Find your doctor here"
+        android:text="Get your doctor here"
         android:textColor="@color/black"
         android:fontFamily="@font/ubuntu_light"
         android:textSize="24sp"
@@ -43,7 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:layout_gravity="end"/>
+        android:layout_gravity="end"
+        android:gravity="end"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/DoctorList"

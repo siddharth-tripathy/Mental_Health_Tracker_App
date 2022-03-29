@@ -32,7 +32,7 @@ public class Reads extends AppCompatActivity {
     String Id, Name, Url;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     TextView content, artName;
-    ImageView arImg;
+    ImageView arImg, ReadsBackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +53,14 @@ public class Reads extends AppCompatActivity {
                 .load(Url)
                 .placeholder(R.drawable.profile)
                 .into(arImg);
+
+        ReadsBackBtn = findViewById(R.id.ReadsBackBtn);
+        ReadsBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         Log.d(TAG, "The tag is......."+Id);
 

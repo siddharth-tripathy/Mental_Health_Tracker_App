@@ -273,5 +273,14 @@ public class Analysis extends AppCompatActivity {
                 }
             }
         });
+
+        Button quitBtn;
+        quitBtn = findViewById(R.id.quitBtn);
+        quitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

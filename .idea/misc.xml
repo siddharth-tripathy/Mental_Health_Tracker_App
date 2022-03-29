@@ -82,8 +82,12 @@
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/request_list_layout.xml" value="0.16216216216216217" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/Desktop/AndroidProjects/MentalHealthTracker/app/src/main/res/layout/senderlayout.xml" value="0.1" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/drawable/ic_baseline_arrow_forward_ios_24.xml" value="0.188" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_analysis.xml" value="0.25" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_anjaneyasana.xml" value="0.25" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_appointment_history.xml" value="0.25" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_approval.xml" value="0.25" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_articles.xml" value="0.25" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_chat.xml" value="0.25" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_create_account.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_d_doctor_details.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_d_patient_details.xml" value="0.25" />
@@ -92,6 +96,8 @@
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_doc_main.xml" value="0.22826086956521738" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_doc_profile.xml" value="0.25" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_doc_settings.xml" value="0.25" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_manage_otp.xml" value="0.25" />
+        <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_pay_admin.xml" value="0.25" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_payment_history.xml" value="0.25" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_reads.xml" value="0.10989583333333333" />
         <entry key="..\:/Users/siddh.LAPTOP-LC2NR12O/StudioProjects/Mental_Health_Tracker_App/app/src/main/res/layout/activity_settings.xml" value="0.16799999999999998" />

@@ -55,6 +55,14 @@ public class Chat extends AppCompatActivity {
         String Name = i.getStringExtra("Name");
         String Profile = i.getStringExtra("Profile");
 
+        ImageView DoctorPatientChatBackBtn = findViewById(R.id.DoctorPatientChatBackBtn);
+        DoctorPatientChatBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         profile = findViewById(R.id.profile);
 
         Glide.with(Chat.this)

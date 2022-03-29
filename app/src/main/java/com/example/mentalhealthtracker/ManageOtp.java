@@ -2,6 +2,7 @@ package com.example.mentalhealthtracker;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -215,15 +217,9 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
                                     }
                                 }
                             });
-
-
                 }
-
             }
         });
-
-
-
 
         // initializing on click listener
         // for verify otp button
@@ -241,6 +237,15 @@ public class ManageOtp extends AppCompatActivity implements AdapterView.OnItemSe
                     ManageOtp.this.verifyCode(edtOTP.getText().toString());
                     Toast.makeText(ManageOtp.this, "Verifying OTP", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        Button cu = findViewById(R.id.cu);
+        cu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + "example@example.com"));
+                startActivity(intent);
             }
         });
     }

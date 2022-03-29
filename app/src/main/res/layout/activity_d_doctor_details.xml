@@ -222,6 +222,32 @@
                     </RadioGroup>
                 </LinearLayout>
 
+                <EditText
+                    android:id="@+id/editRazorPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/custom_input"
+                    android:ems="10"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:gravity="center"
+                    android:hint="Enter RazorPay Id"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"/>
+
+                <EditText
+                    android:id="@+id/editFees"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/custom_input"
+                    android:ems="10"
+                    android:fontFamily="@font/ubuntu_light"
+                    android:gravity="center"
+                    android:hint="Enter Fees"
+                    android:inputType="textPersonName"
+                    android:padding="10dp"/>
+
                 <LinearLayout
                     android:id="@+id/biodata"
                     android:layout_width="match_parent"

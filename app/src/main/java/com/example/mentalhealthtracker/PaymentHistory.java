@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
@@ -25,6 +27,7 @@ public class PaymentHistory extends AppCompatActivity {
     AdapterPaymentHistory myAdapter;
     FirebaseFirestore firebaseFirestore;
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
+    ImageView UPayBackBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,5 +61,13 @@ public class PaymentHistory extends AppCompatActivity {
                         }
                     }
                 });
+
+        UPayBackBtn = findViewById(R.id.UPayBackBtn);
+        UPayBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 }

@@ -68,7 +68,7 @@ import static android.content.ContentValues.TAG;
 
 public class DocProfile extends AppCompatActivity implements PaymentResultListener {
     TextView docName, temp, appointmentDate, requestAppointment, requestAppointmentCancel, requestApp, bkApp, bkAppointmentCancel;
-    TextView dBio, dLocation, dExp, dPatients;
+    TextView dBio, dLocation, dExp, dPatients, fs;
     ImageButton chat, video, call;
     String uName, docId, doc_Name, uNumber, docBio;
     LinearLayout contact, appDt;
@@ -81,7 +81,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
     MediaPlayer mediaPlayer;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-    String bio, exp, location, patients, profileImg;
+    String bio, exp, location, patients, profileImg, rzp, fss;
     ProgressDialog progressDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +105,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
         temp = findViewById(R.id.temp);
         //temp.setText(bio);
 
+        fs = findViewById(R.id.fs);
         dLocation = findViewById(R.id.loc);
         dExp = findViewById(R.id.exp);
         dPatients = findViewById(R.id.totalPatients);
@@ -284,6 +285,9 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                             dPatients.setText(patients);
                             exp = documentSnapshot.getString("Experience");
                             dExp.setText(exp);
+                            fss = documentSnapshot.getString("Fees");
+                            fs.setText(fss);
+                            rzp = documentSnapshot.getString("RazorpayId");
                             profileImg = documentSnapshot.getString("Profileimage");
                             Glide.with(DocProfile.this)
                                     .load(profileImg)
@@ -339,8 +343,10 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 Log.w("TAG", "Successful Written Data" + AppointmentDate+" "+AppointmentTime + timeStamp);
 
 
+                fss = fss+"00";
+                float fsss = Float.parseFloat(fss);
                 Checkout checkout = new Checkout();
-                checkout.setKeyID("rzp_test_m8Mx6M6wvVB1qu");
+                checkout.setKeyID(rzp);
                 //checkout.setImage(R.drawable.nev_cart);
                 JSONObject object = new JSONObject();
                 try {
@@ -348,7 +354,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                     //object.put("description", "Test Payment");
                     object.put("theme.color", "#FF8C00");
                     object.put("currency", "INR");
-                    object.put("amount", 100000);
+                    object.put("amount", fsss);
                     object.put("prefill.contact", uNumber);
                     checkout.open(DocProfile.this, object);
                 } catch (JSONException e) {
@@ -356,7 +362,6 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 }
             }
         });
-
 
         bkAppShow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -509,6 +514,14 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
                 View sbView = snackbar.getView();
                 sbView.setBackgroundColor(getResources().getColor(R.color.teal_700));
                 snackbar.show();
+            }
+        });
+
+        ImageView UserProfileBackBtn = findViewById(R.id.UserProfileBackBtn);
+        UserProfileBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
@@ -674,7 +687,7 @@ public class DocProfile extends AppCompatActivity implements PaymentResultListen
 
         Map<String, Object> paymentData = new HashMap<>();
         paymentData.put("PaymentDate", currentDateTimeString);
-        paymentData.put("PaymentAmount", "Rs. 1000");
+        paymentData.put("PaymentAmount", fss);
         paymentData.put("PaidTo", doc_Name);
         paymentData.put("PaymentStatus", "Failure");
 

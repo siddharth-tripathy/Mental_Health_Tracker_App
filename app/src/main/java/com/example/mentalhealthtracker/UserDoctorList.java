@@ -162,7 +162,6 @@ public class UserDoctorList extends AppCompatActivity implements AdapterView.OnI
                             progressDialog.dismiss();
                         }
                     });
-
         }
         else if (choice.equals("All")){
             modelArrayList.clear();

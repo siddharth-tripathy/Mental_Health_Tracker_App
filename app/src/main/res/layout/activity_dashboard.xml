@@ -37,7 +37,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
+            android:layout_marginEnd="15dp"
             android:layout_marginBottom="30dp"
             android:contentDescription="@string/image"
             android:padding="10dp"
@@ -484,8 +484,7 @@
                                 <ImageView
                                     android:id="@+id/articles2"
                                     android:layout_width="match_parent"
-                                    android:layout_height="125dp"
-                                    android:scaleType="centerCrop"/>
+                                    android:layout_height="125dp"/>
                             </androidx.cardview.widget.CardView>
 
                             <TextView
@@ -706,7 +705,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="25dp"
-                android:text="Find Doctor"
+                android:text="Get Doctor"
                 android:textColor="@color/black"
                 android:fontFamily="@font/ubuntu_light"
                 android:textStyle="bold"

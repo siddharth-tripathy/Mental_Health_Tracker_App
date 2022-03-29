@@ -133,6 +133,15 @@ public class Settings extends AppCompatActivity {
             }
         });
 
+        TextView deleteAcc = findViewById(R.id.deleteAcc);
+        deleteAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent (Intent.ACTION_VIEW , Uri.parse("mailto:" + "example@example.com"));
+                startActivity(intent);
+            }
+        });
+
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override

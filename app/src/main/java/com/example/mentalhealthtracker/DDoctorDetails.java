@@ -61,12 +61,12 @@ public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnI
     String editMode, uName, uDOB, uGender, eGender, uBio, uLocation, uExp, uPatients, frm;
     TextView name, age, edit, dob, eDob, gender;
     TextView totalPatients, speciality, exp, location;
-    EditText eName, eAge, eBio, eLocation, eExp, ePatients;
+    EditText eName, eAge, eBio, eLocation, eExp, ePatients, editFees, editRazorPay;
     CalendarView calendarView;
     RadioGroup radioGroup;
     RadioButton male, female, other;
     Button save, upload;
-    ImageView profileImg;
+    ImageView profileImg, DoctorProfileBackBtn;
     Uri url;
     Spinner spec;
 
@@ -377,6 +377,11 @@ public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnI
 
 
 
+                    editRazorPay = findViewById(R.id.editRazorPay);
+                    String erp = String.valueOf(editRazorPay);
+
+                    editFees = findViewById(R.id.editFees);
+                    String fs = String.valueOf(editFees);
 
 
 
@@ -430,6 +435,9 @@ public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnI
                                             accountData.put("Location", uLocation);
                                             accountData.put("Profileimage", profileImgUrl);
                                             accountData.put("Number", uNumber);
+                                            accountData.put("RazorpayId", erp);
+                                            accountData.put("Fees", fs);
+
                                             /*
                                             if (frm.equals("signin")){
                                                 accountData.put("Approval", "false");
@@ -488,6 +496,13 @@ public class DDoctorDetails extends AppCompatActivity implements AdapterView.OnI
             }
         });
 
+        DoctorProfileBackBtn = findViewById(R.id.DoctorProfileBackBtn);
+        DoctorProfileBackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
