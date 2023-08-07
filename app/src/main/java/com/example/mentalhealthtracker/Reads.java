@@ -12,8 +12,10 @@ import android.media.MediaPlayer;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +27,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class Reads extends AppCompatActivity {
     MediaPlayer mediaPlayer;
@@ -33,6 +36,9 @@ public class Reads extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     TextView content, artName;
     ImageView arImg, ReadsBackBtn;
+
+    private TextToSpeech mtts;
+    String con = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,11 +77,30 @@ public class Reads extends AppCompatActivity {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()){
                             DocumentSnapshot documentSnapshot= task.getResult();
-                            String con = documentSnapshot.getString("Content");
+                            con = documentSnapshot.getString("Content");
                             content.setText(con);
                         }
                     }
                 });
+
+
+        Button play = findViewById(R.id.play);
+        mtts = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if(i == TextToSpeech.SUCCESS){
+                    mtts.setLanguage(Locale.ENGLISH);
+                    play.setEnabled(true);
+                }
+            }
+        });
+
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mtts.speak(con, TextToSpeech.QUEUE_FLUSH, null, null);
+            }
+        });
 
         /*
         play = findViewById(R.id.play);
@@ -118,5 +143,14 @@ public class Reads extends AppCompatActivity {
             if (info.getTypeName().equalsIgnoreCase("MOBILE DATA"))if (info.isConnected())have_MobileData=true;
         }
         return have_WIFI||have_MobileData;
+    }
+
+    @Override
+    protected void onDestroy() {
+        if(mtts!=null){
+            mtts.stop();
+            mtts.shutdown();
+        }
+        super.onDestroy();
     }
 }

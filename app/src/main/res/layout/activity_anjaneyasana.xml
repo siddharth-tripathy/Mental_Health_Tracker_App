@@ -24,4 +24,10 @@
         android:text=""
         android:textSize="16sp"
         android:fontFamily="@font/ubuntu_light"/>
+
+    <Button
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start"/>
 </LinearLayout>
